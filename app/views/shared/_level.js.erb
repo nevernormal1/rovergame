@@ -1,0 +1,16 @@
+$(function() {
+  var container_dimensions = {width: 700, height: 467},
+      margins = {top: 20, right: 20, bottom: 20, left: 20},
+      level_dimensions = {
+        width: container_dimensions.width - margins.left - margins.right,
+        height: container_dimensions.height - margins.top - margins.bottom
+      },
+      x = d3.scale.linear().range([0, level_dimensions.width]),
+      y = d3.scale.linear().range([level_dimensions.height, 0]),
+      svg = d3.select("#level-content")
+        .append("svg")
+        .attr("height", container_dimensions.height)
+        .attr("width", container_dimensions.width)
+        .append("g")
+        .attr("transform", "translate(" + margins.left + "," + margins.top + ")");
+});

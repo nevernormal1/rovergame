@@ -13,5 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-//= require 'bootstrap.min'
-//= require 'd3.v2'
+//= require bootstrap.min
+//= require d3.v2
