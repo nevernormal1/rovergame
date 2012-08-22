@@ -5,10 +5,18 @@ $(function() {
         width: container_dimensions.width - margins.left - margins.right,
         height: container_dimensions.height - margins.top - margins.bottom
       },
+      walls = [],
+      rover = [{x: 5, y: 5}],
+      grid,
       gridRows = 10,
       gridColumns = 10,
       x = d3.scale.linear().range([0, level_dimensions.width]),
       y = d3.scale.linear().range([level_dimensions.height, 0]),
+
+      line = d3.svg.line()
+        .x(function(d) { return x(d.x); })
+        .y(function(d) { return y(d.y); });
+
       svg = d3.select("#level-content")
         .append("svg")
         .attr("height", container_dimensions.height)
@@ -16,8 +24,9 @@ $(function() {
         .append("g")
         .attr("transform", "translate(" + margins.left + "," + margins.top + ")"),
 
-      generateGrid = function(numWalls) {
-        var i, j, lastY=0, grid = new Array(gridRows);
+      buildWalls = function(numWalls) {
+        var i, j, y=0, wall;
+        grid = new Array(gridRows);
         for(i=0; i<gridRows; i++) {
           grid[i] = [];
           for(j=0; j<gridColumns; j++) {
@@ -26,27 +35,54 @@ $(function() {
         }
 
         for(i=0; i<numWalls; i++) {
-          y += (Math.floor(Math.random() * gridRows - 2) + 1 - y)
+          wall = new Array();
+          y += (Math.floor(Math.random() * gridRows - 2 - numWalls) + 1 - y)
           if (i % 2 === 0) {
             // Left wall
-            for(i=0; i<gridColumns-2; i++) {
-              grid[y][i] = 1;
+            for(j=0; j<gridColumns-2; j++) {
+              wall.push({x: j, y: y});
             }
           } else {
             // Right wall
-            for(i=2; i<gridColumns; i++) {
-              grid[y][i] = 1;
+            for(j=2; j<gridColumns; j++) {
+              wall.push({x: j, y: y});
             }
           }
+          walls.push(wall);
         }
-        return grid;
       },
 
-      drawWalls = function() {
-        var grid = generateGrid(3);
-        var gridRows = svg.selectAll(".row").data(grid);
-        gridRows.enter().append("g").attr("class", "row");
+      populateGrid = function() {
+        var i, j, wall;
+        for(i=0; i<walls.length; i++) {
+          wall = walls[i];
+          for(j=0; j<wall.length; j++) {
+            grid[wall[j].x][wall[j].y] = 1;
+          }
+        }
+      },
+
+      render = function() {
+        var wallSelection = svg.selectAll(".wall").data(walls);
+        wallSelection.enter()
+          .append("path")
+          .attr("class", "wall")
+          .attr("d", line);
+
+        var roverSelection = svg.selectAll(".rover").data(rover);
+        roverSelection.enter()
+          .append("circle")
+          .attr("class", "rover")
+          .attr("r", "4")
+          .attr("cx", function(d) { return x(d.x); })
+          .attr("cy", function(d) { return y(d.y); });
+
       };
 
-      drawWalls();
+      x.domain([0, gridRows - 1]);
+      y.domain([0, gridColumns - 1]);
+
+      buildWalls(3);
+      populateGrid();
+      render();
 });

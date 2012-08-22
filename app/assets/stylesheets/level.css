@@ -4,3 +4,7 @@
   -moz-border-radius: 9px;
   border-radius: 9px;
 }
+
+.wall {
+  stroke: gray;
+}
