@@ -6,12 +6,12 @@ $(function() {
         height: container_dimensions.height - margins.top - margins.bottom
       },
       walls = [],
-      rover = [{x: 5, y: 5}],
+      rover = [{x: 0, y: 0}],
       grid,
       gridRows = 10,
       gridColumns = 10,
       x = d3.scale.linear().range([0, level_dimensions.width]),
-      y = d3.scale.linear().range([level_dimensions.height, 0]),
+      y = d3.scale.linear().range([0, level_dimensions.height]),
 
       line = d3.svg.line()
         .x(function(d) { return x(d.x); })
@@ -25,7 +25,7 @@ $(function() {
         .attr("transform", "translate(" + margins.left + "," + margins.top + ")"),
 
       buildWalls = function(numWalls) {
-        var i, j, y=0, wall;
+        var i, j, y=0, minY=1, maxY, wall;
         grid = new Array(gridRows);
         for(i=0; i<gridRows; i++) {
           grid[i] = [];
@@ -36,7 +36,8 @@ $(function() {
 
         for(i=0; i<numWalls; i++) {
           wall = new Array();
-          y += (Math.floor(Math.random() * gridRows - 2 - numWalls) + 1 - y)
+          maxY = gridRows - 1 - ((numWalls - i - 1) * 2)
+          y = Math.floor(Math.random() * (maxY - minY)) + minY;
           if (i % 2 === 0) {
             // Left wall
             for(j=0; j<gridColumns-2; j++) {
@@ -49,6 +50,7 @@ $(function() {
             }
           }
           walls.push(wall);
+          minY = y + 2;
         }
       },
 
@@ -82,7 +84,7 @@ $(function() {
       x.domain([0, gridRows - 1]);
       y.domain([0, gridColumns - 1]);
 
-      buildWalls(3);
+      buildWalls(2);
       populateGrid();
       render();
 });
