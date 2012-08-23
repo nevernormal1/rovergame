@@ -69,9 +69,23 @@ $(function() {
       render = function() {
         var wallSelection = svg.selectAll(".wall").data(walls);
         wallSelection.enter()
-          .append("path")
-          .attr("class", "wall")
-          .attr("d", line);
+          .append("g")
+          .attr("class", "scatter");
+
+        var wallBlocks = wallSelection.selectAll(".block")
+          .data(function(d) { return d; });
+
+        wallBlocks.enter()
+          .append("circle")
+          .attr("class", "block")
+          .attr("cx", function(d) { return x(d.x); })
+          .attr("cy", function(d) { return y(d.y); })
+          .attr("r", "2");
+
+        // wallSelection.enter()
+        //   .append("path")
+        //   .attr("class", "wall")
+        //   .attr("d", line);
 
         var roverSelection = svg.selectAll(".rover").data(rover);
         roverSelection.enter()
