@@ -8,3 +8,13 @@
 .wall {
   stroke: gray;
 }
+
+.rover {
+  fill: black;
+}
+
+.goal {
+  stroke: blue;
+  stroke-width: 3;
+  fill: none;
+}

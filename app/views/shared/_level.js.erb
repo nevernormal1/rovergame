@@ -5,11 +5,12 @@ $(function() {
         width: container_dimensions.width - margins.left - margins.right,
         height: container_dimensions.height - margins.top - margins.bottom
       },
-      walls = [],
-      rover = [{x: 0, y: 0}],
       grid,
       gridRows = 20,
       gridColumns = 30,
+      walls = [],
+      rover = [{x: 0, y: 0}],
+      goal = [{x: gridColumns - 1, y: gridRows - 1}],
       x = d3.scale.linear().range([0, level_dimensions.width]),
       y = d3.scale.linear().range([0, level_dimensions.height]),
 
@@ -77,6 +78,14 @@ $(function() {
           .append("circle")
           .attr("class", "rover")
           .attr("r", "4")
+          .attr("cx", function(d) { return x(d.x); })
+          .attr("cy", function(d) { return y(d.y); });
+
+        var goalSelection = svg.selectAll(".goal").data(goal);
+        goalSelection.enter()
+          .append("circle")
+          .attr("class", "goal")
+          .attr("r", "6")
           .attr("cx", function(d) { return x(d.x); })
           .attr("cy", function(d) { return y(d.y); });
 
