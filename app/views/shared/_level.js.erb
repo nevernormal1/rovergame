@@ -8,8 +8,8 @@ $(function() {
       walls = [],
       rover = [{x: 0, y: 0}],
       grid,
-      gridRows = 10,
-      gridColumns = 10,
+      gridRows = 20,
+      gridColumns = 30,
       x = d3.scale.linear().range([0, level_dimensions.width]),
       y = d3.scale.linear().range([0, level_dimensions.height]),
 
@@ -55,11 +55,12 @@ $(function() {
       },
 
       populateGrid = function() {
-        var i, j, wall;
+        var i, j, wall, wallPoint;
         for(i=0; i<walls.length; i++) {
           wall = walls[i];
           for(j=0; j<wall.length; j++) {
-            grid[wall[j].x][wall[j].y] = 1;
+            wallPoint = wall[j];
+            grid[wallPoint.y][wallPoint.x] = 1;
           }
         }
       },
@@ -81,10 +82,10 @@ $(function() {
 
       };
 
-      x.domain([0, gridRows - 1]);
-      y.domain([0, gridColumns - 1]);
+      x.domain([0, gridColumns - 1]);
+      y.domain([0, gridRows - 1]);
 
-      buildWalls(2);
+      buildWalls(4);
       populateGrid();
       render();
 });
