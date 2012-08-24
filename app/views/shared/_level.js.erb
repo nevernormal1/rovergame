@@ -8,6 +8,8 @@ $(function() {
       grid,
       gridRows = 20,
       gridColumns = 30,
+      cellWidth = level_dimensions.width / gridColumns,
+      cellHeight = level_dimensions.height / gridRows,
       walls = [],
       rover = [{x: 0, y: 0}],
       goal = [{x: gridColumns - 1, y: gridRows - 1}],
@@ -76,11 +78,12 @@ $(function() {
           .data(function(d) { return d; });
 
         wallBlocks.enter()
-          .append("circle")
+          .append("rect")
           .attr("class", "block")
-          .attr("cx", function(d) { return x(d.x); })
-          .attr("cy", function(d) { return y(d.y); })
-          .attr("r", "2");
+          .attr("x", function(d) { return x(d.x); })
+          .attr("y", function(d) { return y(d.y); })
+          .attr("height", cellHeight)
+          .attr("width", cellWidth);
 
         // wallSelection.enter()
         //   .append("path")
