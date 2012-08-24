@@ -15,6 +15,12 @@ $(function() {
       goal = [{x: gridColumns - 1, y: gridRows - 1}],
       x = d3.scale.linear().range([0, level_dimensions.width]),
       y = d3.scale.linear().range([0, level_dimensions.height]),
+      offsetX = function(d) {
+        return x(d.x) - cellWidth / 2;
+      },
+      offsetY = function(d) {
+        return y(d.y) - cellHeight / 2;
+      }
 
       line = d3.svg.line()
         .x(function(d) { return x(d.x); })
@@ -41,6 +47,7 @@ $(function() {
           wall = new Array();
           maxY = gridRows - 1 - ((numWalls - i - 1) * 2)
           y = Math.floor(Math.random() * (maxY - minY)) + minY;
+          // $("#debug").append("<p> y: " + y + "</p>");
           if (i % 2 === 0) {
             // Left wall
             for(j=0; j<gridColumns-2; j++) {
@@ -80,15 +87,24 @@ $(function() {
         wallBlocks.enter()
           .append("rect")
           .attr("class", "block")
-          .attr("x", function(d) { return x(d.x); })
-          .attr("y", function(d) { return y(d.y); })
+          .attr("x", offsetX)
+          .attr("y", offsetY)
           .attr("height", cellHeight)
           .attr("width", cellWidth);
 
-        // wallSelection.enter()
-        //   .append("path")
-        //   .attr("class", "wall")
-        //   .attr("d", line);
+        svg.selectAll(".gridLine")
+          .data(
+            [
+                [{x: 0, y: 0}, {x: gridColumns - 1, y: 0}],
+                [{x: 0, y: 0}, {x: 0, y: gridRows - 1}],
+                [{x: gridColumns - 1, y: 0}, {x: gridColumns - 1, y: gridRows - 1}],
+                [{x: 0, y: gridRows - 1}, {x: gridColumns - 1, y: gridRows - 1}],
+            ]
+          )
+          .enter()
+          .append("path")
+          .attr("class", "wall")
+          .attr("d", line);
 
         var roverSelection = svg.selectAll(".rover").data(rover);
         roverSelection.enter()
