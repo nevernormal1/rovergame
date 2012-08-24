@@ -1,6 +1,6 @@
 $(function() {
   var container_dimensions = {width: 700, height: 467},
-      margins = {top: 20, right: 20, bottom: 20, left: 20},
+      margins = {top: 20, right: 16, bottom: 20, left: 12},
       level_dimensions = {
         width: container_dimensions.width - margins.left - margins.right,
         height: container_dimensions.height - margins.top - margins.bottom
@@ -33,15 +33,10 @@ $(function() {
         .append("g")
         .attr("transform", "translate(" + margins.left + "," + margins.top + ")"),
 
-      buildWalls = function(numWalls) {
-        var i, j, y=0, minY=1, maxY, wall;
-        grid = new Array(gridRows);
-        for(i=0; i<gridRows; i++) {
-          grid[i] = [];
-          for(j=0; j<gridColumns; j++) {
-            grid[i].push(0);
-          }
-        }
+      buildWalls = function() {
+        var i, j, y=0, minY=1, maxY, wall, numWalls;
+        numWalls = Math.ceil(Math.random() * 4) * 2;
+        walls = [];
 
         for(i=0; i<numWalls; i++) {
           wall = new Array();
@@ -66,6 +61,15 @@ $(function() {
 
       populateGrid = function() {
         var i, j, wall, wallPoint;
+
+        grid = new Array(gridRows);
+        for(i=0; i<gridRows; i++) {
+          grid[i] = [];
+          for(j=0; j<gridColumns; j++) {
+            grid[i].push(0);
+          }
+        }
+
         for(i=0; i<walls.length; i++) {
           wall = walls[i];
           for(j=0; j<wall.length; j++) {
@@ -75,11 +79,19 @@ $(function() {
         }
       },
 
+      animatedRender = function() {
+        d3.transition()
+          .duration(750)
+          .each(render);
+      },
+
       render = function() {
         var wallSelection = svg.selectAll(".wall").data(walls);
         wallSelection.enter()
           .append("g")
-          .attr("class", "scatter");
+          .attr("class", "wall");
+
+        wallSelection.exit().remove();
 
         var wallBlocks = wallSelection.selectAll(".block")
           .data(function(d) { return d; });
@@ -92,19 +104,23 @@ $(function() {
           .attr("height", cellHeight)
           .attr("width", cellWidth);
 
-        svg.selectAll(".gridLine")
-          .data(
-            [
-                [{x: 0, y: 0}, {x: gridColumns - 1, y: 0}],
-                [{x: 0, y: 0}, {x: 0, y: gridRows - 1}],
-                [{x: gridColumns - 1, y: 0}, {x: gridColumns - 1, y: gridRows - 1}],
-                [{x: 0, y: gridRows - 1}, {x: gridColumns - 1, y: gridRows - 1}],
-            ]
-          )
-          .enter()
-          .append("path")
-          .attr("class", "wall")
-          .attr("d", line);
+        wallBlocks.transition()
+          .attr("x", offsetX)
+          .attr("y", offsetY);
+
+        //svg.selectAll(".gridLine")
+        //  .data(
+        //    [
+        //        [{x: 0, y: 0}, {x: gridColumns - 1, y: 0}],
+        //        [{x: 0, y: 0}, {x: 0, y: gridRows - 1}],
+        //        [{x: gridColumns - 1, y: 0}, {x: gridColumns - 1, y: gridRows - 1}],
+        //        [{x: 0, y: gridRows - 1}, {x: gridColumns - 1, y: gridRows - 1}],
+        //    ]
+        //  )
+        //  .enter()
+        //  .append("path")
+        //  .attr("class", "wall")
+        //  .attr("d", line);
 
         var roverSelection = svg.selectAll(".rover").data(rover);
         roverSelection.enter()
@@ -122,12 +138,20 @@ $(function() {
           .attr("cx", function(d) { return x(d.x); })
           .attr("cy", function(d) { return y(d.y); });
 
+      },
+
+      generate = function() {
+        buildWalls();
+        populateGrid();
+        animatedRender();
       };
 
-      x.domain([0, gridColumns - 1]);
-      y.domain([0, gridRows - 1]);
+    $("#generate").click(function() {
+      generate();
+    });
 
-      buildWalls(4);
-      populateGrid();
-      render();
+    x.domain([0, gridColumns - 1]);
+    y.domain([0, gridRows - 1]);
+
+    generate();
 });

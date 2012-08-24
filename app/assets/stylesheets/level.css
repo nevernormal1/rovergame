@@ -24,3 +24,8 @@
   stroke-width: 2;
   fill: none;
 }
+
+#level-tools {
+  height: 20px;
+  margin-bottom: 8px;
+}
