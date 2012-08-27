@@ -144,8 +144,26 @@ $(function() {
 
       },
 
+      outOfBounds = function(position) {
+        if (position.x < 0 || position.y < 0) return true;
+        if (position.x > gridColumns - 1 || position.y > gridRows - 1) return true;
+        return false;
+      },
+
+      collision = function(position) {
+        if (grid[position.x][position.y] === 1) return true;
+        return false;
+      }
+
       moveRover = function(coordinate, direction) {
-        roverPos[coordinate] += parseInt(direction);
+        var newPosition = {x: roverPos.x, y: roverPos.y};
+        newPosition[coordinate] += parseInt(direction);
+
+        if (outOfBounds(newPosition) || collision(position)) return;
+
+        roverPos.x = newPosition.x;
+        roverPos.y = newPosition.y;
+
         rover.transition()
           .duration(500)
           .attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
