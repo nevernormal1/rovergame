@@ -11,7 +11,9 @@ $(function() {
       cellWidth = level_dimensions.width / gridColumns,
       cellHeight = level_dimensions.height / gridRows,
       walls = [],
-      rover = [{x: 0, y: 0}],
+      roverPos = {x: 0, y: 0},
+      roverData = [{x: 0, y: 0}],
+      rover,
       goal = [{x: gridColumns - 1, y: gridRows - 1}],
       x = d3.scale.linear().range([0, level_dimensions.width]),
       y = d3.scale.linear().range([0, level_dimensions.height]),
@@ -101,6 +103,8 @@ $(function() {
           .attr("class", "block")
           .attr("x", offsetX)
           .attr("y", offsetY)
+          .attr("rx", "1")
+          .attr("ry", "1")
           .attr("height", cellHeight)
           .attr("width", cellWidth);
 
@@ -122,8 +126,8 @@ $(function() {
         //  .attr("class", "wall")
         //  .attr("d", line);
 
-        var roverSelection = svg.selectAll(".rover").data(rover);
-        roverSelection.enter()
+        var roverSelection = svg.selectAll(".rover").data(roverData);
+        rover = roverSelection.enter()
           .append("circle")
           .attr("class", "rover")
           .attr("r", "4")
@@ -140,6 +144,13 @@ $(function() {
 
       },
 
+      moveRover = function(coordinate, direction) {
+        roverPos[coordinate] += parseInt(direction);
+        rover.transition()
+          .duration(500)
+          .attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
+      },
+
       generate = function() {
         buildWalls();
         populateGrid();
@@ -148,6 +159,10 @@ $(function() {
 
     $("#generate").click(function() {
       generate();
+    });
+
+    $(".move").click(function() {
+      moveRover($(this).attr("data-coordinate"), $(this).attr("data-direction"));
     });
 
     x.domain([0, gridColumns - 1]);
