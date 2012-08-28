@@ -11,9 +11,8 @@ $(function() {
       cellWidth = level_dimensions.width / gridColumns,
       cellHeight = level_dimensions.height / gridRows,
       walls = [],
-      roverPos = {x: 0, y: 0},
+      roverPos = {x: 0, y: 0, rotation: 0, cruise_on: false},
       roverData = [{x: 0, y: 0}],
-      rover,
       goal = [{x: gridColumns - 1, y: gridRows - 1}],
       x = d3.scale.linear().range([0, level_dimensions.width]),
       y = d3.scale.linear().range([0, level_dimensions.height]),
@@ -22,11 +21,17 @@ $(function() {
       },
       offsetY = function(d) {
         return y(d.y) - cellHeight / 2;
-      }
+      },
+      roverOffsetX = function(d) {
+        return x(d.x) - (cellWidth / 4);
+      },
+      roverOffsetY = function(d) {
+        return y(d.y) - (cellHeight / 4);
+      },
 
       line = d3.svg.line()
         .x(function(d) { return x(d.x); })
-        .y(function(d) { return y(d.y); });
+        .y(function(d) { return y(d.y); }),
 
       svg = d3.select("#level-content")
         .append("svg")
@@ -127,12 +132,18 @@ $(function() {
         //  .attr("d", line);
 
         var roverSelection = svg.selectAll(".rover").data(roverData);
-        rover = roverSelection.enter()
-          .append("circle")
+        var roverEnter = roverSelection.enter()
+          .append("rect")
           .attr("class", "rover")
-          .attr("r", "4")
-          .attr("cx", function(d) { return x(d.x); })
-          .attr("cy", function(d) { return y(d.y); });
+          .attr("x",function(d) { roverOffsetX; })
+          .attr("y",function(d) { roverOffsetY; })
+          .attr("width", cellWidth / 4)
+          .attr("height", cellHeight / 4);
+          //.attr("rx", "1");
+          //.attr("cy", function(d) { return y(d.y); });
+
+        roverSelection.transition()
+          .attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
 
         var goalSelection = svg.selectAll(".goal").data(goal);
         goalSelection.enter()
@@ -151,25 +162,32 @@ $(function() {
       },
 
       collision = function(position) {
-        if (grid[position.x][position.y] === 1) return true;
+        if (grid[position.y][position.x] === 1) return true;
         return false;
       }
 
       moveRover = function(coordinate, direction) {
-        var newPosition = {x: roverPos.x, y: roverPos.y};
-        newPosition[coordinate] += parseInt(direction);
+        if (!roverPos.cruise_on) return;
 
-        if (outOfBounds(newPosition) || collision(position)) return;
+        var newPosition = {x: roverPos.x, y: roverPos.y};
+
+        if (roverPos.rotation == 0) {
+          newPosition.x += 1;
+        }
+
+        if (outOfBounds(newPosition) || collision(newPosition)) return;
 
         roverPos.x = newPosition.x;
         roverPos.y = newPosition.y;
 
-        rover.transition()
+        svg.selectAll(".rover").transition()
           .duration(500)
           .attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
       },
 
       generate = function() {
+        roverPos.x = 0;
+        roverPos.y = 0;
         buildWalls();
         populateGrid();
         animatedRender();
@@ -180,11 +198,18 @@ $(function() {
     });
 
     $(".move").click(function() {
-      moveRover($(this).attr("data-coordinate"), $(this).attr("data-direction"));
+      var action = $(this).attr("data-action");
+      if (action.indexOf("on") > -1) {
+        roverPos.cruise_on = true;
+      } else {
+        roverPos.cruise_on = false;
+      }
     });
 
     x.domain([0, gridColumns - 1]);
     y.domain([0, gridRows - 1]);
 
     generate();
+
+    setInterval(function() { moveRover() }, 500);
 });

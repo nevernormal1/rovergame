@@ -10,7 +10,9 @@
 }
 
 .rover {
-  fill: black;
+  stroke: black;
+  stroke-width: 1px;
+  fill: none;
 }
 
 .goal {
