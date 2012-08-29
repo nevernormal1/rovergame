@@ -6,8 +6,8 @@ $(function() {
         height: container_dimensions.height - margins.top - margins.bottom
       },
       grid,
-      gridRows = 20,
-      gridColumns = 30,
+      gridRows = 10,
+      gridColumns = 15,
       goalReached = false,
       transitionDuration = 300,
       cellWidth = level_dimensions.width / gridColumns,
@@ -36,6 +36,10 @@ $(function() {
         .x(function(d) { return x(d.x); })
         .y(function(d) { return y(d.y); }),
 
+      debug = function(text) {
+        $("#debug").append("<p> " + text + "</p>");
+      },
+
       svg = d3.select("#level-content")
         .append("svg")
         .attr("height", container_dimensions.height)
@@ -46,6 +50,8 @@ $(function() {
       buildWalls = function() {
         var i, j, y=0, minY=1, maxY, wall, numWalls;
         numWalls = Math.ceil(Math.random() * 4) * 2;
+        numWalls = d3.min([numWalls, Math.floor((gridRows - 1) / 2)]);
+        debug("num walls: " + numWalls);
         walls = [];
 
         for(i=0; i<numWalls; i++) {
