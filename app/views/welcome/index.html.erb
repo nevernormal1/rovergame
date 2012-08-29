@@ -27,6 +27,21 @@
 </div>
 <div id="debug" class="row">
 </div>
+
+<div class="modal hide fade" id="goal-reached">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Mission Complete!</h3>
+  </div>
+  <div class="modal-body">
+    <p>Congratulations, you completed your first mission.</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+  </div>
+</div>
+
+
 <% content_for :jquery do %>
   <%= javascript_tag do %>
     <%= render :partial => 'shared/level.js' %>

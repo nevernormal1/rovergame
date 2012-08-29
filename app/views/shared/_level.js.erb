@@ -9,6 +9,7 @@ $(function() {
       gridRows = 20,
       gridColumns = 30,
       goalReached = false,
+      transitionDuration = 300,
       cellWidth = level_dimensions.width / gridColumns,
       cellHeight = level_dimensions.height / gridRows,
       walls = [],
@@ -90,7 +91,8 @@ $(function() {
 
       animatedRender = function() {
         d3.transition()
-          .duration(750)
+          .duration(transitionDuration)
+          .ease('linear')
           .each(render);
       },
 
@@ -144,8 +146,7 @@ $(function() {
           //.attr("rx", "1");
           //.attr("cy", function(d) { return y(d.y); });
 
-        roverSelection.transition()
-          .attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
+        roverSelection.attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
 
         var goalSelection = svg.selectAll(".goal").data(goalData);
         goalSelection.enter()
@@ -169,12 +170,13 @@ $(function() {
       },
 
       reachedGoal = function(position) {
-        if (position.x === grid.x && position.y === grid.y) return true;
+        if (position.x === goal.x && position.y === goal.y) return true;
         return false;
       },
 
       endLevel = function() {
         goalReached = true;
+        $("#goal-reached").modal('show');
       },
 
       moveRover = function(coordinate, direction) {
@@ -202,20 +204,24 @@ $(function() {
         roverPos.y = newPosition.y;
 
         svg.selectAll(".rover").transition()
-          .duration(500)
+          .duration(transitionDuration)
+          .ease('linear')
           .attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
       },
 
       updateScene = function() {
         moveRover();
         if (!goalReached) {
-          setTimeout(function() { updateScene(); }, 500);
+          setTimeout(function() { updateScene(); }, transitionDuration);
         }
       },
 
       generate = function() {
+        // Todo: Rover needs to be a class that can re-initialize itself
         roverPos.x = 0;
         roverPos.y = 0;
+        roverPos.cruise_on = false;
+        roverPos.rotation = 0;
         buildWalls();
         populateGrid();
         animatedRender();
@@ -244,5 +250,5 @@ $(function() {
 
     generate();
 
-    setTimeout(function() { updateScene() }, 500);
+    setTimeout(function() { updateScene() }, transitionDuration);
 });
