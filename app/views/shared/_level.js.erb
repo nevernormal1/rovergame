@@ -1,20 +1,20 @@
 $(function() {
   var container_dimensions = {width: 700, height: 467},
-      margins = {top: 20, right: 22, bottom: 20, left: 18},
+      margins = {top: 20, right: 20, bottom: 16, left: 16},
       level_dimensions = {
         width: container_dimensions.width - margins.left - margins.right,
         height: container_dimensions.height - margins.top - margins.bottom
       },
       grid,
-      gridRows = 12,
-      gridColumns = 18,
+      gridRows = 14,
+      gridColumns = 21,
       goalReached = false,
       transitionDuration = 300,
       cellWidth = level_dimensions.width / gridColumns,
       cellHeight = level_dimensions.height / gridRows,
       walls = [],
       roverPos = {x: 0, y: 0, rotation: 0, cruise_on: false},
-      roverData = [{x: 0, y: 0}],
+      roverData = [roverPos],
       goal = {x: gridColumns - 1, y: gridRows - 1},
       goalData = [goal],
       x = d3.scale.linear().range([0, level_dimensions.width]),
@@ -97,8 +97,7 @@ $(function() {
 
       animatedRender = function() {
         d3.transition()
-          .duration(transitionDuration)
-          .ease('linear')
+          .duration(750)
           .each(render);
       },
 
@@ -127,32 +126,32 @@ $(function() {
           .attr("x", offsetX)
           .attr("y", offsetY);
 
-        //svg.selectAll(".gridLine")
-        //  .data(
-        //    [
-        //        [{x: 0, y: 0}, {x: gridColumns - 1, y: 0}],
-        //        [{x: 0, y: 0}, {x: 0, y: gridRows - 1}],
-        //        [{x: gridColumns - 1, y: 0}, {x: gridColumns - 1, y: gridRows - 1}],
-        //        [{x: 0, y: gridRows - 1}, {x: gridColumns - 1, y: gridRows - 1}],
-        //    ]
-        //  )
-        //  .enter()
-        //  .append("path")
-        //  .attr("class", "wall")
-        //  .attr("d", line);
+        // svg.selectAll(".gridLine")
+        //   .data(
+        //     [
+        //         [{x: 0, y: 0}, {x: gridColumns - 1, y: 0}],
+        //         [{x: 0, y: 0}, {x: 0, y: gridRows - 1}],
+        //         [{x: gridColumns - 1, y: 0}, {x: gridColumns - 1, y: gridRows - 1}],
+        //         [{x: 0, y: gridRows - 1}, {x: gridColumns - 1, y: gridRows - 1}],
+        //     ]
+        //   )
+        //   .enter()
+        //   .append("path")
+        //   .attr("class", "wall")
+        //   .attr("d", line);
 
         var roverSelection = svg.selectAll(".rover").data(roverData);
         var roverEnter = roverSelection.enter()
           .append("rect")
           .attr("class", "rover")
-          .attr("x",function(d) { roverOffsetX; })
-          .attr("y",function(d) { roverOffsetY; })
-          .attr("width", cellWidth / 4)
-          .attr("height", cellHeight / 4);
+          .attr("x", roverOffsetX)
+          .attr("y", roverOffsetY)
+          .attr("width", cellWidth / 2)
+          .attr("height", cellHeight / 2);
           //.attr("rx", "1");
           //.attr("cy", function(d) { return y(d.y); });
 
-        roverSelection.attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
+        //roverSelection.attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
 
         var goalSelection = svg.selectAll(".goal").data(goalData);
         goalSelection.enter()
