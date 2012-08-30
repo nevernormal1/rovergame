@@ -1,13 +1,13 @@
 $(function() {
   var container_dimensions = {width: 700, height: 467},
-      margins = {top: 20, right: 16, bottom: 20, left: 12},
+      margins = {top: 20, right: 22, bottom: 20, left: 18},
       level_dimensions = {
         width: container_dimensions.width - margins.left - margins.right,
         height: container_dimensions.height - margins.top - margins.bottom
       },
       grid,
-      gridRows = 10,
-      gridColumns = 15,
+      gridRows = 12,
+      gridColumns = 18,
       goalReached = false,
       transitionDuration = 300,
       cellWidth = level_dimensions.width / gridColumns,
@@ -158,7 +158,7 @@ $(function() {
         goalSelection.enter()
           .append("circle")
           .attr("class", "goal")
-          .attr("r", "6")
+          .attr("r", cellWidth / 4)
           .attr("cx", function(d) { return x(d.x); })
           .attr("cy", function(d) { return y(d.y); });
 
