@@ -15,3 +15,4 @@
 //= require_tree .
 //= require bootstrap.min
 //= require d3.v2
+//= require select2.min

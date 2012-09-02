@@ -1,14 +1,20 @@
 <div class="row">
   <div id="level-tools" class="btn-toolbar">
+    <button id="generate" class="btn pull-right">Generate</button>
     <button class="btn move" data-action="cruise-on">Cruise On</button>
     <button class="btn move" data-action="cruise-off">Cruise Off</button>
     <button class="btn rotate">Rotate</button>
-    <button id="generate" class="btn pull-right">Generate</button>
   </div>
 </div>
+<div class="clearfix" style="margin-top: 4px"></div>
 <div class="row">
-  <div class="span3">
-    <p>Program</p>
+  <div id="instructions" style="width:100%">
+    <select class="span3">
+      <optgroup label="Engine">
+        <option value="engine.on">Turn On</option>
+        <option value="engine.off">Turn Off</option>
+      </optgroup>
+    </select>
   </div>
   <div class="span9">
     <div id="level-content">
@@ -45,5 +51,6 @@
 <% content_for :jquery do %>
   <%= javascript_tag do %>
     <%= render :partial => 'shared/level.js' %>
+    $("#instructions > select").select2();
   <% end %>
 <% end %>
