@@ -8,13 +8,20 @@
 </div>
 <div class="clearfix" style="margin-top: 4px"></div>
 <div class="row">
-  <div id="instructions" style="width:100%">
-    <select class="span3">
-      <optgroup label="Engine">
-        <option value="engine.on">Turn On</option>
-        <option value="engine.off">Turn Off</option>
-      </optgroup>
-    </select>
+  <div id="instructions" class="span3">
+    <div class="row">
+      <div class="span1-5">
+        <h6>1</h6>
+      </div>
+      <div class="span2-5">
+        <select style="width: 100%">
+          <optgroup label="Engine">
+            <option value="engine.on">Turn On Engine</option>
+            <option value="engine.off">Turn Off Engine</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
   </div>
   <div class="span9">
     <div id="level-content">
@@ -51,6 +58,8 @@
 <% content_for :jquery do %>
   <%= javascript_tag do %>
     <%= render :partial => 'shared/level.js' %>
-    $("#instructions > select").select2();
+    $("#instructions > select").select2({
+      placeholder: "Choose an instruction"
+    });
   <% end %>
 <% end %>
