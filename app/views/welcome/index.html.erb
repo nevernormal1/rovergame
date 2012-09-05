@@ -8,18 +8,12 @@
 </div>
 <div class="clearfix" style="margin-top: 4px"></div>
 <div class="row">
-  <div id="instructions" class="span3">
+  <div class="span3">
     <div class="row">
       <div class="span1-5">
         <h6>1</h6>
       </div>
-      <div class="span2-5">
-        <select style="width: 100%">
-          <optgroup label="Engine">
-            <option value="engine.on">Turn On Engine</option>
-            <option value="engine.off">Turn Off Engine</option>
-          </optgroup>
-        </select>
+      <div id="instructions" class="span2-5">
       </div>
     </div>
   </div>
@@ -58,8 +52,55 @@
 <% content_for :jquery do %>
   <%= javascript_tag do %>
     <%= render :partial => 'shared/level.js' %>
-    $("#instructions > select").select2({
-      placeholder: "Choose an instruction"
+    $(function() {
+      var enums = {
+            direction: {name: "Current Direction", values: ["North", "South", "East", "West"]}
+          },
+
+          topLevelInstructions = [
+            {
+              label: "Engine",
+              instructions: [
+                {label: "Turn Engine On", value: "engine.on"},
+                {label: "Turn Engine Off", value: "engine.off"}
+              ]
+            },
+            {
+              label: "Navigation",
+              instructions: [
+                {label: "Change Direction To...", value: "direction.update"},
+                {label: "When Blocked", value: "navigation.blocked"}
+              ]
+            },
+            {
+              label: "Test",
+              instructions: [
+                {label: "If [Condition] Is...", value: "if"}
+              ]
+            }
+          ],
+
+          addInstruction = function() {
+            var select = $("<select/>", {style: "width:100%"}).appendTo("#instructions"), optgroup;
+
+            topLevelInstructions.forEach(function(instructionGroup) {
+              optgroup = $("<optgroup/>", {label: instructionGroup.label}).appendTo(select);
+              instructionGroup.instructions.forEach(function(instruction) {
+                $("<option/>", {value: instruction.value, text: instruction.label}).appendTo(optgroup);
+              });
+            });
+          };
+
+      addInstruction();
+
+      $("#instructions select").select2({
+        placeholder: "Choose an instruction"
+      });
+
+      $("#instructions select").change(function() {
+        var instruction = $(this).val();
+        alert(instruction);
+      });
     });
   <% end %>
 <% end %>
