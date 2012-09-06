@@ -8,14 +8,7 @@
 </div>
 <div class="clearfix" style="margin-top: 4px"></div>
 <div class="row">
-  <div class="span3">
-    <div class="row">
-      <div class="span1-5">
-        <h6>1</h6>
-      </div>
-      <div id="instructions" class="span2-5">
-      </div>
-    </div>
+  <div id="program-panel" class="span3">
   </div>
   <div class="span9">
     <div id="level-content">
@@ -80,8 +73,23 @@
             }
           ],
 
-          addInstruction = function() {
-            var select = $("<select/>", {style: "width:100%"}).appendTo("#instructions"), optgroup;
+          renumberInstructions = function() {
+            $(".line-number").each(function(index) {
+              $(this).text(index + 1);
+            });
+          },
+
+          addInstructionRow = function() {
+            var row = $("<div/>", {class: "row"}).appendTo("#program-panel");
+            var lineNumber = $("<div/>", {class: "span1-5"}).appendTo(row);
+            lineNumber.append($("<h6/>", {class: "line-number"}));
+            var instruction = $("<div/>", {class: "span2-5"}).appendTo(row);
+            addInstructionSelect(instruction);
+            renumberInstructions();
+          },
+
+          addInstructionSelect = function(parent) {
+            var select = $("<select/>", {style: "width:100%"}).appendTo(parent), optgroup;
 
             topLevelInstructions.forEach(function(instructionGroup) {
               optgroup = $("<optgroup/>", {label: instructionGroup.label}).appendTo(select);
@@ -89,17 +97,17 @@
                 $("<option/>", {value: instruction.value, text: instruction.label}).appendTo(optgroup);
               });
             });
+
           };
 
-      addInstruction();
+      addInstructionRow();
 
-      $("#instructions select").select2({
+      $("#program-panel select").select2({
         placeholder: "Choose an instruction"
       });
 
-      $("#instructions select").change(function() {
-        var instruction = $(this).val();
-        alert(instruction);
+      $(document).on("change", "#program-panel .row:last-child select", function() {
+        addInstructionRow();
       });
     });
   <% end %>
