@@ -13,8 +13,7 @@ $(function() {
       cellWidth = level_dimensions.width / gridColumns,
       cellHeight = level_dimensions.height / gridRows,
       walls = [],
-      roverPos = {x: 0, y: 0, rotation: 0, cruise_on: false},
-      roverData = [roverPos],
+      rover = RVR.rover({});
       goal = {x: gridColumns - 1, y: gridRows - 1},
       goalData = [goal],
       x = d3.scale.linear().range([0, level_dimensions.width]),
@@ -140,7 +139,7 @@ $(function() {
         //   .attr("class", "wall")
         //   .attr("d", line);
 
-        var roverSelection = svg.selectAll(".rover").data(roverData);
+        var roverSelection = svg.selectAll(".rover").data([rover.getPosition()]);
         var roverEnter = roverSelection.enter()
           .append("rect")
           .attr("class", "rover")
@@ -174,7 +173,8 @@ $(function() {
         return false;
       },
 
-      reachedGoal = function(position) {
+      reachedGoal = function() {
+        var position = rover.getPosition();
         if (position.x === goal.x && position.y === goal.y) return true;
         return false;
       },
@@ -185,33 +185,21 @@ $(function() {
       },
 
       moveRover = function(coordinate, direction) {
-        if (reachedGoal(roverPos)) {
+        if (reachedGoal()) {
           endLevel();
         }
 
-        if (!roverPos.cruise_on) return;
+        if (!rover.isMoving()) return;
 
-        var newPosition = {x: roverPos.x, y: roverPos.y};
+        var nextPosition = rover.nextPosition();
+        if (outOfBounds(nextPosition) || collision(nextPosition)) return;
 
-        if (roverPos.rotation === 0) {
-          newPosition.x += 1;
-        } else if (roverPos.rotation === 90) {
-          newPosition.y -= 1;
-        } else if (roverPos.rotation === 180) {
-          newPosition.x -= 1;
-        } else if (roverPos.rotation === 270) {
-          newPosition.y += 1;
-        }
-
-        if (outOfBounds(newPosition) || collision(newPosition)) return;
-
-        roverPos.x = newPosition.x;
-        roverPos.y = newPosition.y;
+        rover.updatePosition();
 
         svg.selectAll(".rover").transition()
           .duration(transitionDuration)
           .ease('linear')
-          .attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
+          .attr("transform", "translate(" + x(rover.getPosition().x) + "," + y(rover.getPosition().y) + ")");
       },
 
       updateScene = function() {
@@ -222,11 +210,7 @@ $(function() {
       },
 
       generate = function() {
-        // Todo: Rover needs to be a class that can re-initialize itself
-        roverPos.x = 0;
-        roverPos.y = 0;
-        roverPos.cruise_on = false;
-        roverPos.rotation = 0;
+        rover.reset();
         buildWalls();
         populateGrid();
         animatedRender();
@@ -239,15 +223,14 @@ $(function() {
     $(".move").click(function() {
       var action = $(this).attr("data-action");
       if (action.indexOf("on") > -1) {
-        roverPos.cruise_on = true;
+        rover.cruise(true);
       } else {
-        roverPos.cruise_on = false;
+        rover.cruise(false);
       }
     });
 
     $(".rotate").click(function() {
-      roverPos.rotation -= 90;
-      if (roverPos.rotation < 0) roverPos.rotation = 270;
+      rover.rotate(-90);
     });
 
     x.domain([0, gridColumns - 1]);
