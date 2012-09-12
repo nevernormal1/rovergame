@@ -5,16 +5,16 @@ $(function() {
         width: container_dimensions.width - margins.left - margins.right,
         height: container_dimensions.height - margins.top - margins.bottom
       },
-      grid = RVR.grid({rowCount: 14, columnCount: 21}),
+      x = d3.scale.linear().range([0, level_dimensions.width]),
+      y = d3.scale.linear().range([0, level_dimensions.height]),
       transitionDuration = 300,
+
+      rover = RVR.rover({});
+      grid = RVR.grid({rowCount: 14, columnCount: 21}),
+      goal = {x: grid.getColumnCount() - 1, y: grid.getRowCount() - 1},
       cellWidth = level_dimensions.width / grid.getColumnCount(),
       cellHeight = level_dimensions.height / grid.getRowCount(),
       goalReached = false,
-      rover = RVR.rover({});
-      goal = {x: grid.getColumnCount() - 1, y: grid.getRowCount() - 1},
-      goalData = [goal],
-      x = d3.scale.linear().range([0, level_dimensions.width]),
-      y = d3.scale.linear().range([0, level_dimensions.height]),
       offsetX = function(d) {
         return x(d.x) - cellWidth / 2;
       },
@@ -28,21 +28,12 @@ $(function() {
         return y(d.y) - (cellHeight / 4);
       },
 
-      line = d3.svg.line()
-        .x(function(d) { return x(d.x); })
-        .y(function(d) { return y(d.y); }),
-
-      debug = function(text) {
-        $("#debug").append("<p> " + text + "</p>");
-      },
-
       svg = d3.select("#level-content")
         .append("svg")
         .attr("height", container_dimensions.height)
         .attr("width", container_dimensions.width)
         .append("g")
         .attr("transform", "translate(" + margins.left + "," + margins.top + ")"),
-
 
       animatedRender = function() {
         d3.transition()
@@ -83,19 +74,14 @@ $(function() {
           .attr("y", roverOffsetY)
           .attr("width", cellWidth / 2)
           .attr("height", cellHeight / 2);
-          //.attr("rx", "1");
-          //.attr("cy", function(d) { return y(d.y); });
 
-        //roverSelection.attr("transform", "translate(" + x(roverPos.x) + "," + y(roverPos.y) + ")");
-
-        var goalSelection = svg.selectAll(".goal").data(goalData);
+        var goalSelection = svg.selectAll(".goal").data([goal]);
         goalSelection.enter()
           .append("circle")
           .attr("class", "goal")
           .attr("r", cellWidth / 4)
           .attr("cx", function(d) { return x(d.x); })
           .attr("cy", function(d) { return y(d.y); });
-
       },
 
       reachedGoal = function() {
