@@ -2,64 +2,64 @@ if (typeof RVR === 'undefined') {
   RVR = {};
 }
 
-RVR.rover = function(spec) {
-  spec.position = spec.position || {x: 0, y: 0};
-  spec.rotation = spec.rotation || 0;
-  spec.cruise = false;
+RVR.rover = function(params) {
+  var position, rotation, cruise;
 
-  var that = {};
+  var instance = {};
 
-  that.reset = function() {
-    spec.position = {x: 0, y: 0};
-    spec.rotation = 0;
-    spec.cruise = false;
+  var reset = function() {
+    position = params.position || {x: 0, y: 0};
+    rotation = params.rotation || 0;
+    cruise = false;
+  };
+  instance.reset = reset;
+
+  instance.getPosition = function() {
+    return position;
   };
 
-  that.getPosition = function() {
-    return spec.position;
+  instance.getRotation = function() {
+    return rotation;
   };
 
-  that.getRotation = function() {
-    return spec.rotation;
-  };
-
-  that.rotate = function(degrees) {
-    spec.rotation += degrees;
-    if (spec.rotation < 0) {
-      spec.rotation = 270;
+  instance.rotate = function(degrees) {
+    rotation += degrees;
+    if (rotation < 0) {
+      rotation = 270;
     }
   };
 
-  that.cruise = function(bool) {
-    spec.cruise = bool;
+  instance.cruise = function(bool) {
+    cruise = bool;
   };
 
-  that.isMoving = function() {
-    return spec.cruise;
+  instance.isMoving = function() {
+    return cruise;
   };
 
   var nextPosition = function() {
-    var x = spec.position.x,
-        y = spec.position.y;
+    var x = position.x,
+        y = position.y;
 
-    if (spec.rotation === 0) {
+    if (rotation === 0) {
       x += 1;
-    } else if (spec.rotation === 90) {
+    } else if (rotation === 90) {
       y -= 1;
-    } else if (spec.rotation === 180) {
+    } else if (rotation === 180) {
       x -= 1;
-    } else if (spec.rotation === 270) {
+    } else if (rotation === 270) {
       y += 1;
     }
 
     return {x: x, y: y};
   };
-  that.nextPosition = nextPosition;
+  instance.nextPosition = nextPosition;
 
-  that.updatePosition = function() {
-    spec.position = nextPosition();
+  instance.updatePosition = function() {
+    position = nextPosition();
   };
 
-  return that;
+  reset();
+  return instance;
 };
 
