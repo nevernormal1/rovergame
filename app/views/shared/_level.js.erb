@@ -5,16 +5,13 @@ $(function() {
         width: container_dimensions.width - margins.left - margins.right,
         height: container_dimensions.height - margins.top - margins.bottom
       },
-      grid,
-      gridRows = 14,
-      gridColumns = 21,
-      goalReached = false,
+      grid = RVR.grid({rowCount: 14, columnCount: 21}),
       transitionDuration = 300,
-      cellWidth = level_dimensions.width / gridColumns,
-      cellHeight = level_dimensions.height / gridRows,
-      walls = [],
+      cellWidth = level_dimensions.width / grid.getColumnCount(),
+      cellHeight = level_dimensions.height / grid.getRowCount(),
+      goalReached = false,
       rover = RVR.rover({});
-      goal = {x: gridColumns - 1, y: gridRows - 1},
+      goal = {x: grid.getColumnCount() - 1, y: grid.getRowCount() - 1},
       goalData = [goal],
       x = d3.scale.linear().range([0, level_dimensions.width]),
       y = d3.scale.linear().range([0, level_dimensions.height]),
@@ -46,53 +43,6 @@ $(function() {
         .append("g")
         .attr("transform", "translate(" + margins.left + "," + margins.top + ")"),
 
-      buildWalls = function() {
-        var i, j, y=0, minY=1, maxY, wall, numWalls;
-        numWalls = Math.ceil(Math.random() * 4) * 2;
-        numWalls = d3.min([numWalls, Math.floor((gridRows - 1) / 2)]);
-        //debug("num walls: " + numWalls);
-        walls = [];
-
-        for(i=0; i<numWalls; i++) {
-          wall = new Array();
-          maxY = gridRows - 1 - ((numWalls - i - 1) * 2)
-          y = Math.floor(Math.random() * (maxY - minY)) + minY;
-          // $("#debug").append("<p> y: " + y + "</p>");
-          if (i % 2 === 0) {
-            // Left wall
-            for(j=0; j<gridColumns-2; j++) {
-              wall.push({x: j, y: y});
-            }
-          } else {
-            // Right wall
-            for(j=2; j<gridColumns; j++) {
-              wall.push({x: j, y: y});
-            }
-          }
-          walls.push(wall);
-          minY = y + 2;
-        }
-      },
-
-      populateGrid = function() {
-        var i, j, wall, wallPoint;
-
-        grid = new Array(gridRows);
-        for(i=0; i<gridRows; i++) {
-          grid[i] = [];
-          for(j=0; j<gridColumns; j++) {
-            grid[i].push(0);
-          }
-        }
-
-        for(i=0; i<walls.length; i++) {
-          wall = walls[i];
-          for(j=0; j<wall.length; j++) {
-            wallPoint = wall[j];
-            grid[wallPoint.y][wallPoint.x] = 1;
-          }
-        }
-      },
 
       animatedRender = function() {
         d3.transition()
@@ -101,7 +51,7 @@ $(function() {
       },
 
       render = function() {
-        var wallSelection = svg.selectAll(".wall").data(walls);
+        var wallSelection = svg.selectAll(".wall").data(grid.getWalls());
         wallSelection.enter()
           .append("g")
           .attr("class", "wall");
@@ -124,20 +74,6 @@ $(function() {
         wallBlocks.transition()
           .attr("x", offsetX)
           .attr("y", offsetY);
-
-        // svg.selectAll(".gridLine")
-        //   .data(
-        //     [
-        //         [{x: 0, y: 0}, {x: gridColumns - 1, y: 0}],
-        //         [{x: 0, y: 0}, {x: 0, y: gridRows - 1}],
-        //         [{x: gridColumns - 1, y: 0}, {x: gridColumns - 1, y: gridRows - 1}],
-        //         [{x: 0, y: gridRows - 1}, {x: gridColumns - 1, y: gridRows - 1}],
-        //     ]
-        //   )
-        //   .enter()
-        //   .append("path")
-        //   .attr("class", "wall")
-        //   .attr("d", line);
 
         var roverSelection = svg.selectAll(".rover").data([rover.getPosition()]);
         var roverEnter = roverSelection.enter()
@@ -162,17 +98,6 @@ $(function() {
 
       },
 
-      outOfBounds = function(position) {
-        if (position.x < 0 || position.y < 0) return true;
-        if (position.x > gridColumns - 1 || position.y > gridRows - 1) return true;
-        return false;
-      },
-
-      collision = function(position) {
-        if (grid[position.y][position.x] === 1) return true;
-        return false;
-      },
-
       reachedGoal = function() {
         var position = rover.getPosition();
         if (position.x === goal.x && position.y === goal.y) return true;
@@ -192,7 +117,7 @@ $(function() {
         if (!rover.isMoving()) return;
 
         var nextPosition = rover.nextPosition();
-        if (outOfBounds(nextPosition) || collision(nextPosition)) return;
+        if (grid.outOfBounds(nextPosition) || grid.collision(nextPosition)) return;
 
         rover.updatePosition();
 
@@ -211,8 +136,7 @@ $(function() {
 
       generate = function() {
         rover.reset();
-        buildWalls();
-        populateGrid();
+        grid.reset();
         animatedRender();
       };
 
@@ -233,8 +157,8 @@ $(function() {
       rover.rotate(-90);
     });
 
-    x.domain([0, gridColumns - 1]);
-    y.domain([0, gridRows - 1]);
+    x.domain([0, grid.getColumnCount() - 1]);
+    y.domain([0, grid.getRowCount() - 1]);
 
     generate();
 
