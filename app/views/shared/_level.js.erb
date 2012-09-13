@@ -1,20 +1,27 @@
 $(function() {
   var container_dimensions = {width: 700, height: 467},
       margins = {top: 20, right: 20, bottom: 16, left: 16},
+      svg = d3.select("#level-content")
+        .append("svg")
+        .attr("height", container_dimensions.height)
+        .attr("width", container_dimensions.width)
+        .append("g")
+        .attr("transform", "translate(" + margins.left + "," + margins.top + ")"),
+
       level_dimensions = {
         width: container_dimensions.width - margins.left - margins.right,
         height: container_dimensions.height - margins.top - margins.bottom
       },
       x = d3.scale.linear().range([0, level_dimensions.width]),
       y = d3.scale.linear().range([0, level_dimensions.height]),
-      transitionDuration = 300,
 
       rover = RVR.rover({});
       grid = RVR.grid({rowCount: 14, columnCount: 21}),
       goal = {x: grid.getColumnCount() - 1, y: grid.getRowCount() - 1},
+
       cellWidth = level_dimensions.width / grid.getColumnCount(),
       cellHeight = level_dimensions.height / grid.getRowCount(),
-      goalReached = false,
+
       offsetX = function(d) {
         return x(d.x) - cellWidth / 2;
       },
@@ -27,14 +34,9 @@ $(function() {
       roverOffsetY = function(d) {
         return y(d.y) - (cellHeight / 4);
       },
+      goalReached = false,
 
-      svg = d3.select("#level-content")
-        .append("svg")
-        .attr("height", container_dimensions.height)
-        .attr("width", container_dimensions.width)
-        .append("g")
-        .attr("transform", "translate(" + margins.left + "," + margins.top + ")"),
-
+      transitionDuration = 300,
       animatedRender = function() {
         d3.transition()
           .duration(750)
@@ -42,29 +44,7 @@ $(function() {
       },
 
       render = function() {
-        var wallSelection = svg.selectAll(".wall").data(grid.getWalls());
-        wallSelection.enter()
-          .append("g")
-          .attr("class", "wall");
-
-        wallSelection.exit().remove();
-
-        var wallBlocks = wallSelection.selectAll(".block")
-          .data(function(d) { return d; });
-
-        wallBlocks.enter()
-          .append("rect")
-          .attr("class", "block")
-          .attr("x", offsetX)
-          .attr("y", offsetY)
-          .attr("rx", "1")
-          .attr("ry", "1")
-          .attr("height", cellHeight)
-          .attr("width", cellWidth);
-
-        wallBlocks.transition()
-          .attr("x", offsetX)
-          .attr("y", offsetY);
+        grid.render(svg);
 
         var roverSelection = svg.selectAll(".rover").data([rover.getPosition()]);
         var roverEnter = roverSelection.enter()

@@ -87,5 +87,32 @@ RVR.grid = function(params) {
   };
   instance.reset = reset;
 
+  var render = function(container) {
+    var wallSelection = container.selectAll(".wall").data(walls);
+    wallSelection.enter()
+    .append("g")
+    .attr("class", "wall");
+
+    wallSelection.exit().remove();
+
+    var wallBlocks = wallSelection.selectAll(".block")
+    .data(function(d) { return d; });
+
+    wallBlocks.enter()
+    .append("rect")
+    .attr("class", "block")
+    .attr("x", offsetX)
+    .attr("y", offsetY)
+    .attr("rx", "1")
+    .attr("ry", "1")
+    .attr("height", cellHeight)
+    .attr("width", cellWidth);
+
+    wallBlocks.transition()
+    .attr("x", offsetX)
+    .attr("y", offsetY);
+  };
+  instance.render = render;
+
   return instance;
 }
