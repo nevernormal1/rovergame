@@ -7,6 +7,9 @@ RVR.grid = function(params) {
       columnCount = params.columns || 21,
       walls,
       data,
+      parent = params.parent,
+      width = params.dimensions.width,
+      height = params.dimensions.height,
       instance = {};
 
   instance.getWalls = function() {
@@ -87,8 +90,36 @@ RVR.grid = function(params) {
   };
   instance.reset = reset;
 
-  var render = function(container) {
-    var wallSelection = container.selectAll(".wall").data(walls);
+  var x = d3.scale.linear().range([0, width]),
+      y = d3.scale.linear().range([0, height]),
+      cellWidth = width / columnCount,
+      cellHeight = height / rowCount;
+  x.domain([0, columnCount - 1]);
+  instance.x = x;
+
+  y.domain([0, rowCount - 1]);
+  instance.y = y;
+
+  var offsetX = function(percentage) {
+    return function(d) {
+      return x(d.x) - cellWidth * percentage;
+    }
+  };
+  var offsetY = function(percentage) {
+    return function(d) {
+      return y(d.y) - cellHeight * percentage;
+    }
+  };
+
+  var centeredX = function() {
+    return offsetX(0);
+  }
+  var centeredY = function() {
+    return offsetY(0);
+  }
+
+  var render = function() {
+    var wallSelection = parent.selectAll(".wall").data(walls);
     wallSelection.enter()
     .append("g")
     .attr("class", "wall");

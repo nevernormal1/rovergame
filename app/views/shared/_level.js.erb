@@ -1,33 +1,12 @@
 $(function() {
-  var container_dimensions = {width: 700, height: 467},
-      margins = {top: 20, right: 20, bottom: 16, left: 16},
-      svg = d3.select("#level-content")
-        .append("svg")
-        .attr("height", container_dimensions.height)
-        .attr("width", container_dimensions.width)
-        .append("g")
-        .attr("transform", "translate(" + margins.left + "," + margins.top + ")"),
-
-      level_dimensions = {
-        width: container_dimensions.width - margins.left - margins.right,
-        height: container_dimensions.height - margins.top - margins.bottom
-      },
-      x = d3.scale.linear().range([0, level_dimensions.width]),
-      y = d3.scale.linear().range([0, level_dimensions.height]),
-
-      rover = RVR.rover({});
-      grid = RVR.grid({rowCount: 14, columnCount: 21}),
+  var rover = RVR.rover({});
+      container = RVR.container({});
+      grid = RVR.grid({
+        parent: container.getElement(),
+        dimensions: container.getLevelDimensions()
+      }),
       goal = {x: grid.getColumnCount() - 1, y: grid.getRowCount() - 1},
 
-      cellWidth = level_dimensions.width / grid.getColumnCount(),
-      cellHeight = level_dimensions.height / grid.getRowCount(),
-
-      offsetX = function(d) {
-        return x(d.x) - cellWidth / 2;
-      },
-      offsetY = function(d) {
-        return y(d.y) - cellHeight / 2;
-      },
       roverOffsetX = function(d) {
         return x(d.x) - (cellWidth / 4);
       },
@@ -44,18 +23,18 @@ $(function() {
       },
 
       render = function() {
-        grid.render(svg);
+        grid.render();
 
-        var roverSelection = svg.selectAll(".rover").data([rover.getPosition()]);
+        var roverSelection = container.getElement().selectAll(".rover").data([rover.getPosition()]);
         var roverEnter = roverSelection.enter()
           .append("rect")
           .attr("class", "rover")
-          .attr("x", roverOffsetX)
+          .attr("x", grid.offsetX(.25))
           .attr("y", roverOffsetY)
           .attr("width", cellWidth / 2)
           .attr("height", cellHeight / 2);
 
-        var goalSelection = svg.selectAll(".goal").data([goal]);
+        var goalSelection = container.getElement().selectAll(".goal").data([goal]);
         goalSelection.enter()
           .append("circle")
           .attr("class", "goal")
@@ -122,9 +101,6 @@ $(function() {
     $(".rotate").click(function() {
       rover.rotate(-90);
     });
-
-    x.domain([0, grid.getColumnCount() - 1]);
-    y.domain([0, grid.getRowCount() - 1]);
 
     generate();
 
