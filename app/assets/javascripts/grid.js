@@ -103,13 +103,16 @@ RVR.grid = function(params) {
   var offsetX = function(percentage) {
     return function(d) {
       return x(d.x) - cellWidth * percentage;
-    }
+    };
   };
+  instance.offsetX = offsetX;
+
   var offsetY = function(percentage) {
     return function(d) {
       return y(d.y) - cellHeight * percentage;
     }
   };
+  instance.offsetY = offsetY;
 
   var centeredX = function() {
     return offsetX(0);
@@ -117,6 +120,16 @@ RVR.grid = function(params) {
   var centeredY = function() {
     return offsetY(0);
   }
+
+  var getCellWidth = function() {
+    return cellWidth;
+  };
+  instance.getCellWidth = getCellWidth;
+
+  var getCellHeight = function() {
+    return cellHeight;
+  };
+  instance.getCellHeight = getCellHeight;
 
   var render = function() {
     var wallSelection = parent.selectAll(".wall").data(walls);
@@ -132,16 +145,16 @@ RVR.grid = function(params) {
     wallBlocks.enter()
     .append("rect")
     .attr("class", "block")
-    .attr("x", offsetX)
-    .attr("y", offsetY)
+    .attr("x", offsetX(0.5))
+    .attr("y", offsetY(0.5))
     .attr("rx", "1")
     .attr("ry", "1")
     .attr("height", cellHeight)
     .attr("width", cellWidth);
 
     wallBlocks.transition()
-    .attr("x", offsetX)
-    .attr("y", offsetY);
+    .attr("x", offsetX(0.5))
+    .attr("y", offsetY(0.5));
   };
   instance.render = render;
 

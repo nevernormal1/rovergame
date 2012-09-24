@@ -3,9 +3,11 @@ if (typeof RVR === 'undefined') {
 }
 
 RVR.rover = function(params) {
-  var position, rotation, cruise;
-
-  var instance = {};
+  var container = params.container,
+      instance = {},
+      position,
+      rotation,
+      cruise;
 
   var reset = function() {
     position = params.position || {x: 0, y: 0};
@@ -29,7 +31,7 @@ RVR.rover = function(params) {
     }
   };
 
-  instance.cruise = function(bool) {
+  instance.setCruise = function(bool) {
     cruise = bool;
   };
 

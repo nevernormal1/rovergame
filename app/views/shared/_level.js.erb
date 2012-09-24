@@ -1,18 +1,13 @@
 $(function() {
-  var rover = RVR.rover({});
-      container = RVR.container({});
+  var container = RVR.container({}),
       grid = RVR.grid({
         parent: container.getElement(),
         dimensions: container.getLevelDimensions()
       }),
+      rover = RVR.rover({container: container}),
+      roverOffsetX = grid.offsetX(0.25),
+      roverOffsetY = grid.offsetY(0.25),
       goal = {x: grid.getColumnCount() - 1, y: grid.getRowCount() - 1},
-
-      roverOffsetX = function(d) {
-        return x(d.x) - (cellWidth / 4);
-      },
-      roverOffsetY = function(d) {
-        return y(d.y) - (cellHeight / 4);
-      },
       goalReached = false,
 
       transitionDuration = 300,
@@ -29,18 +24,18 @@ $(function() {
         var roverEnter = roverSelection.enter()
           .append("rect")
           .attr("class", "rover")
-          .attr("x", grid.offsetX(.25))
+          .attr("x", roverOffsetX)
           .attr("y", roverOffsetY)
-          .attr("width", cellWidth / 2)
-          .attr("height", cellHeight / 2);
+          .attr("width", grid.getCellWidth() / 2)
+          .attr("height", grid.getCellHeight() / 2);
 
         var goalSelection = container.getElement().selectAll(".goal").data([goal]);
         goalSelection.enter()
           .append("circle")
           .attr("class", "goal")
-          .attr("r", cellWidth / 4)
-          .attr("cx", function(d) { return x(d.x); })
-          .attr("cy", function(d) { return y(d.y); });
+          .attr("r", grid.getCellWidth() / 4)
+          .attr("cx", grid.offsetX(0))
+          .attr("cy", grid.offsetY(0));
       },
 
       reachedGoal = function() {
@@ -66,10 +61,13 @@ $(function() {
 
         rover.updatePosition();
 
-        svg.selectAll(".rover").transition()
+        var newPosition = rover.getPosition();
+        var newX = roverOffsetX(newPosition);
+        var newY = roverOffsetY(newPosition);
+        container.getElement().selectAll(".rover").transition()
           .duration(transitionDuration)
           .ease('linear')
-          .attr("transform", "translate(" + x(rover.getPosition().x) + "," + y(rover.getPosition().y) + ")");
+          .attr("transform", "translate(" + newX + "," + newY + ")");
       },
 
       updateScene = function() {
@@ -92,9 +90,9 @@ $(function() {
     $(".move").click(function() {
       var action = $(this).attr("data-action");
       if (action.indexOf("on") > -1) {
-        rover.cruise(true);
+        rover.setCruise(true);
       } else {
-        rover.cruise(false);
+        rover.setCruise(false);
       }
     });
 
