@@ -3,7 +3,7 @@ if (typeof RVR === 'undefined') {
 }
 
 RVR.rover = function(params) {
-  var container = params.container,
+  var parent = params.parent,
       grid = params.grid,
       instance = {},
       position,
@@ -77,7 +77,7 @@ RVR.rover = function(params) {
       },
 
       render = function() {
-        var rover = container.getElement().selectAll(".rover").data([position]);
+        var rover = parent.selectAll(".rover").data([position]);
 
         rover.enter()
           .append("rect")
