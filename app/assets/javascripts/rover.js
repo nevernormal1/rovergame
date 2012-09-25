@@ -2,8 +2,6 @@ if (typeof RVR === 'undefined') {
   RVR = {};
 }
 
-RVR.transitionDuration = 300;
-
 RVR.rover = function(params) {
   var container = params.container,
       grid = params.grid,
