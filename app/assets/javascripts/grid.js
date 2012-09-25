@@ -97,6 +97,12 @@ RVR.grid = function(params) {
   x.domain([0, columnCount - 1]);
   instance.x = x;
 
+  var baseOffset = {
+    x: x,
+    y: y
+  };
+  instance.baseOffset = baseOffset;
+
   y.domain([0, rowCount - 1]);
   instance.y = y;
 

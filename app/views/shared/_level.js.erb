@@ -4,7 +4,12 @@ $(function() {
         parent: container.getElement(),
         dimensions: container.getLevelDimensions()
       }),
-      rover = RVR.rover({container: container}),
+
+      rover = RVR.rover({
+        container: container,
+        grid: grid
+      }),
+
       baseOffsetX = grid.offsetX(0),
       baseOffsetY = grid.offsetY(0),
       roverOffsetX = grid.offsetX(0.25),
@@ -12,7 +17,6 @@ $(function() {
       goal = {x: grid.getColumnCount() - 1, y: grid.getRowCount() - 1},
       goalReached = false,
 
-      transitionDuration = 300,
       animatedRender = function() {
         d3.transition()
           .duration(750)
@@ -63,22 +67,13 @@ $(function() {
         if (grid.outOfBounds(nextPosition) || grid.collision(nextPosition)) return;
 
         rover.updatePosition();
-
-        var newPosition = rover.getPosition();
-        var newX = baseOffsetX(newPosition);
-        var newY = baseOffsetY(newPosition);
-        container.getElement().selectAll(".rover")
-          .data([rover.getPosition()])
-          .transition()
-          .duration(transitionDuration)
-          .ease('linear')
-          .attr("transform", "translate(" + newX + "," + newY + ")");
+        rover.render();
       },
 
       updateScene = function() {
         moveRover();
         if (!goalReached) {
-          setTimeout(function() { updateScene(); }, transitionDuration);
+          setTimeout(function() { updateScene(); }, RVR.transitionDuration);
         }
       },
 
@@ -107,5 +102,5 @@ $(function() {
 
     generate();
 
-    setTimeout(function() { updateScene() }, transitionDuration);
+    setTimeout(function() { updateScene() }, RVR.transitionDuration);
 });
