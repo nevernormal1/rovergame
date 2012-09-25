@@ -57,7 +57,16 @@ RVR.rover = function(params) {
       },
 
       updatePosition = function() {
-        position = nextPosition();
+        var pos;
+
+        if (!isMoving()) return;
+
+        pos = nextPosition();
+        if (grid.outOfBounds(pos) || grid.collision(pos)) return;
+
+        position = pos;
+
+        render();
       },
 
       render = function() {
@@ -77,16 +86,13 @@ RVR.rover = function(params) {
   reset();
 
   instance.reset = reset;
-  instance.render = render;
 
-  instance.nextPosition = nextPosition;
   instance.updatePosition = updatePosition;
   instance.setCruise = setCruise;
   instance.rotate = rotate;
 
   instance.getPosition = getPosition;
   instance.getRotation = getRotation;
-  instance.isMoving = isMoving;
 
   return instance;
 };

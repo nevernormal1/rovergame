@@ -61,13 +61,7 @@ $(function() {
           endLevel();
         }
 
-        if (!rover.isMoving()) return;
-
-        var nextPosition = rover.nextPosition();
-        if (grid.outOfBounds(nextPosition) || grid.collision(nextPosition)) return;
-
         rover.updatePosition();
-        rover.render();
       },
 
       updateScene = function() {
