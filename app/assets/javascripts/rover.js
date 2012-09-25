@@ -9,12 +9,19 @@ RVR.rover = function(params) {
       position,
       rotation,
       cruise,
+      roverOffsetX = grid.offsetX(0.25),
+      roverOffsetY = grid.offsetY(0.25),
 
       reset = function() {
         position = params.position || {x: 0, y: 0};
         rotation = params.rotation || 0;
         cruise = false;
+        draw();
       },
+
+      draw = function() {
+      },
+
 
       getPosition = function() {
         return position;
@@ -70,9 +77,17 @@ RVR.rover = function(params) {
       },
 
       render = function() {
-        container.getElement().selectAll(".rover")
-          .data([position])
-          .transition()
+        var rover = container.getElement().selectAll(".rover").data([position]);
+
+        rover.enter()
+          .append("rect")
+          .attr("class", "rover")
+          .attr("x", roverOffsetX)
+          .attr("y", roverOffsetY)
+          .attr("width", grid.getCellWidth() / 2)
+          .attr("height", grid.getCellHeight() / 2);
+
+        rover.transition()
           .duration(RVR.transitionDuration)
           .ease('linear')
           .attr("transform", function(d, i) {
@@ -86,6 +101,7 @@ RVR.rover = function(params) {
   reset();
 
   instance.reset = reset;
+  instance.render = render;
 
   instance.updatePosition = updatePosition;
   instance.setCruise = setCruise;

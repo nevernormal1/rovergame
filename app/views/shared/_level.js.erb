@@ -12,8 +12,6 @@ $(function() {
 
       baseOffsetX = grid.offsetX(0),
       baseOffsetY = grid.offsetY(0),
-      roverOffsetX = grid.offsetX(0.25),
-      roverOffsetY = grid.offsetY(0.25),
       goal = {x: grid.getColumnCount() - 1, y: grid.getRowCount() - 1},
       goalReached = false,
 
@@ -25,16 +23,7 @@ $(function() {
 
       render = function() {
         grid.render();
-
-        var position = rover.getPosition();
-        var roverSelection = container.getElement().selectAll(".rover").data([position]);
-        var roverEnter = roverSelection.enter()
-          .append("rect")
-          .attr("class", "rover")
-          .attr("x", roverOffsetX)
-          .attr("y", roverOffsetY)
-          .attr("width", grid.getCellWidth() / 2)
-          .attr("height", grid.getCellHeight() / 2);
+        rover.render();
 
         var goalSelection = container.getElement().selectAll(".goal").data([goal]);
         goalSelection.enter()
