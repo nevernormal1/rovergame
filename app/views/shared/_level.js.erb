@@ -33,7 +33,7 @@ $(function() {
         rover.updatePosition();
 
         if (!goal.reached(rover.getPosition())) {
-          setTimeout(function() { updateScene(); }, RVR.transitionDuration);
+          setTimeout(updateScene, RVR.transitionDuration);
         } else {
           $("#goal-reached").modal('show');
         }
