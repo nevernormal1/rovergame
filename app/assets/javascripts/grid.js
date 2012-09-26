@@ -65,8 +65,7 @@ RVR.grid = function(params) {
 
       outOfBounds = function(position) {
         if (position.x < 0 || position.y < 0) return true;
-        if (position.x > columnCount - 1 || position.y > rowCount - 1) return true;
-        return false;
+        return (position.x > columnCount - 1 || position.y > rowCount - 1);
       },
 
       reset = function() {
@@ -96,14 +95,6 @@ RVR.grid = function(params) {
         }
       },
 
-      centeredX = function() {
-        return offsetX(0);
-      },
-
-      centeredY = function() {
-        return offsetY(0);
-      },
-
       getCellWidth = function() {
         return cellWidth;
       },
@@ -113,29 +104,31 @@ RVR.grid = function(params) {
       },
 
       render = function() {
-        var wallSelection = parent.selectAll(".wall").data(walls);
+        var wallSelection, wallBlocks;
+
+        wallSelection = parent.selectAll(".wall").data(walls);
         wallSelection.enter()
-        .append("g")
-        .attr("class", "wall");
+          .append("g")
+          .attr("class", "wall");
 
         wallSelection.exit().remove();
 
-        var wallBlocks = wallSelection.selectAll(".block")
-        .data(function(d) { return d; });
+        wallBlocks = wallSelection.selectAll(".block")
+          .data(function(d) { return d; });
 
         wallBlocks.enter()
-        .append("rect")
-        .attr("class", "block")
-        .attr("x", offsetX(0.5))
-        .attr("y", offsetY(0.5))
-        .attr("rx", "1")
-        .attr("ry", "1")
-        .attr("height", cellHeight)
-        .attr("width", cellWidth);
+          .append("rect")
+          .attr("class", "block")
+          .attr("x", offsetX(0.5))
+          .attr("y", offsetY(0.5))
+          .attr("rx", "1")
+          .attr("ry", "1")
+          .attr("height", cellHeight)
+          .attr("width", cellWidth);
 
         wallBlocks.transition()
-        .attr("x", offsetX(0.5))
-        .attr("y", offsetY(0.5));
+          .attr("x", offsetX(0.5))
+          .attr("y", offsetY(0.5));
       },
 
       instance = {};
