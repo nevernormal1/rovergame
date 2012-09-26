@@ -25,9 +25,14 @@ RVR.goal = function(params) {
           .attr("cy", grid.baseOffset.y);
       },
 
+      reached = function(pos) {
+        return (position.x === pos.x && position.y === pos.y);
+      },
+
       instance = {};
 
   instance.render = render;
+  instance.reached = reached;
 
   return instance;
 

@@ -17,8 +17,6 @@ $(function() {
         y: grid.getRowCount() - 1
       }),
 
-      goalReached = false,
-
       animatedRender = function() {
         d3.transition()
           .duration(750)
@@ -31,29 +29,13 @@ $(function() {
         goal.render();
       },
 
-      reachedGoal = function() {
-        var position = rover.getPosition();
-        if (position.x === goal.x && position.y === goal.y) return true;
-        return false;
-      },
-
-      endLevel = function() {
-        goalReached = true;
-        $("#goal-reached").modal('show');
-      },
-
-      moveRover = function(coordinate, direction) {
-        if (reachedGoal()) {
-          endLevel();
-        }
-
-        rover.updatePosition();
-      },
-
       updateScene = function() {
-        moveRover();
-        if (!goalReached) {
+        rover.updatePosition();
+
+        if (!goal.reached(rover.getPosition())) {
           setTimeout(function() { updateScene(); }, RVR.transitionDuration);
+        } else {
+          $("#goal-reached").modal('show');
         }
       },
 
