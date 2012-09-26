@@ -91,8 +91,8 @@ RVR.rover = function(params) {
           .duration(RVR.transitionDuration)
           .ease('linear')
           .attr("transform", function(d, i) {
-            var newX = grid.baseOffset.x(d.x),
-                newY = grid.baseOffset.y(d.y);
+            var newX = grid.baseOffset.x(d),
+                newY = grid.baseOffset.y(d);
 
             return "translate(" + newX + "," + newY + ")";
           });

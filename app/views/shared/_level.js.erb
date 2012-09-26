@@ -10,9 +10,13 @@ $(function() {
         grid: grid
       }),
 
-      baseOffsetX = grid.offsetX(0),
-      baseOffsetY = grid.offsetY(0),
-      goal = {x: grid.getColumnCount() - 1, y: grid.getRowCount() - 1},
+      goal = RVR.goal({
+        parent: container.getElement(),
+        grid: grid,
+        x: grid.getColumnCount() - 1,
+        y: grid.getRowCount() - 1
+      }),
+
       goalReached = false,
 
       animatedRender = function() {
@@ -24,14 +28,7 @@ $(function() {
       render = function() {
         grid.render();
         rover.render();
-
-        var goalSelection = container.getElement().selectAll(".goal").data([goal]);
-        goalSelection.enter()
-          .append("circle")
-          .attr("class", "goal")
-          .attr("r", grid.getCellWidth() / 4)
-          .attr("cx", baseOffsetX)
-          .attr("cy", baseOffsetY);
+        goal.render();
       },
 
       reachedGoal = function() {

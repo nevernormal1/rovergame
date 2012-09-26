@@ -98,8 +98,8 @@ RVR.grid = function(params) {
   instance.x = x;
 
   var baseOffset = {
-    x: x,
-    y: y
+    x: function(d) { return x(d.x) },
+    y: function(d) { return y(d.y) }
   };
   instance.baseOffset = baseOffset;
 
