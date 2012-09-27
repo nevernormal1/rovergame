@@ -57,28 +57,7 @@
             direction: {name: "Current Direction", values: ["North", "South", "East", "West"]}
           },
 
-          topLevelInstructions = [
-            {
-              label: "Engine",
-              instructions: [
-                {label: "Turn Engine On", value: "engine.on"},
-                {label: "Turn Engine Off", value: "engine.off"}
-              ]
-            },
-            {
-              label: "Navigation",
-              instructions: [
-                {label: "Change Direction To...", value: "direction.update"},
-                {label: "When Blocked", value: "navigation.blocked"}
-              ]
-            },
-            {
-              label: "Test",
-              instructions: [
-                {label: "If [Condition] Is...", value: "if"}
-              ]
-            }
-          ],
+          topLevelInstructions = RVR.instructionGroups.get(),
 
           renumberInstructions = function() {
             $(".line-number").each(function(index) {

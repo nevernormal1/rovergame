@@ -12,6 +12,8 @@ RVR.instruction = function(params) {
       that = {};
 
   that.perform = perform;
+  that.label = label;
+  that.value = value;
 
   return that;
 }

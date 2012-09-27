@@ -14,6 +14,8 @@ RVR.instructionGroup = function(params) {
       };
 
   that.addInstruction = addInstruction;
+  that.label = label;
+  that.instructions = instructions;
 
   return that;
 };
