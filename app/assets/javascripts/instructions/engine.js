@@ -3,8 +3,16 @@ if (typeof RVR === 'undefined') {
 }
 
 (function() {
-  var group = RVR.instructionGroup("label");
-  group.addInstruction("Turn Engine On", "engine.on");
-  group.addInstruction("Turn Engine Off", "engine.off");
+  var group = RVR.instructionGroups.add({label: "engine"});
+
+  group.addInstruction({label: "Turn Engine On", value: "engine.on"})
+    .perform(function() {
+       setCruise(true);
+    });
+
+  group.addInstruction({label: "Turn Engine Off", value: "engine.off"})
+    .perform(function() {
+      setCruise(false);
+    });
 })();
 
