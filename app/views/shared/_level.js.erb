@@ -29,11 +29,13 @@ $(function() {
         goal.render();
       },
 
+      timeout,
+
       updateScene = function() {
         rover.updatePosition();
 
         if (!goal.reached(rover.getPosition())) {
-          setTimeout(updateScene, RVR.transitionDuration);
+          timeout = setTimeout(updateScene, RVR.transitionDuration);
         } else {
           $("#goal-reached").modal('show');
         }
@@ -43,6 +45,39 @@ $(function() {
         rover.reset();
         grid.reset();
         animatedRender();
+      },
+
+      // Instruction vars
+      enums = {
+        direction: {name: "Current Direction", values: ["North", "South", "East", "West"]}
+      },
+
+      topLevelInstructions = RVR.instructionGroups.get(),
+
+      renumberInstructions = function() {
+        $(".line-number").each(function(index) {
+          $(this).text(index + 1);
+        });
+      },
+
+      addInstructionRow = function() {
+        var row = $("<div/>", {class: "row"}).appendTo("#program-panel");
+        var lineNumber = $("<div/>", {class: "span1-5"}).appendTo(row);
+        lineNumber.append($("<h6/>", {class: "line-number"}));
+        var instruction = $("<div/>", {class: "span2-5"}).appendTo(row);
+        addInstructionSelect(instruction);
+        renumberInstructions();
+      },
+
+      addInstructionSelect = function(parent) {
+        var select = $("<select/>", {style: "width:100%"}).appendTo(parent), optgroup;
+
+        topLevelInstructions.forEach(function(instructionGroup) {
+          optgroup = $("<optgroup/>", {label: instructionGroup.label}).appendTo(select);
+          instructionGroup.instructions.forEach(function(instruction) {
+            $("<option/>", {value: instruction.value, text: instruction.label}).appendTo(optgroup);
+          });
+        });
       };
 
     $("#generate").click(function() {
@@ -62,7 +97,24 @@ $(function() {
       rover.rotate(-90);
     });
 
+    addInstructionRow();
+
+    $("#program-panel select").select2({
+      placeholder: "Choose an instruction"
+    });
+
+    $("#run-program").click(function() {
+      timeout = setTimeout(function() { updateScene() }, RVR.transitionDuration);
+    });
+
+    $("#pause-program").click(function() {
+      clearTimeout(timeout);
+    });
+
+    $(document).on("change", "#program-panel .row:last-child select", function() {
+      addInstructionRow();
+    });
+
     generate();
 
-    setTimeout(function() { updateScene() }, RVR.transitionDuration);
 });
