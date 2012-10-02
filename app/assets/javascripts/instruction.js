@@ -3,17 +3,33 @@ if (typeof RVR === 'undefined') {
 }
 
 RVR.instruction = function(params) {
-  var label = params.label,
-      value = params.value,
-      callback,
-      perform = function(f) {
-        callback = f;
-      },
-      that = {};
+  var hash = {},
+  maker = function(m_params) {
+    var label = m_params.label,
+        value = m_params.value,
+        target_function,
+        callback = function() {
+          target_function.apply(RVR.rover);
+        },
+        perform = function(f) {
+          target_function = f;
+        },
+        that = {};
 
-  that.perform = perform;
-  that.label = label;
-  that.value = value;
+    hash[value] = that;
+    that.perform = perform;
+    that.label = label;
+    that.value = value;
+    that.callback = callback;
 
-  return that;
-}
+    return that;
+  };
+
+  maker.run = function(value) {
+    var instruction = hash[value];
+    instruction.callback();
+  };
+
+  return maker;
+}();
+

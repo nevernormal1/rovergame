@@ -32,6 +32,10 @@ RVR.instructionGroups = function() {
 
           get: function() {
             return groups;
+          },
+
+          run: function(instructionValue) {
+            RVR.instruction.run(instructionValue);
           }
         };
       }

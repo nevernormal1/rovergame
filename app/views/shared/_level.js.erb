@@ -78,6 +78,13 @@ $(function() {
             $("<option/>", {value: instruction.value, text: instruction.label}).appendTo(optgroup);
           });
         });
+      },
+
+      runProgram = function() {
+        //var instructions = []
+        $("#program-panel select").each(function() {
+          RVR.instructionGroups.run($(this).val());
+        });
       };
 
     $("#generate").click(function() {
@@ -104,6 +111,7 @@ $(function() {
     });
 
     $("#run-program").click(function() {
+      runProgram();
       timeout = setTimeout(function() { updateScene() }, RVR.transitionDuration);
     });
 

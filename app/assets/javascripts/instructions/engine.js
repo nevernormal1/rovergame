@@ -7,12 +7,12 @@ if (typeof RVR === 'undefined') {
 
   group.addInstruction({label: "Turn Engine On", value: "engine.on"})
     .perform(function() {
-       setCruise(true);
+       this.setCruise(true);
     });
 
   group.addInstruction({label: "Turn Engine Off", value: "engine.off"})
     .perform(function() {
-      setCruise(false);
+      this.setCruise(false);
     });
 })();
 

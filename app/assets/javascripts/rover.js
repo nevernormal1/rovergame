@@ -110,6 +110,8 @@ RVR.rover = function(params) {
   instance.getPosition = getPosition;
   instance.getRotation = getRotation;
 
+  RVR.rover = instance;
+
   return instance;
 };
 
