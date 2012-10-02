@@ -7,7 +7,7 @@ if (typeof RVR === 'undefined') {
 
   group.addInstruction({label: "Change Direction To...", value: "direction.update"})
     .perform(function(degrees) {
-       rotate(degrees);
+       this.rotate(degrees);
     });
 
   group.addInstruction({label: "When Blocked", value: "navigation.blocked"})
