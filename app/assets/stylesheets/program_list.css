@@ -14,3 +14,8 @@
 #program-panel > .row {
   margin-bottom: 4px;
 }
+
+#program-panel p {
+  text-align: center;
+}
+

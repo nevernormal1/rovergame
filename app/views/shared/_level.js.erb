@@ -61,7 +61,7 @@ $(function() {
       },
 
       addInstructionRow = function() {
-        var row = $("<div/>", {class: "row"}).appendTo("#program-panel");
+        var row = $("<div/>", {class: "row"}).insertBefore("#add-instruction");
         var lineNumber = $("<div/>", {class: "span1-5"}).appendTo(row);
         lineNumber.append($("<h6/>", {class: "line-number"}));
         var instruction = $("<div/>", {class: "span2-5"}).appendTo(row);
@@ -72,11 +72,18 @@ $(function() {
       addInstructionSelect = function(parent) {
         var select = $("<select/>", {style: "width:100%"}).appendTo(parent), optgroup;
 
+        // Blank option required for select2 placeholders for some reason
+        $("<option/>").appendTo(select);
+
         topLevelInstructions.forEach(function(instructionGroup) {
           optgroup = $("<optgroup/>", {label: instructionGroup.label}).appendTo(select);
           instructionGroup.instructions.forEach(function(instruction) {
             $("<option/>", {value: instruction.value, text: instruction.label}).appendTo(optgroup);
           });
+        });
+
+        select.select2({
+          placeholder: "Choose an instruction"
         });
       },
 
@@ -106,10 +113,6 @@ $(function() {
 
     addInstructionRow();
 
-    $("#program-panel select").select2({
-      placeholder: "Choose an instruction"
-    });
-
     $("#run-program").click(function() {
       runProgram();
       timeout = setTimeout(function() { updateScene() }, RVR.transitionDuration);
@@ -119,9 +122,13 @@ $(function() {
       clearTimeout(timeout);
     });
 
-    $(document).on("change", "#program-panel .row:last-child select", function() {
+    $("#add-instruction a").click(function() {
       addInstructionRow();
     });
+
+    //$(document).on("change", "#program-panel .row:last-child select", function() {
+    //  addInstructionRow();
+    //});
 
     generate();
 
