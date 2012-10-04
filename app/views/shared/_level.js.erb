@@ -70,27 +70,34 @@ $(function() {
       },
 
       addInstructionSelect = function(parent) {
-        var select = $("<select/>", {style: "width:100%"}).appendTo(parent), optgroup;
-
-        // Blank option required for select2 placeholders for some reason
-        $("<option/>").appendTo(select);
+        var input = $("<input/>", {type: "hidden", class: "instruction", style: "width:100%"}).appendTo(parent),
+            data = [],
+            children;
 
         topLevelInstructions.forEach(function(instructionGroup) {
-          optgroup = $("<optgroup/>", {label: instructionGroup.label}).appendTo(select);
+          children = [];
+
           instructionGroup.instructions.forEach(function(instruction) {
-            $("<option/>", {value: instruction.value, text: instruction.label}).appendTo(optgroup);
+            children.push({id: instruction.value, text: instruction.label});
           });
+
+          data.push({text: instructionGroup.label, children: children});
         });
 
-        select.select2({
-          placeholder: "Choose an instruction"
+        input.select2({
+          placeholder: "Choose an instruction",
+          data: data
         });
       },
 
       runProgram = function() {
-        //var instructions = []
-        $("#program-panel select").each(function() {
-          RVR.instructionGroups.run($(this).val());
+        var instructionId;
+
+        $("#program-panel input.instruction").each(function() {
+          instructionId = $(this).val();
+          if (instructionId !== "") {
+            RVR.instructionGroups.run(instructionId);
+          }
         });
       };
 

@@ -3,7 +3,7 @@ if (typeof RVR === 'undefined') {
 }
 
 (function() {
-  var group = RVR.instructionGroups.add({label: "engine"});
+  var group = RVR.instructionGroups.add({label: "Engine"});
 
   group.addInstruction({label: "Turn Engine On", value: "engine.on"})
     .perform(function() {
