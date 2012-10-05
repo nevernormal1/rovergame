@@ -2,11 +2,12 @@ if (typeof RVR === 'undefined') {
   RVR = {};
 }
 
-RVR.instruction = function(params) {
+RVR.instruction = function() {
   var hash = {},
-  maker = function(m_params) {
-    var label = m_params.label,
-        value = m_params.value,
+  maker = function(params) {
+    var label = params.label,
+        value = params.value,
+        html = params.html,
         target_function,
         callback = function() {
           target_function.apply(RVR.rover);
@@ -20,6 +21,7 @@ RVR.instruction = function(params) {
     that.perform = perform;
     that.label = label;
     that.value = value;
+    that.html = html;
     that.callback = callback;
 
     return that;

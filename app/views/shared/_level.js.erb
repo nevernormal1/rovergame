@@ -69,6 +69,14 @@ $(function() {
         renumberInstructions();
       },
 
+      formatInstruction = function(instruction) {
+        if (!instruction.id) return instruction.text;
+
+        if (instruction.html) return instruction.html;
+
+        return instruction.text; 
+      },
+
       addInstructionSelect = function(parent) {
         var input = $("<input/>", {type: "hidden", class: "instruction", style: "width:100%"}).appendTo(parent),
             data = [],
@@ -78,7 +86,7 @@ $(function() {
           children = [];
 
           instructionGroup.instructions.forEach(function(instruction) {
-            children.push({id: instruction.value, text: instruction.label});
+            children.push({id: instruction.value, text: instruction.label, html: instruction.html});
           });
 
           data.push({text: instructionGroup.label, children: children});
@@ -86,7 +94,9 @@ $(function() {
 
         input.select2({
           placeholder: "Choose an instruction",
-          data: data
+          data: data,
+          formatResult: formatInstruction,
+          formatSelection: formatInstruction
         });
       },
 
