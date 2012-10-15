@@ -132,7 +132,7 @@ $(function() {
 
     $("#run-program").click(function() {
       runProgram();
-      timeout = setTimeout(function() { updateScene() }, RVR.transitionDuration);
+      timeout = setTimeout(updateScene, RVR.transitionDuration);
     });
 
     $("#pause-program").click(function() {
