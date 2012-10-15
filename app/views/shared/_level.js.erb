@@ -60,6 +60,14 @@ $(function() {
         });
       },
 
+      addBlock = function(instruction, element) {
+        var block = $("<div/>", {class: "row well"}).insertAfter(element.closest(".row"));
+        var lineNumber = $("<div/>", {class: "span1-5"}).appendTo(block);
+        lineNumber.append($("<h6/>", {class: "line-number"}));
+        var instruction = $("<div/>", {class: "span2-5"}).appendTo(block);
+        addInstructionSelect(instruction);
+      },
+
       addInstructionRow = function() {
         var row = $("<div/>", {class: "row"}).insertBefore("#add-instruction");
         var lineNumber = $("<div/>", {class: "span1-5"}).appendTo(row);
@@ -69,12 +77,12 @@ $(function() {
         renumberInstructions();
       },
 
-      formatInstruction = function(instruction) {
-        if (!instruction.id) return instruction.text;
+      formatInstruction = function(data) {
+        if (!data.id) return data.text;
 
-        if (instruction.html) return instruction.html;
+        if (data.instruction.html) return data.instruction.html;
 
-        return instruction.text; 
+        return data.instruction.label; 
       },
 
       addInstructionSelect = function(parent) {
@@ -86,7 +94,7 @@ $(function() {
           children = [];
 
           instructionGroup.instructions.forEach(function(instruction) {
-            children.push({id: instruction.value, text: instruction.label, html: instruction.html});
+            children.push({id: instruction.value, instruction: instruction});
           });
 
           data.push({text: instructionGroup.label, children: children});
@@ -97,6 +105,13 @@ $(function() {
           data: data,
           formatResult: formatInstruction,
           formatSelection: formatInstruction
+        });
+
+        input.change(function(event) {
+          var instruction = input.select2("data").instruction;
+          if (typeof instruction.async !== "undefined") {
+            addBlock(instruction, $(this));
+          }
         });
       },
 

@@ -21,8 +21,11 @@ if (typeof RVR === 'undefined') {
      this.rotate(90);
   });
 
-  group.addInstruction({label: "When Blocked", value: "navigation.blocked"})
-    .perform(function(instructions) {
-    });
+  group.addInstruction({
+    label: "When Blocked",
+    value: "navigation.blocked",
+    async: true
+  }).perform(function(instructions) {
+  });
 })();
 

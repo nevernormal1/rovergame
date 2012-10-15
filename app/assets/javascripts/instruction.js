@@ -8,6 +8,7 @@ RVR.instruction = function() {
     var label = params.label,
         value = params.value,
         html = params.html,
+        async = params.async,
         target_function,
         callback = function() {
           target_function.apply(RVR.rover);
@@ -22,6 +23,7 @@ RVR.instruction = function() {
     that.label = label;
     that.value = value;
     that.html = html;
+    that.async = async;
     that.callback = callback;
 
     return that;
