@@ -9,16 +9,16 @@ if (typeof RVR === 'undefined') {
     label: "Rotate Right",
     value: "rotate.right",
     html: '<button class="btn">Rotate</button><button class="btn btn-warning">Right</button>'
-  }).perform(function(degrees) {
-     this.rotate(degrees);
+  }).perform(function() {
+     this.rotate(-90);
   });
 
   group.addInstruction({
     label: "Rotate Left",
     value: "rotate.left",
     html: '<button class="btn">Rotate</button><button class="btn btn-info">Left</button>'
-  }).perform(function(degrees) {
-     this.rotate(degrees);
+  }).perform(function() {
+     this.rotate(90);
   });
 
   group.addInstruction({label: "When Blocked", value: "navigation.blocked"})
