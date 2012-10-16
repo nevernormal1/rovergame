@@ -64,8 +64,9 @@ $(function() {
         var block = $("<div/>", {class: "row well"}).insertAfter(element.closest(".row"));
         var lineNumber = $("<div/>", {class: "span1-5"}).appendTo(block);
         lineNumber.append($("<h6/>", {class: "line-number"}));
-        var instruction = $("<div/>", {class: "span2-5"}).appendTo(block);
+        var instruction = $("<div/>", {class: "span2-5 short"}).appendTo(block);
         addInstructionSelect(instruction);
+        renumberInstructions();
       },
 
       addInstructionRow = function() {

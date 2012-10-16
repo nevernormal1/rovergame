@@ -11,6 +11,10 @@
   width: 215px;
 }
 
+#program-panel .span2-5.short {
+  width: 175px;
+}
+
 #program-panel > .row {
   margin-bottom: 4px;
 }
