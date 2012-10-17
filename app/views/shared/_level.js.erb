@@ -73,6 +73,13 @@ $(function() {
         addInstructionRow(linkWrapper);
       },
 
+      removeBlock = function(instruction, element) {
+        var nextRow = element.closest(".row").next();
+        if (nextRow.hasClass("block")) {
+          nextRow.remove();
+        }
+      },
+
       addInstructionRow = function(addLink) {
         var wrapper, lineNumber, instruction;
         wrapper = $("<div/>", {class: "row"}).insertBefore(addLink);
@@ -117,6 +124,8 @@ $(function() {
           var instruction = input.select2("data").instruction;
           if (typeof instruction.async !== "undefined") {
             addBlock(instruction, $(this));
+          } else {
+            removeBlock(instruction, $(this));
           }
         });
       },
