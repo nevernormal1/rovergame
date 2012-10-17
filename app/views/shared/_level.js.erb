@@ -134,21 +134,6 @@ $(function() {
       generate();
     });
 
-    $(".move").click(function() {
-      var action = $(this).attr("data-action");
-      if (action.indexOf("on") > -1) {
-        rover.setCruise(true);
-      } else {
-        rover.setCruise(false);
-      }
-    });
-
-    $(".rotate").click(function() {
-      rover.rotate(-90);
-    });
-
-    addInstructionRow($(".add-instruction"));
-
     $("#run-program").click(function() {
       runProgram();
       timeout = setTimeout(updateScene, RVR.transitionDuration);
@@ -163,6 +148,7 @@ $(function() {
       return false;
     });
 
+    addInstructionRow($(".add-instruction"));
     generate();
 });
 
