@@ -67,23 +67,23 @@ $(function() {
         lineNumber.append($("<h6/>", {class: "line-number"}));
         var instruction = $("<div/>", {class: "span2-5 short"}).appendTo(wrapper);
         addInstructionSelect(instruction);
-        var linkWrapper = $("<p/>").appendTo(block);
-        var link = $("<a/>", {class: "nested-add-instruction", href: "#", text: "Add Instruction"}).appendTo(linkWrapper);
+        var linkWrapper = $("<p/>", {class: "add-instruction"}).appendTo(block);
+        var link = $("<a/>", {href: "#", text: "Add Instruction"}).appendTo(linkWrapper);
         renumberInstructions();
       },
 
-      addInstructionRow = function() {
-        var row = $("<div/>", {class: "row"}).insertBefore("#add-instruction");
-        var lineNumber = $("<div/>", {class: "span1-5"}).appendTo(row);
+      addInstructionRow = function(addLink) {
+        var wrapper = $("<div/>", {class: "row"}).insertBefore(addLink);
+        var lineNumber = $("<div/>", {class: "span1-5"}).appendTo(wrapper);
         lineNumber.append($("<h6/>", {class: "line-number"}));
-        var instruction = $("<div/>", {class: "span2-5"}).appendTo(row);
+        var instruction = $("<div/>", {class: "span2-5"}).appendTo(wrapper);
         addInstructionSelect(instruction);
         renumberInstructions();
       },
 
-      addNestedInstructionRow = function(block) {
+      addNestedInstructionRow = function(addLink) {
         var wrapper, lineNumber, instruction;
-        wrapper = $("<div/>", {class: "row"}).insertAfter(block.find(".row").last());
+        wrapper = $("<div/>", {class: "row"}).insertBefore(addLink);
         lineNumber = $("<div/>", {class: "span1-5"}).appendTo(wrapper);
         lineNumber.append($("<h6/>", {class: "line-number"}));
         instruction = $("<div/>", {class: "span2-5 short"}).appendTo(wrapper);
@@ -157,7 +157,7 @@ $(function() {
       rover.rotate(-90);
     });
 
-    addInstructionRow();
+    addInstructionRow($("#add-instruction"));
 
     $("#run-program").click(function() {
       runProgram();
@@ -169,19 +169,15 @@ $(function() {
     });
 
     $("#add-instruction a").click(function() {
-      addInstructionRow();
+      addInstructionRow($(this).closest("#add-instruction"));
       return false;
     });
 
-    $(document).on("click", ".nested-add-instruction", function() {
-      addNestedInstructionRow($(this).closest(".block"));
+    $(document).on("click", ".add-instruction a", function() {
+      addNestedInstructionRow($(this).closest(".add-instruction"));
       return false;
     });
-
-    //$(document).on("change", "#program-panel .row:last-child select", function() {
-    //  addInstructionRow();
-    //});
 
     generate();
-
 });
+
