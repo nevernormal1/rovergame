@@ -54,9 +54,13 @@ $(function() {
       topLevelInstructions = RVR.instructionGroups.get(),
 
       renumberInstructions = function() {
-        $(".line-number").each(function(index) {
-          $(this).text(index + 1);
+        $("#program-panel > .row").each(function(index) {
+          $(this).find(".line-number").text(index + 1);
         });
+
+        //$(".line-number").each(function(index) {
+        //  $(this).text(index + 1);
+        //});
       },
 
       addBlock = function(instruction, element) {
