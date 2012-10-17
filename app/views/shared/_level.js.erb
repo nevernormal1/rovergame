@@ -64,15 +64,13 @@ $(function() {
       },
 
       addBlock = function(instruction, element) {
-        var block = $("<div/>", {class: "well block"}).insertAfter(element.closest(".row"));
-        var wrapper = $("<div/>", {class: "row"}).appendTo(block);
-        var lineNumber = $("<div/>", {class: "span1-5"}).appendTo(wrapper);
-        lineNumber.append($("<h6/>", {class: "line-number"}));
-        var instruction = $("<div/>", {class: "span2-5 short"}).appendTo(wrapper);
-        addInstructionSelect(instruction);
-        var linkWrapper = $("<p/>", {class: "add-instruction"}).appendTo(block);
-        var link = $("<a/>", {href: "#", text: "Add Instruction"}).appendTo(linkWrapper);
-        renumberInstructions();
+        var block, linkWrapper, link;
+
+        block = $("<div/>", {class: "well block"}).insertAfter(element.closest(".row"));
+        linkWrapper = $("<p/>", {class: "add-instruction"}).appendTo(block);
+        link = $("<a/>", {href: "#", text: "Add Instruction"}).appendTo(linkWrapper);
+
+        addInstructionRow(linkWrapper);
       },
 
       addInstructionRow = function(addLink) {
