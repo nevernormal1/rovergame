@@ -147,7 +147,7 @@ $(function() {
       rover.rotate(-90);
     });
 
-    addInstructionRow($("#add-instruction"));
+    addInstructionRow($(".add-instruction"));
 
     $("#run-program").click(function() {
       runProgram();
@@ -156,11 +156,6 @@ $(function() {
 
     $("#pause-program").click(function() {
       clearTimeout(timeout);
-    });
-
-    $("#add-instruction a").click(function() {
-      addInstructionRow($(this).closest("#add-instruction"));
-      return false;
     });
 
     $(document).on("click", ".add-instruction a", function() {
