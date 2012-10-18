@@ -131,10 +131,17 @@ $(function() {
       },
 
       runProgram = function() {
-        var instructionId;
+        $("#program-panel > div.row").each(function() {
+          var instructionId, subInstructionIds;
 
-        $("#program-panel input.instruction").each(function() {
-          instructionId = $(this).val();
+          instructionId = $(this).find("input.instruction").val();
+
+          if ($(this).next().hasClass("block")) {
+            subInstructionIds = $(this).next().find("input.instruction").map(function() {
+              return $(this).val();
+            }).toArray();
+          }
+
           if (instructionId !== "") {
             RVR.instructionGroups.run(instructionId);
           }
