@@ -10,8 +10,8 @@ RVR.instruction = function() {
         html = params.html,
         async = params.async,
         target_function,
-        callback = function() {
-          target_function.apply(RVR.rover);
+        callback = function(nestedInstructions) {
+          target_function.apply(RVR.rover, nestedInstructions);
         },
         perform = function(f) {
           target_function = f;
@@ -29,9 +29,9 @@ RVR.instruction = function() {
     return that;
   };
 
-  maker.run = function(value) {
+  maker.run = function(value, nestedInstructions) {
     var instruction = hash[value];
-    instruction.callback();
+    instruction.callback(nestedInstructions);
   };
 
   return maker;

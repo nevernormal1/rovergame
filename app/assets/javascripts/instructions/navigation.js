@@ -26,6 +26,8 @@ if (typeof RVR === 'undefined') {
     value: "navigation.blocked",
     async: true
   }).perform(function(instructions) {
+    console.log("Block invoked with instructions");
+    console.log(instructions);
   });
 })();
 
