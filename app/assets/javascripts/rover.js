@@ -35,6 +35,8 @@ RVR.rover = function(params) {
         rotation += degrees;
         if (rotation < 0) {
           rotation = 270;
+        } else if (rotation >= 360) {
+          rotation = 0;
         }
       },
 
@@ -69,7 +71,10 @@ RVR.rover = function(params) {
         if (!isMoving()) return;
 
         pos = nextPosition();
-        if (grid.outOfBounds(pos) || grid.collision(pos)) return;
+        if (grid.outOfBounds(pos) || grid.collision(pos)) {
+          dispatch.blocked();
+          return;
+        }
 
         position = pos;
 
@@ -98,6 +103,8 @@ RVR.rover = function(params) {
           });
       };
 
+      dispatch = d3.dispatch("blocked");
+
   reset();
 
   instance.reset = reset;
@@ -109,6 +116,8 @@ RVR.rover = function(params) {
 
   instance.getPosition = getPosition;
   instance.getRotation = getRotation;
+
+  instance.dispatch = dispatch;
 
   RVR.rover = instance;
 
