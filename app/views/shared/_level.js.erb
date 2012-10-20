@@ -85,7 +85,7 @@ $(function() {
         wrapper = $("<div/>", {class: "row"}).insertBefore(addLink);
         lineNumber = $("<div/>", {class: "span1-5"}).appendTo(wrapper);
         lineNumber.append($("<h6/>", {class: "line-number"}));
-        instruction = $("<div/>", {class: "span2-5"}).appendTo(wrapper);
+        instruction = $("<div/>", {class: "span2-5 instruction"}).appendTo(wrapper);
         addInstructionSelect(instruction);
         renumberInstructions();
       },
@@ -127,6 +127,9 @@ $(function() {
           } else {
             removeBlock(instruction, $(this));
           }
+
+          input.select2("destroy");
+          $(instruction.selectHtml).appendTo(input.closest("div.instruction"));
         });
       },
 

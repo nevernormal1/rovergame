@@ -8,6 +8,7 @@ RVR.instruction = function() {
     var label = params.label,
         value = params.value,
         html = params.html,
+        selectHtml = params.selectHtml,
         async = params.async,
         target_function,
         callback = function(nestedInstructions) {
@@ -23,6 +24,7 @@ RVR.instruction = function() {
     that.label = label;
     that.value = value;
     that.html = html;
+    that.selectHtml = selectHtml;
     that.async = async;
     that.callback = callback;
 

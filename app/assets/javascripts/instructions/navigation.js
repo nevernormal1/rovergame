@@ -24,6 +24,7 @@ if (typeof RVR === 'undefined') {
   group.addInstruction({
     label: "When Blocked",
     value: "navigation.blocked",
+    selectHtml: '<p>When <span class="label">Blocked</span></p>',
     async: true
   }).perform(function(instructions) {
     var rover = this;
