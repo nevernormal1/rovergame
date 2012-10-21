@@ -23,7 +23,7 @@
   text-align: center;
 }
 
-#program-panel div.instruction p {
+#program-panel .instruction-container p {
   text-align: left;
   margin-bottom: 0px;
 }

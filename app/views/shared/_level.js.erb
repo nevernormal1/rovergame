@@ -85,7 +85,7 @@ $(function() {
         wrapper = $("<div/>", {class: "row"}).insertBefore(addLink);
         lineNumber = $("<div/>", {class: "span1-5"}).appendTo(wrapper);
         lineNumber.append($("<h6/>", {class: "line-number"}));
-        instruction = $("<div/>", {class: "span2-5 instruction"}).appendTo(wrapper);
+        instruction = $("<div/>", {class: "span2-5 instruction-container"}).appendTo(wrapper);
         addInstructionSelect(instruction);
         renumberInstructions();
       },
@@ -121,15 +121,24 @@ $(function() {
         });
 
         input.change(function(event) {
-          var instruction = input.select2("data").instruction;
+          var container = input.closest(".instruction-container"),
+              instruction = input.select2("data").instruction;
+
+          container.find(".select2-container").hide();
+
+          container.append(
+            $('<i class="icon-circle-arrow-down pull-right"></i>')
+          ).append(
+            $(instruction.selectHtml)
+          );
+
           if (typeof instruction.async !== "undefined") {
             addBlock(instruction, $(this));
           } else {
             removeBlock(instruction, $(this));
           }
 
-          input.select2("destroy");
-          $(instruction.selectHtml).appendTo(input.closest("div.instruction"));
+          //input.select2("destroy");
         });
       },
 

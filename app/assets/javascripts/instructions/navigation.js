@@ -6,9 +6,9 @@ if (typeof RVR === 'undefined') {
   var group = RVR.instructionGroups.add({label: "Navigation"});
 
   group.addInstruction({
-    label: "Rotate Right",
-    value: "rotate.right",
-    html: '<button class="btn">Rotate</button><button class="btn btn-warning">Right</button>'
+    label: "Rotate [direction]",
+    value: "rotate",
+    selectHtml: '<p>Rotate <select style="width: 100px"><option>Right</option><option>Left</option></select>'
   }).perform(function() {
      this.rotate(-90);
   });
