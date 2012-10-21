@@ -122,14 +122,25 @@ $(function() {
 
         input.change(function(event) {
           var container = input.closest(".instruction-container"),
-              instruction = input.select2("data").instruction;
+              instruction = input.select2("data").instruction,
+              showInstructions = $('<i class="icon-circle-arrow-down pull-right show-instructions"></i>'),
+              select2Container = container.find(".select2-container");
 
-          container.find(".select2-container").hide();
+          select2Container.hide();
+
+          showInstructions.click(function() {
+            showInstructions.closest(".instruction-content").hide();
+            select2Container.show();
+            input.select2("open");
+            //$(this).closest("instruction-container").find(".select2-container").show();
+          });
 
           container.append(
-            $('<i class="icon-circle-arrow-down pull-right"></i>')
-          ).append(
-            $(instruction.selectHtml)
+            $('<div class="instruction-content"/>').append(
+              showInstructions
+            ).append(
+              $(instruction.selectHtml)
+            )
           );
 
           if (typeof instruction.async !== "undefined") {
@@ -174,6 +185,9 @@ $(function() {
     $(document).on("click", ".add-instruction a", function() {
       addInstructionRow($(this).closest(".add-instruction"));
       return false;
+    });
+
+    $(document).on("click", ".show-instructions", function() {
     });
 
     addInstructionRow($(".add-instruction"));
