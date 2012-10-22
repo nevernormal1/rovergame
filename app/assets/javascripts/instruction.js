@@ -6,9 +6,9 @@ RVR.instruction = function() {
   var hash = {},
   maker = function(params) {
     var label = params.label,
+        selectLabel = params.selectLabel,
         value = params.value,
-        html = params.html,
-        selectHtml = params.selectHtml,
+        args = params.args,
         async = params.async,
         target_function,
         callback = function(nestedInstructions) {
@@ -22,9 +22,9 @@ RVR.instruction = function() {
     hash[value] = that;
     that.perform = perform;
     that.label = label;
+    that.selectLabel = selectLabel;
     that.value = value;
-    that.html = html;
-    that.selectHtml = selectHtml;
+    that.args = args;
     that.async = async;
     that.callback = callback;
 

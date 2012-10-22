@@ -6,19 +6,12 @@ if (typeof RVR === 'undefined') {
   var group = RVR.instructionGroups.add({label: "Engine"});
 
   group.addInstruction({
-    label: "Turn Engine On",
-    value: "engine.on",
-    html: '<button class="btn">Turn Engine</button><button class="btn btn-success">On</button>'
+    value: "engine",
+    label: "Engine [option]",
+    selectLabel: "Engine",
+    args: ["On", "Off"]
   }).perform(function() {
      this.setCruise(true);
-  });
-
-  group.addInstruction({
-    label: "Turn Engine Off",
-    value: "engine.off",
-    html: '<button class="btn">Turn Engine</button><button class="btn btn-danger">Off</button>'
-  }).perform(function() {
-    this.setCruise(false);
   });
 })();
 

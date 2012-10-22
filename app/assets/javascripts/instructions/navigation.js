@@ -7,24 +7,17 @@ if (typeof RVR === 'undefined') {
 
   group.addInstruction({
     label: "Rotate [direction]",
+    selectLabel: "Rotate",
     value: "rotate",
-    selectHtml: '<p>Rotate <select style="width: 100px"><option>Right</option><option>Left</option></select>'
+    args: ["Left", "Right"]
   }).perform(function() {
      this.rotate(-90);
   });
 
   group.addInstruction({
-    label: "Rotate Left",
-    value: "rotate.left",
-    html: '<button class="btn">Rotate</button><button class="btn btn-info">Left</button>'
-  }).perform(function() {
-     this.rotate(90);
-  });
-
-  group.addInstruction({
     label: "When Blocked",
+    selectLabel: "When Blocked",
     value: "navigation.blocked",
-    selectHtml: '<p>When <span class="label">Blocked</span></p>',
     async: true
   }).perform(function(instructions) {
     var rover = this;

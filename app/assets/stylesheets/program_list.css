@@ -27,3 +27,7 @@
   text-align: left;
   margin-bottom: 0px;
 }
+
+#program-panel select.arguments {
+  width: 100px;
+}
