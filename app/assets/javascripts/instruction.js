@@ -10,9 +10,13 @@ RVR.instruction = function() {
         value = params.value,
         args = params.args,
         async = params.async,
+        argValue,
         target_function,
         callback = function(nestedInstructions) {
-          target_function.apply(RVR.rover, [nestedInstructions]);
+          target_function.call(RVR.rover, argValue, nestedInstructions);
+        },
+        arg = function(value) {
+          argValue = value;
         },
         perform = function(f) {
           target_function = f;
@@ -27,6 +31,7 @@ RVR.instruction = function() {
     that.args = args;
     that.async = async;
     that.callback = callback;
+    that.arg = arg;
 
     return that;
   };

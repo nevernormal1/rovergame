@@ -166,17 +166,22 @@ $(function() {
 
       runProgram = function() {
         $("#program-panel > div.row").each(function() {
-          var instruction, subInstructionIds;
+          var instruction, subInstructions = [], arg;
 
           instruction = $(this).find("input.instruction").select2("data").instruction;
+          arg = $(this).find("select.arguments").val();
+          instruction.arg(arg);
 
           if (instruction.async) {
-            subInstructionIds = $(this).next().find("input.instruction").map(function() {
-              return $(this).select2("data").instruction;
+            subInstructions = $(this).next().find("input.instruction").map(function() {
+              var nestedInstruction = $(this).select2("data").instruction,
+                  arg = $(this).closest(".instruction-container").find(".arguments").val();
+              nestedInstruction.arg(arg);
+              return nestedInstruction;
             }).toArray();
           }
 
-          instruction.callback(subInstructionIds);
+          instruction.callback(subInstructions);
         });
       };
 
