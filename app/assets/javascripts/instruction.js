@@ -31,13 +31,6 @@ RVR.instruction = function() {
     return that;
   };
 
-  //maker.run = function(value, nestedInstructions) {
-  //  if (typeof value !== "undefined" && value !== "") {
-  //    var instruction = hash[value];
-  //    instruction.callback(nestedInstructions);
-  //  }
-  //};
-
   return maker;
 }();
 

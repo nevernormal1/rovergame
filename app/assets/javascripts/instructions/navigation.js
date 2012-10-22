@@ -23,7 +23,7 @@ if (typeof RVR === 'undefined') {
     var rover = this;
     rover.dispatch.on("blocked", function() {
       instructions.forEach(function(instruction) {
-        RVR.instruction.run(instruction);
+        instruction.callback();
       });
     });
   });

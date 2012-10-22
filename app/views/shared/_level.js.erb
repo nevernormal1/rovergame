@@ -172,7 +172,7 @@ $(function() {
 
           if (instruction.async) {
             subInstructionIds = $(this).next().find("input.instruction").map(function() {
-              return $(this).val();
+              return $(this).select2("data").instruction;
             }).toArray();
           }
 
