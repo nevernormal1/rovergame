@@ -166,17 +166,17 @@ $(function() {
 
       runProgram = function() {
         $("#program-panel > div.row").each(function() {
-          var instructionId, subInstructionIds;
+          var instruction, subInstructionIds;
 
-          instructionId = $(this).find("input.instruction").val();
+          instruction = $(this).find("input.instruction").select2("data").instruction;
 
-          if ($(this).next().hasClass("block")) {
+          if (instruction.async) {
             subInstructionIds = $(this).next().find("input.instruction").map(function() {
               return $(this).val();
             }).toArray();
           }
 
-          RVR.instruction.run(instructionId, subInstructionIds);
+          instruction.callback(subInstructionIds);
         });
       };
 
