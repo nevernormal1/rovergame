@@ -9,7 +9,7 @@ if (typeof RVR === 'undefined') {
     value: "engine",
     label: "Engine [option]",
     selectLabel: "Engine",
-    args: ["On", "Off"]
+    args: [{label: "Turn Engine", values: ["On", "Off"]}]
   }).perform(function(arg) {
     this.setCruise(arg === "On");
   });

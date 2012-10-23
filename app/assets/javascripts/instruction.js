@@ -9,7 +9,7 @@ RVR.instruction = function() {
         selectLabel = params.selectLabel,
         value = params.value,
         args = params.args,
-        async = params.async,
+        block = params.block,
         argValue,
         target_function,
         callback = function(nestedInstructions) {
@@ -29,7 +29,7 @@ RVR.instruction = function() {
     that.selectLabel = selectLabel;
     that.value = value;
     that.args = args;
-    that.async = async;
+    that.block = block;
     that.callback = callback;
     that.arg = arg;
 

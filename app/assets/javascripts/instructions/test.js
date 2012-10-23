@@ -7,8 +7,9 @@ if (typeof RVR === 'undefined') {
 
   group.addInstruction({
     label: "If [Condition] Is [Value]",
+    args: [{label: "If", values: ["Heading"]}, {label: "Is", values: ["North", "South", "East", "West"]}],
     value: "if",
-    html: 'If <input type="hidden" class="test-condition"/> Is <input type="hidden" class="test-values"/>'
+    block: true
   }).perform(function(condition, insructions) {
   });
 })();
