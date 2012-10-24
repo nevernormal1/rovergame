@@ -40,6 +40,18 @@ RVR.rover = function(params) {
         }
       },
 
+      direction = function() {
+        if (rotation === 0) {
+          return "East";
+        } else if (rotation === 90) {
+          return "North";
+        } else if (rotation === 180) {
+          return "West";
+        } else if (rotation == 270) {
+          return "South";
+        }
+      },
+
       setCruise = function(bool) {
         cruise = bool;
       },
@@ -116,6 +128,7 @@ RVR.rover = function(params) {
 
   instance.getPosition = getPosition;
   instance.getRotation = getRotation;
+  instance.direction = direction;
 
   instance.dispatch = dispatch;
 

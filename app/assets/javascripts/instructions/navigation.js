@@ -9,9 +9,9 @@ if (typeof RVR === 'undefined') {
     label: "Rotate [direction]",
     selectLabel: "Rotate",
     value: "rotate",
-    args: [{label: "Rotate", values: ["Left", "Right"]}]
-  }).perform(function(arg) {
-    var degrees = arg === "Left" ? 90 : -90;
+    args: [{name: "rotate", label: "Rotate", values: ["Left", "Right"]}]
+  }).perform(function(args) {
+    var degrees = args.rotate === "Left" ? 90 : -90;
 
     this.rotate(degrees);
   });
@@ -21,7 +21,7 @@ if (typeof RVR === 'undefined') {
     selectLabel: "When Blocked",
     value: "navigation.blocked",
     block: true
-  }).perform(function(arg, instructions) {
+  }).perform(function(args, instructions) {
     var rover = this;
     rover.dispatch.on("blocked", function() {
       instructions.forEach(function(instruction) {

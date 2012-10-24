@@ -2,6 +2,10 @@
   margin-left: 2px;
 }
 
+#program-panel .well [class*="span"] {
+  margin-left: 14px;
+}
+
 #program-panel .span1-5 {
   padding-top: 4px;
   width: 20px;
@@ -12,7 +16,7 @@
 }
 
 #program-panel .block .span2-5 {
-  width: 175px;
+  width: 205px;
 }
 
 #program-panel > .row {
@@ -29,5 +33,13 @@
 }
 
 #program-panel select.arguments {
-  width: 90px;
+  width: 85px;
+}
+
+#program-panel .well {
+  padding: 6px;
+}
+
+#program-panel .well .well {
+  background-color: lightgoldenrodyellow;
 }

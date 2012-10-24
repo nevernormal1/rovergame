@@ -7,10 +7,20 @@ if (typeof RVR === 'undefined') {
 
   group.addInstruction({
     label: "If [Condition] Is [Value]",
-    args: [{label: "If", values: ["Heading"]}, {label: "Is", values: ["North", "South", "East", "West"]}],
+    args: [
+      {name: "condition", label: "If", values: ["Heading"]},
+      {name: "value", label: "Is", values: ["North", "South", "East", "West"]}
+    ],
     value: "if",
     block: true
-  }).perform(function(condition, insructions) {
+  }).perform(function(args, instructions) {
+    var direction = args.value;
+
+    if (this.direction() === args.value) {
+      instructions.forEach(function(instruction) {
+        instruction.callback();
+      });
+    }
   });
 })();
 

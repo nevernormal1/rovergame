@@ -5,23 +5,23 @@
   border-radius: 9px;
 }
 
-.wall {
+#level-content .wall {
   stroke: gray;
 }
 
-.rover {
+#level-content .rover {
   stroke: black;
   stroke-width: 1px;
   fill: none;
 }
 
-.goal {
+#level-content .goal {
   stroke: blue;
   stroke-width: 3;
   fill: none;
 }
 
-.block {
+#level-content .block {
   stroke: gray;
   stroke-width: 2;
   fill: none;

@@ -99,11 +99,11 @@ $(function() {
 
         select2Container.hide();
 
-        if (typeof instruction.args !== "undefined" && instruction.args.length > 0) {
+        if (instruction.args && instruction.args.length > 0) {
           instructionText = $('<p/>');
 
           instruction.args.forEach(function(argParams) {
-            argSelect = $("<select/>", {class: "arguments"});
+            argSelect = $("<select/>", {name: argParams.name, class: "arguments"});
             argParams.values.forEach(function(argValue) {
               argSelect.append($('<option/>', {value: argValue, text: argValue}));
             });
@@ -175,14 +175,17 @@ $(function() {
           var instruction, subInstructions = [], arg;
 
           instruction = $(this).find("input.instruction").select2("data").instruction;
-          arg = $(this).find("select.arguments").val();
-          instruction.arg(arg);
+          arg = $(this).find("select.arguments").each(function() {
+            instruction.arg($(this).attr("name"), $(this).val());
+          });
 
           if (instruction.block) {
-            subInstructions = $(this).next().find("input.instruction").map(function() {
-              var nestedInstruction = $(this).select2("data").instruction,
-                  arg = $(this).closest(".instruction-container").find(".arguments").val();
-              nestedInstruction.arg(arg);
+            subInstructions = $(this).next().children().not(".block").find("input.instruction").map(function() {
+              var nestedInstruction = $(this).select2("data").instruction;
+              $(this).closest(".instruction-container").find("select.arguments").each(function() {
+                nestedInstruction.arg($(this).attr("name"), $(this).val());
+              });
+
               return nestedInstruction;
             }).toArray();
           }
