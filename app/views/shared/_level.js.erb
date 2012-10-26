@@ -170,27 +170,46 @@ $(function() {
         });
       },
 
+      prepareInstruction = function(instructionElement) {
+        var instruction = instructionElement.select2("data").instruction,
+            instance = instruction.instance(),
+            container = instructionElement.closest(".instruction-container");
+
+        container.find("select.arguments").each(function() {
+          instance.arg($(this).attr("name"), $(this).val());
+        });
+
+        if (instruction.block) {
+          container.closest(".row").next().children().not(".block").find("input.instruction").each(function() {
+            instance.subInstruction(prepareInstruction($(this)));
+          });
+        }
+
+        return instance;
+      },
+
       runProgram = function() {
         $("#program-panel > div.row").each(function() {
-          var instruction, subInstructions = [], arg;
+          prepareInstruction($(this).find("input.instruction")).callback();
+          //var instruction, subInstructions = [], arg;
 
-          instruction = $(this).find("input.instruction").select2("data").instruction;
-          arg = $(this).find("select.arguments").each(function() {
-            instruction.arg($(this).attr("name"), $(this).val());
-          });
+          //instruction = $(this).find("input.instruction").select2("data").instruction;
+          //arg = $(this).find("select.arguments").each(function() {
+          //  instruction.arg($(this).attr("name"), $(this).val());
+          //});
 
-          if (instruction.block) {
-            subInstructions = $(this).next().children().not(".block").find("input.instruction").map(function() {
-              var nestedInstruction = $(this).select2("data").instruction;
-              $(this).closest(".instruction-container").find("select.arguments").each(function() {
-                nestedInstruction.arg($(this).attr("name"), $(this).val());
-              });
+          //if (instruction.block) {
+          //  subInstructions = $(this).next().children().not(".block").find("input.instruction").map(function() {
+          //    var nestedInstruction = $(this).select2("data").instruction;
+          //    $(this).closest(".instruction-container").find("select.arguments").each(function() {
+          //      nestedInstruction.arg($(this).attr("name"), $(this).val());
+          //    });
 
-              return nestedInstruction;
-            }).toArray();
-          }
+          //    return nestedInstruction;
+          //  }).toArray();
+          //}
 
-          instruction.callback(subInstructions);
+          //instruction.callback(subInstructions);
         });
       };
 

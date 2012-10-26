@@ -14,13 +14,15 @@ if (typeof RVR === 'undefined') {
     value: "if",
     block: true
   }).perform(function(args, instructions) {
-    var direction = args.value;
+    var direction = args.value,
+        currDirection = this.direction();
 
-    if (this.direction() === args.value) {
+    if (currDirection === direction) {
       instructions.forEach(function(instruction) {
         instruction.callback();
       });
     }
   });
+
 })();
 
