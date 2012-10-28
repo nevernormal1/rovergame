@@ -13,7 +13,7 @@ if (typeof RVR === 'undefined') {
     ],
     value: "if",
     block: true
-  }).perform(function(args, instructions) {
+  }).perform(function(args, instructions, elseInstructions) {
     var direction = args.value,
         currDirection = this.direction();
 
@@ -21,8 +21,11 @@ if (typeof RVR === 'undefined') {
       instructions.forEach(function(instruction) {
         instruction.callback();
       });
+    } else {
+      elseInstructions.forEach(function(instruction) {
+        instruction.callback();
+      });
     }
   });
-
 })();
 

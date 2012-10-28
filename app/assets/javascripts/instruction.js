@@ -18,18 +18,23 @@ RVR.instruction = function(params) {
             },
             argValues = {},
             subInstructions = [],
+            elseInstructions = [],
 
             callback = function() {
-              target_function.call(RVR.rover, argValues, subInstructions);
+              target_function.call(RVR.rover, argValues, subInstructions, elseInstructions);
             },
             subInstruction = function(instruction) {
               subInstructions.push(instruction);
+            },
+            elseInstruction = function(instruction) {
+              elseInstructions.push(instruction);
             },
             that = {};
 
         that.arg = arg;
         that.callback = callback;
         that.subInstruction = subInstruction;
+        that.elseInstruction = elseInstruction;
 
         return that;
       },

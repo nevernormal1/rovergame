@@ -63,8 +63,12 @@ $(function() {
         //});
       },
 
-      addBlock = function(instruction, element) {
+      addBlock = function(instruction, element, placeholder) {
         var block, linkWrapper, link;
+
+        if (placeholder) {
+          block = $("<div/>", {class: "placeholder"}).append($("<p/>").text("Otherwise")).insertAfter(element.closest(".row"));
+        }
 
         block = $("<div/>", {class: "well block"}).insertAfter(element.closest(".row"));
         linkWrapper = $("<p/>", {class: "add-instruction"}).appendTo(block);
@@ -130,6 +134,9 @@ $(function() {
 
         if (typeof instruction.block !== "undefined") {
           addBlock(instruction, input);
+          if (instruction.value === "if") {
+            addBlock(instruction, input, "Otherwise");
+          }
         } else {
           removeBlock(instruction, input);
         }
@@ -171,9 +178,15 @@ $(function() {
       },
 
       prepareInstruction = function(instructionElement) {
-        var instruction = instructionElement.select2("data").instruction,
-            instance = instruction.instance(),
-            container = instructionElement.closest(".instruction-container");
+        var data, instruction, instance, container;
+
+        data = instructionElement.select2("data");
+        if (data == null) {
+          return;
+        }
+        instruction = data.instruction;
+        instance = instruction.instance();
+        container = instructionElement.closest(".instruction-container");
 
         container.find("select.arguments").each(function() {
           instance.arg($(this).attr("name"), $(this).val());
@@ -185,31 +198,18 @@ $(function() {
           });
         }
 
+        if (instruction.value === "if") {
+          container.closest(".row").next().next().next().children().not(".block").find("input.instruction").each(function() {
+            instance.elseInstruction(prepareInstruction($(this)));
+          });
+        }
+
         return instance;
       },
 
       runProgram = function() {
         $("#program-panel > div.row").each(function() {
           prepareInstruction($(this).find("input.instruction")).callback();
-          //var instruction, subInstructions = [], arg;
-
-          //instruction = $(this).find("input.instruction").select2("data").instruction;
-          //arg = $(this).find("select.arguments").each(function() {
-          //  instruction.arg($(this).attr("name"), $(this).val());
-          //});
-
-          //if (instruction.block) {
-          //  subInstructions = $(this).next().children().not(".block").find("input.instruction").map(function() {
-          //    var nestedInstruction = $(this).select2("data").instruction;
-          //    $(this).closest(".instruction-container").find("select.arguments").each(function() {
-          //      nestedInstruction.arg($(this).attr("name"), $(this).val());
-          //    });
-
-          //    return nestedInstruction;
-          //  }).toArray();
-          //}
-
-          //instruction.callback(subInstructions);
         });
       };
 
