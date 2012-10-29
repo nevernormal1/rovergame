@@ -34,6 +34,7 @@
 
 #program-panel select.arguments {
   width: 85px;
+  margin-left: 2px;
 }
 
 #program-panel .well {
