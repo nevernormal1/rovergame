@@ -52,6 +52,22 @@ RVR.rover = function(params) {
         }
       },
 
+      blocked = function(direction) {
+        var pos;
+
+        if (direction === "East") {
+          pos = {x: position.x + 1, y: position.y};
+        } else if (direction === "West") {
+          pos = {x: position.x - 1, y: position.y};
+        } else if (direction === "South") {
+          pos = {x: position.x, y: position.y + 1};
+        } else {
+          pos = {x: position.x, y: position.y - 1};
+        }
+
+        return (grid.outOfBounds(pos) || grid.collision(pos));
+      },
+
       setCruise = function(bool) {
         cruise = bool;
       },
@@ -129,6 +145,7 @@ RVR.rover = function(params) {
   instance.getPosition = getPosition;
   instance.getRotation = getRotation;
   instance.direction = direction;
+  instance.blocked = blocked;
 
   instance.dispatch = dispatch;
 
