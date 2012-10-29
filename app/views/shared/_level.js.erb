@@ -207,6 +207,15 @@ $(function() {
         return instance;
       },
 
+      initializeProgramPanel = function() {
+        $("#program-panel").empty()
+          .append($("<p/>", {class: "add-instruction"})
+            .append($("<a/>", {href: "#"}).text("Add Instruction")))
+
+        addInstructionRow($(".add-instruction"));
+        generate();
+      },
+
       runProgram = function() {
         $("#program-panel > div.row").each(function() {
           prepareInstruction($(this).find("input.instruction")).callback();
@@ -226,6 +235,11 @@ $(function() {
       clearTimeout(timeout);
     });
 
+    $("#reset-program").click(function() {
+      clearTimeout(timeout);
+      initializeProgramPanel();
+    });
+
     $(document).on("click", ".add-instruction a", function() {
       addInstructionRow($(this).closest(".add-instruction"));
       return false;
@@ -234,7 +248,6 @@ $(function() {
     $(document).on("click", ".show-instructions", function() {
     });
 
-    addInstructionRow($(".add-instruction"));
-    generate();
+    initializeProgramPanel();
 });
 
