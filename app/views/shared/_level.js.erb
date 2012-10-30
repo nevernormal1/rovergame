@@ -221,6 +221,7 @@ $(function() {
       },
 
       runProgram = function() {
+        $("#stop-program").text("Stop");
         $("#program-panel > div.row").each(function() {
           prepareInstruction($(this).find("input.instruction")).callback();
         });
@@ -239,9 +240,10 @@ $(function() {
       clearTimeout(timeout);
     });
 
-    $("#reset-program").click(function() {
+    $("#stop-program").click(function() {
       clearTimeout(timeout);
-      initializeProgramPanel();
+      generate();
+      $("#stop-program").text("Generate");
     });
 
     $(document).on("click", ".add-instruction a", function() {

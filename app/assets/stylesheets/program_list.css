@@ -19,6 +19,10 @@
   width: 205px;
 }
 
+#program-panel .block {
+  margin-bottom: 10px;
+}
+
 #program-panel > .row {
   margin-bottom: 4px;
 }

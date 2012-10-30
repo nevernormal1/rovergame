@@ -2,4 +2,4 @@ if (typeof RVR === 'undefined') {
   RVR = {};
 }
 
-RVR.transitionDuration = 300;
+RVR.transitionDuration = 250;
