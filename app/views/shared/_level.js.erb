@@ -82,6 +82,11 @@ $(function() {
         if (nextRow.hasClass("block")) {
           nextRow.remove();
         }
+        nextRow = element.closest(".row").next();
+        if (nextRow.hasClass("placeholder")) {
+          nextRow.next().remove();
+          nextRow.remove();
+        }
       },
 
       addInstructionRow = function(addLink) {
@@ -132,13 +137,12 @@ $(function() {
             .append(instructionText)
         );
 
+        removeBlock(instruction, input);
         if (typeof instruction.block !== "undefined") {
           addBlock(instruction, input);
           if (instruction.value === "if") {
             addBlock(instruction, input, "Otherwise");
           }
-        } else {
-          removeBlock(instruction, input);
         }
       },
 
