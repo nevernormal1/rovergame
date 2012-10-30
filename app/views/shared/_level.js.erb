@@ -221,6 +221,7 @@ $(function() {
       },
 
       runProgram = function() {
+        $("#status").removeClass("label-warning").addClass("label-success").text("Running");
         $("#stop-program").text("Stop");
         $("#program-panel > div.row").each(function() {
           prepareInstruction($(this).find("input.instruction")).callback();
@@ -237,10 +238,12 @@ $(function() {
     });
 
     $("#pause-program").click(function() {
+      $("#status").text("Paused").removeClass("label-success").addClass("label-warning");
       clearTimeout(timeout);
     });
 
     $("#stop-program").click(function() {
+      $("#status").text("Stopped").removeClass("label-success").removeClass("label-warning");
       clearTimeout(timeout);
       generate();
       $("#stop-program").text("Generate");
