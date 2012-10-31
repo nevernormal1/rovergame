@@ -109,16 +109,26 @@ RVR.rover = function(params) {
         render();
       },
 
+      rightRoundedRect = function(x, y, width, height, radius) {
+        return "M" + x + "," + y +
+          "h" + (width - radius) +
+          "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius + "v" + (height - 2 * radius) +
+          "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius + "h" + (radius - width) + "z";
+      },
+
       render = function() {
         var rover = parent.selectAll(".rover").data([position]);
 
         rover.enter()
-          .append("rect")
+          .append("path")
           .attr("class", "rover")
-          .attr("x", roverOffsetX)
-          .attr("y", roverOffsetY)
-          .attr("width", grid.getCellWidth() / 2)
-          .attr("height", grid.getCellHeight() / 2);
+          .attr("d", function(d) {
+            return rightRoundedRect(roverOffsetX(d), roverOffsetY(d), grid.getCellWidth() / 2, grid.getCellHeight() / 2, 2);
+          })
+          //.attr("x", roverOffsetX)
+          //.attr("y", roverOffsetY)
+          //.attr("width", grid.getCellWidth() / 2)
+          //.attr("height", grid.getCellHeight() / 2);
 
         rover.transition()
           .duration(RVR.transitionDuration)
