@@ -125,10 +125,6 @@ RVR.rover = function(params) {
           .attr("d", function(d) {
             return rightRoundedRect(roverOffsetX(d), roverOffsetY(d), grid.getCellWidth() / 2, grid.getCellHeight() / 2, 2);
           })
-          //.attr("x", roverOffsetX)
-          //.attr("y", roverOffsetY)
-          //.attr("width", grid.getCellWidth() / 2)
-          //.attr("height", grid.getCellHeight() / 2);
 
         rover.transition()
           .duration(RVR.transitionDuration)
