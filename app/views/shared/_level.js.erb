@@ -33,6 +33,7 @@ $(function() {
 
       updateScene = function() {
         rover.updatePosition();
+        rover.render();
 
         if (!goal.reached(rover.getPosition())) {
           timeout = setTimeout(updateScene, RVR.transitionDuration);

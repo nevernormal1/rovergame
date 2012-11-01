@@ -12,6 +12,10 @@ RVR.rover = function(params) {
       roverOffsetX = grid.offsetX(0.25),
       roverOffsetY = grid.offsetY(0.25),
 
+      width = grid.getCellWidth() / 2,
+      height = grid.getCellHeight() / 2,
+      radius = 3,
+
       reset = function() {
         position = params.position || {x: 0, y: 0};
         rotation = params.rotation || 0;
@@ -100,12 +104,10 @@ RVR.rover = function(params) {
         }
 
         position = pos;
-
-        render();
       },
 
-      rightRoundedRect = function(x, y, width, height, radius) {
-        return "M" + x + "," + y +
+      drawRover = function(d) {
+        return "M" + roverOffsetX(d) + "," + roverOffsetY(d) +
           "h" + (width - radius) +
           "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius + "v" + (height - 2 * radius) +
           "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius + "h" + (radius - width) + "z";
@@ -118,9 +120,7 @@ RVR.rover = function(params) {
         rover.enter()
           .append("path")
           .attr("class", "rover")
-          .attr("d", function(d) {
-            return rightRoundedRect(roverOffsetX(d), roverOffsetY(d), grid.getCellWidth() / 2, grid.getCellHeight() / 2, 3);
-          })
+          .attr("d", drawRover);
 
         rover.transition()
           .duration(RVR.transitionDuration)
