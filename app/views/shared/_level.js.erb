@@ -47,32 +47,24 @@ $(function() {
         animatedRender();
       },
 
-      enums = {
-        direction: {name: "Current Direction", values: ["North", "South", "East", "West"]}
-      },
-
       topLevelInstructions = RVR.instructionGroups.get(),
 
       renumberInstructions = function() {
         $("#program-panel > .row").each(function(index) {
           $(this).find(".line-number").text(index + 1);
         });
-
-        //$(".line-number").each(function(index) {
-        //  $(this).text(index + 1);
-        //});
       },
 
       addBlock = function(instruction, element, placeholder) {
-        var block, linkWrapper, link;
+        var block, linkWrapper;
 
         if (placeholder) {
-          block = $("<div/>", {class: "placeholder"}).append($("<p/>").text("Otherwise")).insertAfter(element.closest(".row"));
+          $("<div/>", {class: "placeholder"}).append($("<p/>").text("Otherwise")).insertAfter(element.closest(".row"));
         }
 
         block = $("<div/>", {class: "well block"}).insertAfter(element.closest(".row"));
         linkWrapper = $("<p/>", {class: "add-instruction"}).appendTo(block);
-        link = $("<a/>", {href: "#", text: "Add Instruction"}).appendTo(linkWrapper);
+        $("<a/>", {href: "#", text: "Add Instruction"}).appendTo(linkWrapper);
 
         addInstructionRow(linkWrapper);
       },
@@ -220,12 +212,20 @@ $(function() {
         generate();
       },
 
+      stop = function() {
+        if (typeof timeout !== "undefined" && timeout != null) {
+          clearTimeout(timeout);
+          timeout = null;
+        }
+      },
+
       runProgram = function() {
         $("#status").removeClass("label-warning").addClass("label-success").text("Running");
         $("#stop-program").text("Stop");
         $("#program-panel > div.row").each(function() {
           prepareInstruction($(this).find("input.instruction")).callback();
         });
+        timeout = setTimeout(updateScene, RVR.transitionDuration);
       };
 
     $("#generate").click(function() {
@@ -233,18 +233,18 @@ $(function() {
     });
 
     $("#run-program").click(function() {
+      stop();
       runProgram();
-      timeout = setTimeout(updateScene, RVR.transitionDuration);
     });
 
     $("#pause-program").click(function() {
       $("#status").text("Paused").removeClass("label-success").addClass("label-warning");
-      clearTimeout(timeout);
+      stop();
     });
 
     $("#stop-program").click(function() {
       $("#status").text("Stopped").removeClass("label-success").removeClass("label-warning");
-      clearTimeout(timeout);
+      stop();
       generate();
       $("#stop-program").text("Generate");
     });
@@ -252,9 +252,6 @@ $(function() {
     $(document).on("click", ".add-instruction a", function() {
       addInstructionRow($(this).closest(".add-instruction"));
       return false;
-    });
-
-    $(document).on("click", ".show-instructions", function() {
     });
 
     initializeProgramPanel();

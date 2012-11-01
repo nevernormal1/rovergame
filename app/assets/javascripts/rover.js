@@ -16,12 +16,7 @@ RVR.rover = function(params) {
         position = params.position || {x: 0, y: 0};
         rotation = params.rotation || 0;
         cruise = false;
-        draw();
       },
-
-      draw = function() {
-      },
-
 
       getPosition = function() {
         return position;
@@ -117,13 +112,14 @@ RVR.rover = function(params) {
       },
 
       render = function() {
-        var rover = parent.selectAll(".rover").data([position]);
+        var rover = parent.selectAll(".rover").data([position]),
+            heading = d3.select("#heading").data([direction()]);
 
         rover.enter()
           .append("path")
           .attr("class", "rover")
           .attr("d", function(d) {
-            return rightRoundedRect(roverOffsetX(d), roverOffsetY(d), grid.getCellWidth() / 2, grid.getCellHeight() / 2, 2);
+            return rightRoundedRect(roverOffsetX(d), roverOffsetY(d), grid.getCellWidth() / 2, grid.getCellHeight() / 2, 3);
           })
 
         rover.transition()
@@ -133,8 +129,11 @@ RVR.rover = function(params) {
             var newX = grid.baseOffset.x(d),
                 newY = grid.baseOffset.y(d);
 
-            return "translate(" + newX + "," + newY + ")";
+            return "translate(" + newX + "," + newY + ")" +
+                   "rotate(" + -rotation + ")";
           });
+
+        heading.text(function(d) { return d; });
       };
 
       dispatch = d3.dispatch("blocked");
