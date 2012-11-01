@@ -37,8 +37,10 @@
 }
 
 #program-panel select.arguments {
-  width: 85px;
-  margin-left: 2px;
+  max-width: 85px;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-bottom: 1px;
 }
 
 #program-panel .well {
