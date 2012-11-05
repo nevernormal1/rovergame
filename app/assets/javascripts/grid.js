@@ -4,7 +4,7 @@ if (typeof RVR === 'undefined') {
 
 RVR.grid = function(params) {
   var rowCount = params.rows || 14,
-      columnCount = params.columns || 21,
+      columnCount = params.columns || 18,
       walls,
       data,
       parent = params.parent,
