@@ -54,10 +54,10 @@ $(function() {
         var block, linkWrapper;
 
         if (placeholder) {
-          $("<div/>", {class: "placeholder"}).append($("<p/>").text("Otherwise")).insertAfter(element.closest(".row"));
+          $("<div/>", {class: "placeholder"}).append($("<p/>").text("Otherwise")).insertAfter(element.closest(".instruction-container"));
         }
 
-        block = $("<div/>", {class: "well block"}).insertAfter(element.closest(".row"));
+        block = $("<div/>", {class: "well block"}).insertAfter(element.closest(".instruction-container"));
         linkWrapper = $("<p/>", {class: "add-instruction"}).appendTo(block);
         $("<a/>", {href: "#", text: "Add Instruction"}).appendTo(linkWrapper);
 
@@ -65,11 +65,11 @@ $(function() {
       },
 
       removeBlock = function(instruction, element) {
-        var nextRow = element.closest(".row").next();
+        var nextRow = element.closest(".instruction-container").next();
         if (nextRow.hasClass("block")) {
           nextRow.remove();
         }
-        nextRow = element.closest(".row").next();
+        nextRow = element.closest(".instruction-container").next();
         if (nextRow.hasClass("placeholder")) {
           nextRow.next().remove();
           nextRow.remove();
@@ -77,10 +77,9 @@ $(function() {
       },
 
       addInstructionRow = function(addLink) {
-        var wrapper, instruction;
-        wrapper = $("<div/>", {class: "row"}).insertBefore(addLink);
-        instruction = $("<div/>", {class: "instruction-container"}).appendTo(wrapper);
-        addInstructionSelect(instruction);
+        addInstructionSelect(
+          $("<div/>", {class: "instruction-container"}).insertBefore(addLink)
+        );
       },
 
       renderInstruction = function(instruction, container) {
@@ -181,13 +180,13 @@ $(function() {
         });
 
         if (instruction.block) {
-          container.closest(".row").next().children().not(".block").find("input.instruction").each(function() {
+          container.next().children().not(".block").find("input.instruction").each(function() {
             instance.subInstruction(prepareInstruction($(this)));
           });
         }
 
         if (instruction.value === "if") {
-          container.closest(".row").next().next().next().children().not(".block").find("input.instruction").each(function() {
+          container.next().next().next().children().not(".block").find("input.instruction").each(function() {
             instance.elseInstruction(prepareInstruction($(this)));
           });
         }
@@ -214,7 +213,7 @@ $(function() {
       runProgram = function() {
         $("#status").removeClass("label-warning").addClass("label-success").text("Running");
         $("#stop-program").text("Stop");
-        $("#program-panel > div.row").each(function() {
+        $("#program-panel > div.instruction-container").each(function() {
           prepareInstruction($(this).find("input.instruction")).callback();
         });
         timeout = setTimeout(updateScene, RVR.transitionDuration);
