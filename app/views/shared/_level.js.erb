@@ -50,12 +50,6 @@ $(function() {
 
       topLevelInstructions = RVR.instructionGroups.get(),
 
-      renumberInstructions = function() {
-        $("#program-panel > .row").each(function(index) {
-          $(this).find(".line-number").text(index + 1);
-        });
-      },
-
       addBlock = function(instruction, element, placeholder) {
         var block, linkWrapper;
 
@@ -83,13 +77,10 @@ $(function() {
       },
 
       addInstructionRow = function(addLink) {
-        var wrapper, lineNumber, instruction;
+        var wrapper, instruction;
         wrapper = $("<div/>", {class: "row"}).insertBefore(addLink);
-        lineNumber = $("<div/>", {class: "span1-5"}).appendTo(wrapper);
-        lineNumber.append($("<h6/>", {class: "line-number"}));
-        instruction = $("<div/>", {class: "span2-5 instruction-container"}).appendTo(wrapper);
+        instruction = $("<div/>", {class: "span-side instruction-container"}).appendTo(wrapper);
         addInstructionSelect(instruction);
-        renumberInstructions();
       },
 
       renderInstruction = function(instruction, container) {

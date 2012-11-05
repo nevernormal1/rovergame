@@ -1,40 +1,29 @@
 #program-panel [class*="span"] {
-  margin-left: 2px;
+  /* margin-left: 2px; */
 }
 
 #program-panel .well [class*="span"] {
-  margin-left: 14px;
-}
-
-#program-panel .span1-5 {
-  padding-top: 4px;
-  width: 20px;
-}
-
-#program-panel .span2-5 {
-  width: 215px;
-}
-
-#program-panel .block .span2-5 {
-  width: 205px;
+  /* margin-left: 14px; */
 }
 
 #program-panel .block {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 #program-panel > .row {
   margin-bottom: 4px;
 }
 
-#program-panel p {
+#program-panel p.add-instruction {
   text-align: center;
 }
 
+
 #program-panel .instruction-container p {
-  text-align: left;
+  /*text-align: left;*/
   margin-bottom: 0px;
 }
+
 
 #program-panel select.arguments {
   max-width: 85px;
