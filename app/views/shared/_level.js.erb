@@ -51,17 +51,22 @@ $(function() {
       topLevelInstructions = RVR.instructionGroups.get(),
 
       addBlock = function(instruction, element, placeholder) {
-        var block, linkWrapper;
+        var block = $("<div/>", {class: "well block"}),
+            linkWrapper = $("<p/>", {class: "add-instruction"});
 
         if (placeholder) {
           $("<div/>", {class: "placeholder"}).append($("<p/>").text("Otherwise")).insertAfter(element.closest(".instruction-container"));
         }
 
-        block = $("<div/>", {class: "well block"}).insertAfter(element.closest(".instruction-container"));
-        linkWrapper = $("<p/>", {class: "add-instruction"}).appendTo(block);
+        block.insertAfter(element.closest(".instruction-container"));
+
+        linkWrapper.appendTo(block);
+
         $("<a/>", {href: "#", text: "Add Instruction"}).appendTo(linkWrapper);
 
         addInstructionRow(linkWrapper);
+
+        return block;
       },
 
       removeBlock = function(instruction, element) {
@@ -87,7 +92,8 @@ $(function() {
             showInstructions = $('<i class="icon-circle-arrow-down pull-right show-instructions"></i>'),
             select2Container = container.find(".select2-container"),
             instructionText,
-            argSelect;
+            argSelect,
+            block;
 
         select2Container.hide();
 
@@ -108,6 +114,10 @@ $(function() {
           instructionText = $('<p/>', {text: instruction.selectLabel || instruction.label});
         }
 
+        if (instruction.block) {
+          container.addClass('block-container');
+        }
+
         showInstructions.click(function() {
           showInstructions.closest(".instruction-content").hide();
           select2Container.show();
@@ -121,10 +131,12 @@ $(function() {
         );
 
         removeBlock(instruction, input);
+
         if (typeof instruction.block !== "undefined") {
-          addBlock(instruction, input);
+          block = addBlock(instruction, input);
           if (instruction.value === "if") {
             addBlock(instruction, input, "Otherwise");
+            block.addClass("secondary");
           }
         }
       },
