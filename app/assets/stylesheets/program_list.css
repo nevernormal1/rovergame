@@ -46,12 +46,29 @@
   border-color: darkgray;
 }
 
+#program-panel .well .well .well {
+  background-color: gainsboro;
+}
+
+#program-panel .well .well .well .well {
+  background-color: lightgoldenrodyellow;
+  border-color: darkgray;
+}
+
 #program-panel .well .well.primary {
   margin-bottom: 4px;
 }
 
 #program-panel .well .well.secondary {
-  background-color: gainsboro;
+  background-color: antiquewhite;
+}
+
+#program-panel .well .well .well .well.secondary {
+  background-color: antiquewhite;
+}
+
+#program-panel .well .well .well.secondary {
+  background-color: burlyWood;
 }
 
 #program-panel p.center {
@@ -63,14 +80,25 @@
 }
 
 .instruction-container.block-container .instruction-content > p {
-  display: inline-block;
   background-color: whiteSmoke;
 }
 
-.well .instruction-container.block-container .instruction-content > p {
+.instruction-content > p {
   display: inline-block;
+}
+
+.well .instruction-container.block-container .instruction-content > p {
   background-color: lightgoldenrodyellow;
   border-color: burlyWood;
+}
+
+.well .well .well .instruction-container.block-container .instruction-content > p {
+  background-color: lightgoldenrodyellow;
+  border-color: burlyWood;
+}
+
+.well .well .instruction-container.block-container .instruction-content > p {
+  background-color: gainsboro;
 }
 
 .placeholder {
@@ -83,6 +111,14 @@
 }
 
 .well .placeholder > p {
-  background-color: gainsboro;
+  background-color: antiqueWhite;
+}
+
+.well .well .placeholder > p {
+  background-color: burlyWood;
+}
+
+.well .well .well .placeholder > p {
+  background-color: antiqueWhite;
 }
 
