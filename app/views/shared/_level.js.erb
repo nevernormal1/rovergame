@@ -135,7 +135,7 @@ $(function() {
         if (typeof instruction.block !== "undefined") {
           block = addBlock(instruction, input);
           if (instruction.value === "if") {
-            addBlock(instruction, input, "Otherwise");
+            addBlock(instruction, input, "Otherwise").addClass("primary");
             block.addClass("secondary");
           }
         }

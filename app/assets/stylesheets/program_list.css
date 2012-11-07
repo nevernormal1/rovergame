@@ -37,12 +37,21 @@
   padding: 8px 12px 2px 12px;
 }
 
+#program-panel > .well {
+  border-color: black;
+}
+
 #program-panel .well .well {
   background-color: lightgoldenrodyellow;
+  border-color: darkgray;
+}
+
+#program-panel .well .well.primary {
+  margin-bottom: 4px;
 }
 
 #program-panel .well .well.secondary {
-  background-color: lightsalmon;
+  background-color: gainsboro;
 }
 
 #program-panel p.center {
@@ -61,5 +70,19 @@
 .well .instruction-container.block-container .instruction-content > p {
   display: inline-block;
   background-color: lightgoldenrodyellow;
+  border-color: burlyWood;
+}
+
+.placeholder {
+  margin-bottom: 0px;
+}
+
+.placeholder > p {
+  display: inline-block;
+  margin-bottom: 0px;
+}
+
+.well .placeholder > p {
+  background-color: gainsboro;
 }
 
