@@ -18,49 +18,46 @@ select.arguments {
   margin-bottom: 1px;
 }
 
-#program-panel .well {
+.block {
   padding: 8px 12px 2px 12px;
-}
-
-#program-panel > .well {
   border-color: black;
 }
 
-#program-panel .well .well {
+.block .block {
   background-color: lightgoldenrodyellow;
   border-color: darkgray;
 }
 
-#program-panel .well .well .well {
+.block .block .block {
   background-color: gainsboro;
 }
 
-#program-panel .well .well .well .well {
+.block .block .block .block {
   background-color: lightgoldenrodyellow;
   border-color: darkgray;
 }
 
-#program-panel .well .well.primary {
+.block .block.primary {
   margin-bottom: 4px;
 }
 
-#program-panel .well .well.secondary {
+.block .block.secondary {
   background-color: antiquewhite;
 }
 
-#program-panel .well .well .well .well.secondary {
+.block .block .block .block.secondary {
   background-color: antiquewhite;
 }
 
-#program-panel .well .well .well.secondary {
+.block .block .block.secondary {
   background-color: burlyWood;
 }
 
-#program-panel p.center {
+p.center {
   text-align: center;
 }
 
-#program-panel .instruction-container.block-container {
+.instruction-container.block-container {
   margin-bottom: 0px;
 }
 
@@ -72,17 +69,17 @@ select.arguments {
   display: inline-block;
 }
 
-.well .instruction-container.block-container .instruction-content > p {
+.block .instruction-container.block-container .instruction-content > p {
   background-color: lightgoldenrodyellow;
   border-color: burlyWood;
 }
 
-.well .well .well .instruction-container.block-container .instruction-content > p {
+.block .block .block .instruction-container.block-container .instruction-content > p {
   background-color: lightgoldenrodyellow;
   border-color: burlyWood;
 }
 
-.well .well .instruction-container.block-container .instruction-content > p {
+.block .block .instruction-container.block-container .instruction-content > p {
   background-color: gainsboro;
 }
 
@@ -95,15 +92,15 @@ select.arguments {
   margin-bottom: 0px;
 }
 
-.well .placeholder > p {
+.block .placeholder > p {
   background-color: antiqueWhite;
 }
 
-.well .well .placeholder > p {
+.block .block .placeholder > p {
   background-color: burlyWood;
 }
 
-.well .well .well .placeholder > p {
+.block .block .block .placeholder > p {
   background-color: antiqueWhite;
 }
 
