@@ -4,7 +4,7 @@ if (typeof RVR === 'undefined') {
 
 RVR.container = function(params) {
   var dimensions = params.dimensions || {width:  573, height: 573},
-      margins = params.margins || {top: 20, right: 20, bottom: 16, left: 16},
+      margins = params.margins || {top: 20, right: 24, bottom: 16, left: 20},
       rowCount = params.rowCount,
       columnCount = params.columnCount,
       element = d3.select("#level-content")

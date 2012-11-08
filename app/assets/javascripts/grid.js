@@ -4,7 +4,7 @@ if (typeof RVR === 'undefined') {
 
 RVR.grid = function(params) {
   var rowCount = params.rows || 14,
-      columnCount = params.columns || 18,
+      columnCount = params.columns || 14,
       walls,
       data,
       parent = params.parent,
@@ -85,13 +85,13 @@ RVR.grid = function(params) {
 
       offsetX = function(percentage) {
         return function(d) {
-          return x(d.x) - cellWidth * percentage;
+          return x(d.x) - cellWidth * percentage - 0.5;
         };
       },
 
       offsetY = function(percentage) {
         return function(d) {
-          return y(d.y) - cellHeight * percentage;
+          return y(d.y) - cellHeight * percentage - 0.5;
         }
       },
 
@@ -121,10 +121,10 @@ RVR.grid = function(params) {
           .attr("class", "block")
           .attr("x", offsetX(0.5))
           .attr("y", offsetY(0.5))
-          .attr("rx", "1")
-          .attr("ry", "1")
-          .attr("height", cellHeight)
-          .attr("width", cellWidth);
+          .attr("rx", "2")
+          .attr("ry", "2")
+          .attr("height", cellHeight + 0.5)
+          .attr("width", cellWidth + 0.5);
 
         wallBlocks.transition()
           .attr("x", offsetX(0.5))
