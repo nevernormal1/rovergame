@@ -5,9 +5,14 @@ $(function() {
         dimensions: container.getLevelDimensions()
       }),
 
+      level = RVR.level()
+        .grid(grid)
+        .parent(container.getElement()),
+
       rover = RVR.rover({
         parent: container.getElement(),
-        grid: grid
+        grid: grid,
+        level: level
       }),
 
       goal = RVR.goal({
@@ -24,7 +29,7 @@ $(function() {
       },
 
       render = function() {
-        grid.render();
+        level.render();
         rover.render();
         goal.render();
       },
@@ -44,7 +49,7 @@ $(function() {
 
       generate = function() {
         rover.reset();
-        grid.reset();
+        level.reset();
         animatedRender();
       },
 

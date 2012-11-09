@@ -5,6 +5,7 @@ if (typeof RVR === 'undefined') {
 RVR.rover = function(params) {
   var parent = params.parent,
       grid = params.grid,
+      level = params.level,
       instance = {},
       position,
       rotation,
@@ -64,7 +65,7 @@ RVR.rover = function(params) {
           pos = {x: position.x, y: position.y - 1};
         }
 
-        return (grid.outOfBounds(pos) || grid.collision(pos));
+        return (grid.outOfBounds(pos) || level.collision(pos));
       },
 
       setCruise = function(bool) {
@@ -98,7 +99,7 @@ RVR.rover = function(params) {
         if (!isMoving()) return;
 
         pos = nextPosition();
-        if (grid.outOfBounds(pos) || grid.collision(pos)) {
+        if (grid.outOfBounds(pos) || level.collision(pos)) {
           dispatch.blocked();
           return;
         }
