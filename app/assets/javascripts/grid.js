@@ -3,21 +3,21 @@ if (typeof RVR === 'undefined') {
 }
 
 RVR.grid = function(params) {
-  var rowCount = params.rows || 14,
+  var container = params.container,
+      dimensions = container.getLevelDimensions(),
+      rowCount = params.rows || 14,
       columnCount = params.columns || 14,
-      parent = params.parent,
-      width = params.dimensions.width,
-      height = params.dimensions.height,
+      parent = container.getElement(),
 
       outOfBounds = function(position) {
         if (position.x < 0 || position.y < 0) return true;
         return (position.x > columnCount - 1 || position.y > rowCount - 1);
       },
 
-      x = d3.scale.linear().range([0, width]),
-      y = d3.scale.linear().range([0, height]),
-      cellWidth = width / columnCount,
-      cellHeight = height / rowCount,
+      x = d3.scale.linear().range([0, dimensions.width]),
+      y = d3.scale.linear().range([0, dimensions.height]),
+      cellWidth = dimensions.width / columnCount,
+      cellHeight = dimensions.height / rowCount,
 
       baseOffset = {
         x: function(d) { return x(d.x) },

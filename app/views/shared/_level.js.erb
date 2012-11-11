@@ -1,8 +1,7 @@
 $(function() {
   var container = RVR.container({}),
       grid = RVR.grid({
-        parent: container.getElement(),
-        dimensions: container.getLevelDimensions()
+        container: container
       }),
 
       level = RVR.zigzag().grid(grid),
