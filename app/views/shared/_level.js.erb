@@ -5,18 +5,14 @@ $(function() {
         dimensions: container.getLevelDimensions()
       }),
 
-      level = RVR.zigzag()
-        .grid(grid)
-        .parent(container.getElement()),
+      level = RVR.zigzag().grid(grid),
 
       rover = RVR.rover({
-        parent: container.getElement(),
         grid: grid,
         level: level
       }),
 
       goal = RVR.goal({
-        parent: container.getElement(),
         grid: grid,
         x: grid.getColumnCount() - 1,
         y: grid.getRowCount() - 1

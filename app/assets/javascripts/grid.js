@@ -24,6 +24,10 @@ RVR.grid = function(params) {
         y: function(d) { return y(d.y) }
       },
 
+      selectAll = function() {
+        return parent.selectAll.apply(parent, arguments);
+      },
+
       offsetX = function(percentage) {
         return function(d) {
           return x(d.x) - cellWidth * percentage - 0.5;
@@ -65,6 +69,7 @@ RVR.grid = function(params) {
   instance.offsetY = offsetY;
   instance.getCellWidth = getCellWidth;
   instance.getCellHeight = getCellHeight;
+  instance.selectAll = selectAll;
 
   return instance;
 }

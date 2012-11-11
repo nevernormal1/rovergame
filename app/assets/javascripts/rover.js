@@ -3,8 +3,7 @@ if (typeof RVR === 'undefined') {
 }
 
 RVR.rover = function(params) {
-  var parent = params.parent,
-      grid = params.grid,
+  var grid = params.grid,
       level = params.level,
       instance = {},
       position,
@@ -115,7 +114,7 @@ RVR.rover = function(params) {
       },
 
       render = function() {
-        var rover = parent.selectAll(".rover").data([position]),
+        var rover = grid.selectAll(".rover").data([position]),
             heading = d3.select("#heading").data([direction()]);
 
         rover.enter()

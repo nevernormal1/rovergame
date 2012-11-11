@@ -3,8 +3,7 @@ if (typeof RVR === 'undefined') {
 }
 
 RVR.goal = function(params) {
-  var parent = params.parent,
-      grid = params.grid,
+  var grid = params.grid,
       position = {
         x: params.x,
         y: params.y
@@ -15,7 +14,7 @@ RVR.goal = function(params) {
       },
 
       render = function() {
-        parent.selectAll(".goal")
+        grid.selectAll(".goal")
           .data([position])
           .enter()
           .append("circle")

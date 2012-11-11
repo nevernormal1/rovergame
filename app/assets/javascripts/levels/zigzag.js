@@ -59,7 +59,7 @@ RVR.zigzag = function() {
       render = function() {
         var wallSelection, wallBlocks;
 
-        wallSelection = my.parent.selectAll(".wall").data(walls);
+        wallSelection = my.grid.selectAll(".wall").data(walls);
         wallSelection.enter()
           .append("g")
           .attr("class", "wall");
