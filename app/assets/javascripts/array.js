@@ -9,3 +9,12 @@ Array.matrix = function (m, n, initial) {
   }
   return mat;
 };
+
+Array.vector = function(l, initial) {
+  var a = [], i;
+  for (i = 0; i < l; l++) {
+    a[i] = initial;
+  }
+  return a;
+}
+

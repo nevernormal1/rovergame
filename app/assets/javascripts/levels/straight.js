@@ -2,41 +2,34 @@ if (typeof RVR === 'undefined') {
   RVR = {};
 }
 
-RVR.zigzag = function() {
+RVR.straight = function() {
   var my = {},
       that = RVR.level(my),
       walls,
 
       generateWallCount = function() {
-        var randomWallCount = Math.ceil(Math.random() * 4) * 2,
-            maxWallCount = Math.floor((my.grid.getRowCount() - 1) / 2);
-
-        if (randomWallCount > maxWallCount) {
-          return maxWallCount;
-        }
-        return randomWallCount;
+        return Math.ceil(Math.random() * (my.grid.getRowCount() - 4)) + 1;
       },
 
       buildWalls = function() {
-        var i, j, y=0, minY=1, maxY, wall, wallCount = generateWallCount();
+        var i,
+            j,
+            wall,
+            y = my.grid.getRowCount() - 1,
+            width = my.grid.getColumnCount(),
+            wallCount = generateWallCount();
 
         walls = [];
 
-        for(i=0; i<wallCount; i++) {
+        for(i = 0; i < wallCount; i++) {
           wall = new Array();
-          maxY = my.grid.getRowCount() - 1 - ((wallCount - i - 1) * 2)
-          y = Math.floor(Math.random() * (maxY - minY)) + minY;
-          if (i % 2 === 0) { // Left wall
-            for(j = 0; j< my.grid.getColumnCount() - 2; j++) {
-              wall.push({x: j, y: y});
-            }
-          } else { // Right wall
-            for(j = 2; j < my.grid.getColumnCount(); j++) {
-              wall.push({x: j, y: y});
-            }
+
+          for(j = 0; j < width; j++) {
+            wall.push({x: j, y: y});
           }
+
           walls.push(wall);
-          minY = y + 2;
+          y -= 1;
         }
       },
 
