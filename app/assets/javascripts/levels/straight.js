@@ -8,20 +8,20 @@ RVR.straight = function() {
       walls,
 
       generateWallCount = function() {
-        return Math.ceil(Math.random() * (my.grid.getRowCount() - 4)) + 1;
+        return Math.ceil((Math.random() * (my.grid.getRowCount() / 2 - 1))) * 2;
       },
 
       buildWalls = function() {
         var i,
             j,
             wall,
-            y = my.grid.getRowCount() - 1,
+            y = 0,
             width = my.grid.getColumnCount(),
             wallCount = generateWallCount();
 
         walls = [];
 
-        for(i = 0; i < wallCount; i++) {
+        for(i = 0; i < wallCount / 2; i++) {
           wall = new Array();
 
           for(j = 0; j < width; j++) {
@@ -29,7 +29,20 @@ RVR.straight = function() {
           }
 
           walls.push(wall);
-          y -= 1;
+          y += 1;
+        }
+
+        y = my.grid.getRowCount() - (wallCount - i);
+
+        for(i = wallCount / 2; i < wallCount; i++) {
+          wall = new Array();
+
+          for(j = 0; j < width; j++) {
+            wall.push({x: j, y: y});
+          }
+
+          walls.push(wall);
+          y += 1;
         }
       },
 
