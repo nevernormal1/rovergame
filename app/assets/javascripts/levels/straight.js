@@ -5,23 +5,26 @@ if (typeof RVR === 'undefined') {
 RVR.straight = function() {
   var my = {},
       that = RVR.level(my),
-      walls,
+      wallGroups,
 
       generateWallCount = function() {
-        return Math.ceil((Math.random() * (my.grid.getRowCount() / 2 - 1))) * 2;
+        return Math.ceil((Math.random() * (my.grid.getRowCount() / 2 - 1)));
       },
 
       buildWalls = function() {
         var i,
             j,
             wall,
+            walls,
             y = 0,
             width = my.grid.getColumnCount(),
+            height = my.grid.getRowCount(),
             wallCount = generateWallCount();
 
-        walls = [];
+        wallGroups = [];
+        walls = new Array();
 
-        for(i = 0; i < wallCount / 2; i++) {
+        for(y = wallCount - 1; y >= 0; y--) {
           wall = new Array();
 
           for(j = 0; j < width; j++) {
@@ -29,12 +32,13 @@ RVR.straight = function() {
           }
 
           walls.push(wall);
-          y += 1;
         }
 
-        y = my.grid.getRowCount() - (wallCount - i);
+        wallGroups.push(walls);
 
-        for(i = wallCount / 2; i < wallCount; i++) {
+        walls = new Array();
+
+        for(y = height - wallCount; y <= height; y++) {
           wall = new Array();
 
           for(j = 0; j < width; j++) {
@@ -42,24 +46,32 @@ RVR.straight = function() {
           }
 
           walls.push(wall);
-          y += 1;
         }
+
+        wallGroups.push(walls);
       },
 
       populateGrid = function() {
         buildWalls();
 
-        my.walls(walls);
+        $.each(wallGroups, function(walls, wallGroup) {
+          my.walls(walls);
+        });
       },
 
       render = function() {
-        var wallSelection, wallBlocks;
+        var wallGroupSelection, wallSelection, wallBlocks;
 
-        wallSelection = my.grid.selectAll(".wall").data(walls);
+        wallGroupSelection = my.grid.selectAll(".wallGroup").data(wallGroups);
+        wallGroupSelection.enter()
+          .append("g")
+          .attr("class", "wallGroup");
+        wallGroupSelection.exit().remove();
+
+        wallSelection = wallGroupSelection.selectAll(".wall").data(function(d) { return d; });
         wallSelection.enter()
           .append("g")
           .attr("class", "wall");
-
         wallSelection.exit().remove();
 
         wallBlocks = wallSelection.selectAll(".block")
