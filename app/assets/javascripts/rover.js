@@ -12,6 +12,17 @@ RVR.rover = function(params) {
       roverOffsetX = grid.offsetX(0.25),
       roverOffsetY = grid.offsetY(0.25),
 
+      positionTranslation = function(currentPosition) {
+        var change = {
+              x: currentPosition.x - params.position.x,
+              y: currentPosition.y - params.position.y
+            },
+            newX = grid.baseOffset.x(change),
+            newY = grid.baseOffset.y(change);
+
+        return "translate(" + newX + "," + newY + ")"
+      },
+
       width = grid.getCellWidth() / 2,
       height = grid.getCellHeight() / 2,
       radius = 3,
@@ -107,9 +118,6 @@ RVR.rover = function(params) {
       },
 
       drawRover = function(d) {
-        console.log("Start x: " + roverOffsetX(d));
-        console.log("Start y: " + roverOffsetY(d));
-
         return "M" + roverOffsetX(d) + "," + roverOffsetY(d) +
           "h" + (width - radius) +
           "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius + "v" + (height - 2 * radius) +
@@ -132,10 +140,7 @@ RVR.rover = function(params) {
             var newX = grid.baseOffset.x(d),
                 newY = grid.baseOffset.y(d);
 
-            console.log("NewX: " + newX);
-            console.log("NewY: " + newY);
-
-            return "translate(" + newX + "," + newY + ")" +
+            return positionTranslation(d) +
                    "rotate(" + -rotation + ")";
           });
 
