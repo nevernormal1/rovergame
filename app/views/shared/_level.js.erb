@@ -6,10 +6,7 @@ $(function() {
 
       level = RVR.straight().grid(grid),
 
-      rover = RVR.rover({
-        grid: grid,
-        level: level
-      }),
+      rover = level.rover(),
 
       goal = RVR.goal({
         grid: grid,
@@ -26,7 +23,7 @@ $(function() {
       render = function() {
         level.render();
         rover.render();
-        goal.render();
+        //goal.render();
       },
 
       timeout,
@@ -45,7 +42,7 @@ $(function() {
       generate = function() {
         rover.reset();
         level.reset();
-        animatedRender();
+        render();
       },
 
       topLevelInstructions = RVR.instructionGroups.get(),

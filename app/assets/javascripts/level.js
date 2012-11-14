@@ -32,6 +32,7 @@ RVR.level = function(my) {
 
   that.grid = function(grid_param) {
     my.grid = grid_param;
+
     return that;
   };
 

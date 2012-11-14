@@ -40,7 +40,7 @@ RVR.straight = function() {
 
         walls = new Array();
 
-        for(y = height - wallCount; y <= height; y++) {
+        for(y = height - wallCount; y < height; y++) {
           walls.push(wallAtRow(y));
         }
 
@@ -90,8 +90,19 @@ RVR.straight = function() {
 
   that.reset = function() {
     my.reset();
-    buildWalls();
     populateGrid();
+    that.rover().reset();
+  };
+
+  that.rover = function() {
+    if (typeof my.rover === 'undefined') {
+      my.rover = RVR.rover({
+        grid: my.grid,
+        level: that,
+        position: {x: 0, y: my.grid.getRowCount() / 2}
+      });
+    }
+    return my.rover;
   };
 
   that.render = render;

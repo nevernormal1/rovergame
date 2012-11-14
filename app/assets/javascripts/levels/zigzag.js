@@ -75,9 +75,21 @@ RVR.zigzag = function() {
       };
 
   that.reset = function() {
+    if (typeof my.rover === 'undefined') {
+      my.rover = RVR.rover({
+        grid: my.grid,
+        level: that,
+        position: {x: 0, y: 0}
+      });
+    }
+    that.rover.reset();
     my.reset();
     buildWalls();
     populateGrid();
+  };
+
+  that.rover = function() {
+    return my.rover;
   };
 
   that.render = render;

@@ -107,6 +107,9 @@ RVR.rover = function(params) {
       },
 
       drawRover = function(d) {
+        console.log("Start x: " + roverOffsetX(d));
+        console.log("Start y: " + roverOffsetY(d));
+
         return "M" + roverOffsetX(d) + "," + roverOffsetY(d) +
           "h" + (width - radius) +
           "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius + "v" + (height - 2 * radius) +
@@ -128,6 +131,9 @@ RVR.rover = function(params) {
           .attr("transform", function(d, i) {
             var newX = grid.baseOffset.x(d),
                 newY = grid.baseOffset.y(d);
+
+            console.log("NewX: " + newX);
+            console.log("NewY: " + newY);
 
             return "translate(" + newX + "," + newY + ")" +
                    "rotate(" + -rotation + ")";
