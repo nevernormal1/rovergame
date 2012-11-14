@@ -105,6 +105,17 @@ RVR.straight = function() {
     return my.rover;
   };
 
+  that.goal = function() {
+    if (typeof my.goal === 'undefined') {
+      my.goal = RVR.goal({
+        grid: my.grid,
+        x: my.grid.getColumnCount() - 1,
+        y: my.grid.getRowCount() / 2
+      });
+    }
+    return my.goal;
+  };
+
   that.render = render;
 
   return that;

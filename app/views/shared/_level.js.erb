@@ -8,11 +8,7 @@ $(function() {
 
       rover = level.rover(),
 
-      goal = RVR.goal({
-        grid: grid,
-        x: grid.getColumnCount() - 1,
-        y: grid.getRowCount() - 1
-      }),
+      goal = level.goal(),
 
       animatedRender = function() {
         d3.transition()
@@ -23,7 +19,7 @@ $(function() {
       render = function() {
         level.render();
         rover.render();
-        //goal.render();
+        goal.render();
       },
 
       timeout,
