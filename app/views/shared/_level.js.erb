@@ -174,7 +174,7 @@ $(function() {
 
         data = instructionElement.select2("data");
         if (data == null) {
-          return;
+          return null;
         }
         instruction = data.instruction;
         instance = instruction.instance();
@@ -186,13 +186,19 @@ $(function() {
 
         if (instruction.block) {
           container.next().children().not(".block").find("input.instruction").each(function() {
-            instance.subInstruction(prepareInstruction($(this)));
+            var instruction = prepareInstruction($(this));
+            if (instruction !== null) {
+              instance.subInstruction(instruction);
+            }
           });
         }
 
         if (instruction.value === "if") {
           container.next().next().next().children().not(".block").find("input.instruction").each(function() {
-            instance.elseInstruction(prepareInstruction($(this)));
+            var instruction = prepareInstruction($(this));
+            if (instruction !== null) {
+              instance.elseInstruction(instruction);
+            }
           });
         }
 
@@ -219,7 +225,10 @@ $(function() {
         $("#status").removeClass("label-warning").addClass("label-success").text("Running");
         $("#stop-program").text("Stop");
         $("#program-panel > div.instruction-container").each(function() {
-          prepareInstruction($(this).find("input.instruction")).callback();
+          var instruction = prepareInstruction($(this).find("input.instruction"));
+          if (instruction != null) {
+            instruction.callback();
+          }
         });
         timeout = setTimeout(updateScene, RVR.transitionDuration);
       };
