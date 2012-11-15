@@ -31,6 +31,7 @@ $(function() {
         if (!goal.reached(rover.getPosition())) {
           timeout = setTimeout(updateScene, RVR.transitionDuration);
         } else {
+          stop();
           $("#goal-reached").modal('show');
         }
       },
@@ -218,6 +219,8 @@ $(function() {
         if (typeof timeout !== "undefined" && timeout != null) {
           clearTimeout(timeout);
           timeout = null;
+          $("#status").text("Stopped").removeClass("label-success").removeClass("label-warning");
+          $("#stop-program").text("Generate");
         }
       },
 
@@ -248,10 +251,8 @@ $(function() {
     });
 
     $("#stop-program").click(function() {
-      $("#status").text("Stopped").removeClass("label-success").removeClass("label-warning");
       stop();
       generate();
-      $("#stop-program").text("Generate");
     });
 
     $(document).on("click", ".add-instruction a", function() {
