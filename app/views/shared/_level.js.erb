@@ -220,13 +220,15 @@ $(function() {
           clearTimeout(timeout);
           timeout = null;
           $("#status").text("Stopped").removeClass("label-success").removeClass("label-warning");
-          $("#stop-program").text("Generate");
+          $("#stop-program span").text("Generate");
+          $("#stop-program i").removeClass("icon-stop").addClass("icon-repeat");
         }
       },
 
       runProgram = function() {
         $("#status").removeClass("label-warning").addClass("label-success").text("Running");
-        $("#stop-program").text("Stop");
+        $("#stop-program span").text("Stop");
+        $("#stop-program i").removeClass("icon-repeat").addClass("icon-stop");
         $("#program-panel > div.instruction-container").each(function() {
           var instruction = prepareInstruction($(this).find("input.instruction"));
           if (instruction != null) {
