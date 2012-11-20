@@ -88,10 +88,14 @@ RVR.straight = function() {
           .attr("y", my.grid.offsetY(0.5));
       };
 
+  that.clear = function() {
+    my.grid.clear();
+  };
+
   that.reset = function() {
     my.reset();
-    populateGrid();
     that.rover().reset();
+    populateGrid();
   };
 
   that.rover = function() {

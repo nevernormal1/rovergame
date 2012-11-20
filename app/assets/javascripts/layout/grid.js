@@ -48,6 +48,10 @@ RVR.grid = function(params) {
         return cellHeight;
       },
 
+      clear = function() {
+        selectAll("*").remove();
+      },
+
       instance = {};
 
   x.domain([0, columnCount - 1]);
@@ -70,6 +74,7 @@ RVR.grid = function(params) {
   instance.getCellWidth = getCellWidth;
   instance.getCellHeight = getCellHeight;
   instance.selectAll = selectAll;
+  instance.clear = clear;
 
   return instance;
 }

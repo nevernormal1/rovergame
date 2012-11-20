@@ -15,15 +15,16 @@ if (typeof RVR === 'undefined') {
     block: true
   }).perform(function(args, instructions, elseInstructions) {
     var direction = args.value,
-        currDirection = this.direction();
+        rover = this,
+        currDirection = rover.direction();
 
     if (currDirection === direction) {
       instructions.forEach(function(instruction) {
-        instruction.callback();
+        instruction.callback(rover);
       });
     } else {
       elseInstructions.forEach(function(instruction) {
-        instruction.callback();
+        instruction.callback(rover);
       });
     }
   });
@@ -36,15 +37,16 @@ if (typeof RVR === 'undefined') {
     value: "if",
     block: true
   }).perform(function(args, instructions, elseInstructions) {
-    var direction = args.direction;
+    var direction = args.direction,
+        rover = this;
 
-    if (this.blocked(direction)) {
+    if (rover.blocked(direction)) {
       instructions.forEach(function(instruction) {
-        instruction.callback();
+        instruction.callback(rover);
       });
     } else {
       elseInstructions.forEach(function(instruction) {
-        instruction.callback();
+        instruction.callback(rover);
       });
     }
   });

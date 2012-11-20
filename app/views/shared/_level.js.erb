@@ -264,6 +264,7 @@ $(function() {
 
     $("#next-level").click(function() {
       $("#goal-reached").modal('hide');
+      level.clear();
       initializeLevel();
       return false;
     });

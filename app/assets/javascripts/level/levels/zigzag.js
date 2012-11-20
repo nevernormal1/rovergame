@@ -74,11 +74,18 @@ RVR.zigzag = function() {
           .attr("y", my.grid.offsetY(0.5));
       };
 
+  that.clear = function() {
+    walls = [];
+    my.reset();
+    that.rover().reset();
+    render();
+  };
+
   that.reset = function() {
     my.reset();
+    that.rover().reset();
     buildWalls();
     populateGrid();
-    that.rover().reset();
   };
 
   that.rover = function() {

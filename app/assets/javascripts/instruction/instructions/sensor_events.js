@@ -14,7 +14,7 @@ if (typeof RVR === 'undefined') {
     var rover = this;
     rover.dispatch.on("blocked", function() {
       instructions.forEach(function(instruction) {
-        instruction.callback();
+        instruction.callback(rover);
       });
     });
   });
