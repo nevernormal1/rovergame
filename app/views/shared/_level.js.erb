@@ -4,11 +4,16 @@ $(function() {
         container: container
       }),
 
-      level = RVR.straight().grid(grid),
+      level,
+      rover,
+      goal,
 
-      rover = level.rover(),
-
-      goal = level.goal(),
+      initializeLevel = function() {
+        level = RVR.levels.next().grid(grid);
+        rover = level.rover();
+        goal = level.goal();
+        initializeProgramPanel();
+      },
 
       animatedRender = function() {
         d3.transition()
@@ -232,7 +237,7 @@ $(function() {
         $("#program-panel > div.instruction-container").each(function() {
           var instruction = prepareInstruction($(this).find("input.instruction"));
           if (instruction != null) {
-            instruction.callback();
+            instruction.callback(rover);
           }
         });
         timeout = setTimeout(updateScene, RVR.transitionDuration);
@@ -257,11 +262,17 @@ $(function() {
       generate();
     });
 
+    $("#next-level").click(function() {
+      $("#goal-reached").modal('hide');
+      initializeLevel();
+      return false;
+    });
+
     $(document).on("click", ".add-instruction a", function() {
       addInstructionRow($(this).closest(".add-instruction"));
       return false;
     });
 
-    initializeProgramPanel();
+    initializeLevel();
 });
 

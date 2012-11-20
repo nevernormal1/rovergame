@@ -162,8 +162,6 @@ RVR.rover = function(params) {
 
   instance.dispatch = dispatch;
 
-  RVR.rover = instance;
-
   return instance;
 };
 

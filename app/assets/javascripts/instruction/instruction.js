@@ -20,8 +20,8 @@ RVR.instruction = function(params) {
             subInstructions = [],
             elseInstructions = [],
 
-            callback = function() {
-              target_function.call(RVR.rover, argValues, subInstructions, elseInstructions);
+            callback = function(rover) {
+              target_function.call(rover, argValues, subInstructions, elseInstructions);
             },
             subInstruction = function(instruction) {
               subInstructions.push(instruction);

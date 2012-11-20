@@ -75,6 +75,13 @@ RVR.zigzag = function() {
       };
 
   that.reset = function() {
+    my.reset();
+    buildWalls();
+    populateGrid();
+    that.rover().reset();
+  };
+
+  that.rover = function() {
     if (typeof my.rover === 'undefined') {
       my.rover = RVR.rover({
         grid: my.grid,
@@ -82,14 +89,18 @@ RVR.zigzag = function() {
         position: {x: 0, y: 0}
       });
     }
-    that.rover.reset();
-    my.reset();
-    buildWalls();
-    populateGrid();
+    return my.rover;
   };
 
-  that.rover = function() {
-    return my.rover;
+  that.goal = function() {
+    if (typeof my.goal === 'undefined') {
+      my.goal = RVR.goal({
+        grid: my.grid,
+        x: my.grid.getColumnCount() - 1,
+        y: my.grid.getRowCount() - 1
+      });
+    }
+    return my.goal;
   };
 
   that.render = render;
