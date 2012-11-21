@@ -5,6 +5,7 @@ $(function() {
       }),
 
       level,
+      levelNumber = 0,
       rover,
       goal,
 
@@ -13,6 +14,15 @@ $(function() {
         rover = level.rover();
         goal = level.goal();
         initializeProgramPanel();
+        levelNumber += 1;
+        $(".level-number").text(levelNumber);
+        $("#level-mission .modal-body").html("");
+        level.mission.forEach(function(paragraph) {
+          $("#level-mission .modal-body").append(
+            $("<p/>").text(paragraph)
+          );
+        });
+        $("#level-mission").modal("show");
       },
 
       animatedRender = function() {

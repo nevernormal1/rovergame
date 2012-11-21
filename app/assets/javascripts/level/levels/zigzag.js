@@ -110,6 +110,12 @@ RVR.zigzag = function() {
     return my.goal;
   };
 
+  that.mission = [
+    'Learn about some of the basic navigational controls of your rover by guiding it through this simple maze.',
+    'The number of walls can vary and their vertical position can change, but their horizontal position will not. Press the "Generate" button to get a better idea of the types of layouts your rover must be able to handle.',
+    'When you press the play button, your program will be run against 3 random layouts of this type. If your rover reaches the blue circle for each variation, you will move on to the next level.'
+  ];
+
   that.render = render;
 
   return that;

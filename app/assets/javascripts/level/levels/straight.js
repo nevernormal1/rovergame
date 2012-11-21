@@ -120,6 +120,10 @@ RVR.straight = function() {
     return my.goal;
   };
 
+  that.mission = [
+    'First level'
+  ];
+
   that.render = render;
 
   return that;

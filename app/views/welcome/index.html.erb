@@ -20,19 +20,19 @@
     <button id="run-program" class="btn"><i class="icon-play"></i> Run</button>
     <button id="pause-program" class="btn"><i class="icon-pause"></i> Pause</button>
     <button id="stop-program" class="btn"><i class="icon-repeat"></i> <span>Generate</span></button>
+    <button id="view-mission" class="btn pull-right" href="#level-mission" data-toggle="modal"><i class="icon-flag"></i> View Mission</button>
   </div>
 </div>
-<div class="row">
-  <div class="span12">
-    <div class="well">
-      <h2>Level 1 Mission</h2>
-      <p class="lead">Learn about some of the basic navigational controls of your rover by guiding it through this simple maze.</p>
-      <p>The number of walls can vary and their vertical position can change, but their horizontal position will not. Press the "Generate" button to get a better idea of the types of layouts your rover must be able to handle.</p>
-      <p>When you press the play button, your program will be run against 3 random layouts of this type. If your rover reaches the blue circle for each variation, you will move on to the next level.</p>
-    </div>
+
+<div class="modal hide fade" id="level-mission">
+  <div class="modal-header">
+    <h3>Level <span class="level-number">1</span> Mission</h3>
   </div>
-</div>
-<div id="debug" class="row">
+  <div class="modal-body">
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">OK</a>
+  </div>
 </div>
 
 <div class="modal hide fade" id="goal-reached">
