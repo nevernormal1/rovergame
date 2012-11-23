@@ -121,7 +121,9 @@ RVR.straight = function() {
   };
 
   that.mission = [
-    'First level'
+    'Welcome to RoverGame. This first level introduces you to the cruise on/off instruction.',
+    'On this level, the goal is straight across from you and no walls will get in your way.',
+    'See if you can program the rover to reach the goal.'
   ];
 
   that.render = render;
