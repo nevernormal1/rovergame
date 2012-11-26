@@ -252,9 +252,9 @@ $(function() {
         return button;
       },
 
-      tutorialPopoverParams = function(params, nextElement) {
+      tutorialPopoverParams = function(params) {
         params.html = true;
-        params.content = '<p>' + params.content + '.</p>' + tutorialButton(nextElement);
+        params.content = '<p>' + params.content + '</p>';
         return params;
       },
 
@@ -262,25 +262,20 @@ $(function() {
         var tips = [
           {
             element: "#level-content",
-            nextElement: "#program-panel",
             params: {
-              title: "Current level",
               content: 'This is where your rover will encounter its challenges. Each level will contain its own unique layout and obstacles.',
-              placement: "left"
+              placement: "right"
             }
           },
           {
             element: "#program-panel",
-            nextElement: "#run-program",
             params: {
               content: "This is where you program your rover. Select instructions from the dropdown that will allow your rover to navigate the current level.",
-              title: 'Program panel',
               placement: "bottom"
             }
           },
           {
             element:  "#run-program",
-            nextElement: "#info",
             params: {
               title: 'Control buttons',
               content: 'Use these buttons to run, pause & stop your program.',
@@ -289,32 +284,26 @@ $(function() {
           },
           {
             element: "#info",
-            nextElement: "#view-mission",
             params: {
               title: 'Rover info',
-              content: 'This section will provide some info about the status of your rover as your program runs',
-              placement: 'top'
+              content: 'This section will provide some info about the status of your rover as your program runs.',
+              placement: 'bottom'
             }
           },
           {
             element: "#view-mission",
             params: {
               title: 'Current mission',
-              content: 'Use this button to read about your current mission at any time'
+              content: 'Use this button to read about your current mission at any time.',
+              placement: 'top'
             }
           }
         ];
 
         tips.forEach(function(tip) {
-          $(tip.element).popover(tutorialPopoverParams(tip.params, tip.nextElement));
+          $(tip.element).popover(tutorialPopoverParams(tip.params));
+          $(tip.element).popover('show');
         });
-
-        $(document).on("click", "button.tutorial", function() {
-          var nextTip = $(this).attr("data-next")
-          $(nextTip).popover('show');
-        });
-
-        $("#level-content").popover('show');
       },
 
       runProgram = function() {
