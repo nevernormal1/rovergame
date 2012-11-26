@@ -22,7 +22,7 @@ $(function() {
             $("<p/>").text(paragraph)
           );
         });
-        $("#level-mission").modal("show");
+        //$("#level-mission").modal("show");
       },
 
       animatedRender = function() {
@@ -240,6 +240,83 @@ $(function() {
         }
       },
 
+      tutorialButton = function(nextElement) {
+        var button = '<button class="btn btn-success tutorial"';
+
+        if (typeof nextElement !== 'undefined') {
+          button = button + 'data-next="' + nextElement + '"';
+        }
+
+        button += '>OK</button>';
+
+        return button;
+      },
+
+      tutorialPopoverParams = function(params, nextElement) {
+        params.html = true;
+        params.content = '<p>' + params.content + '.</p>' + tutorialButton(nextElement);
+        return params;
+      },
+
+      tutorial = function() {
+        var tips = [
+          {
+            element: "#level-content",
+            nextElement: "#program-panel",
+            params: {
+              title: "Current level",
+              content: 'This is where your rover will encounter its challenges. Each level will contain its own unique layout and obstacles.',
+              placement: "left"
+            }
+          },
+          {
+            element: "#program-panel",
+            nextElement: "#run-program",
+            params: {
+              content: "This is where you program your rover. Select instructions from the dropdown that will allow your rover to navigate the current level.",
+              title: 'Program panel',
+              placement: "bottom"
+            }
+          },
+          {
+            element:  "#run-program",
+            nextElement: "#info",
+            params: {
+              title: 'Control buttons',
+              content: 'Use these buttons to run, pause & stop your program.',
+              placement: 'top'
+            }
+          },
+          {
+            element: "#info",
+            nextElement: "#view-mission",
+            params: {
+              title: 'Rover info',
+              content: 'This section will provide some info about the status of your rover as your program runs',
+              placement: 'top'
+            }
+          },
+          {
+            element: "#view-mission",
+            params: {
+              title: 'Current mission',
+              content: 'Use this button to read about your current mission at any time'
+            }
+          }
+        ];
+
+        tips.forEach(function(tip) {
+          $(tip.element).popover(tutorialPopoverParams(tip.params, tip.nextElement));
+        });
+
+        $(document).on("click", "button.tutorial", function() {
+          var nextTip = $(this).attr("data-next")
+          $(nextTip).popover('show');
+        });
+
+        $("#level-content").popover('show');
+      },
+
       runProgram = function() {
         $("#status").removeClass("label-warning").addClass("label-success").text("Running");
         $("#stop-program span").text("Stop");
@@ -284,6 +361,7 @@ $(function() {
       return false;
     });
 
+    tutorial();
     initializeLevel();
 });
 
