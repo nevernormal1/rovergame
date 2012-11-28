@@ -7,6 +7,7 @@ gem 'rails', '3.2.3'
 
 gem 'pg'
 gem 'authlogic'
+gem 'dynamic_form'
 
 group :development do
   gem 'heroku'

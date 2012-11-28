@@ -73,8 +73,8 @@
       <div class="jumbotron">
         <h1>Welcome to RoverGame!</h1>
         <p class="lead">Program a rover from the ground up for autonomous exploration of Mars!</p>
-        <a class="btn btn-large btn-success" href="#">New Game</a>
-        <a class="btn btn-large btn-info" href="#">Continue</a>
+        <%= link_to 'New Game', signup_path, :class => 'btn btn-large btn-success' %>
+        <%= link_to 'Continue', login_path, :class => 'btn btn-large btn-info' %>
       </div>
 
       <hr>

@@ -1,4 +1,14 @@
 Rover::Application.routes.draw do
+  match '/login' => "user_sessions#new"
+  match '/logout' => "user_sessions#destroy"
+  match 'signup' => 'users#new', :as => :signup
+
+  resources :users, :only => [:create]
+  resources :user_sessions
+
+  root :to => 'levels#index'
+
+  #
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -10,8 +20,6 @@ Rover::Application.routes.draw do
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
 
   # Sample resource route with options:
   #   resources :products do
@@ -48,7 +56,6 @@ Rover::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 
