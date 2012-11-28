@@ -6,10 +6,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
-    if @user.save
+    result = Builders::UserBuilder.new(params[:user]).build
+    if result.success
       redirect_to root_path
     else
+      @user = result.object
       render :action => :new
     end
   end
