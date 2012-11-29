@@ -5,6 +5,7 @@ Rover::Application.routes.draw do
 
   resources :users, :only => [:create]
   resources :user_sessions
+  resources :levels
 
   root :to => 'levels#index'
 

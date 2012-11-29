@@ -9,8 +9,18 @@ $(function() {
       rover,
       goal,
 
+      renderLevel = function() {
+      },
+
+      loadNextLevel = function() {
+        $.getJSON('/levels', {}, function(data) {
+          level = RVR[data.level]();
+          initializeLevel();
+        });
+      },
+
       initializeLevel = function() {
-        level = RVR.levels.next().grid(grid);
+        level.grid(grid);
         rover = level.rover();
         goal = level.goal();
         initializeProgramPanel();
@@ -275,7 +285,7 @@ $(function() {
     $("#next-level").click(function() {
       $("#goal-reached").modal('hide');
       level.clear();
-      initializeLevel();
+      loadNextLevel();
       return false;
     });
 
@@ -284,6 +294,6 @@ $(function() {
       return false;
     });
 
-    initializeLevel();
+    loadNextLevel();
 });
 
