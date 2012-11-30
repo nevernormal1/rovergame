@@ -4,7 +4,7 @@ class LevelsController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        render :json => {level: 'straight'}.to_json
+        render :json => {level: {name: 'straight', position: 1}}.to_json
       end
       format.html
     end
