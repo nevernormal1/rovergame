@@ -9,12 +9,9 @@ $(function() {
       rover,
       goal,
 
-      renderLevel = function() {
-      },
-
       loadNextLevel = function() {
         $.getJSON('/levels', {}, function(data) {
-          levelParams = data.level;
+          levelParams = data;
           level = RVR[levelParams.name]();
           initializeLevel();
         });
