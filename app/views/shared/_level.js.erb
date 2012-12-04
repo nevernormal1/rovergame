@@ -17,6 +17,25 @@ $(function() {
         });
       },
 
+      showGoalReached = function() {
+        $("#goal-reached").modal('show');
+      },
+
+      solutionStoreFailed = function(jqXHR, textStatus, errorThrown) {
+        alert("There was a problem saving your solution.");
+      },
+
+      storeLevelSolution = function() {
+        $.ajax({
+          type: 'POST',
+          url: '/solutions',
+          data: {position: levelParams.position},
+          dataType: "json",
+          success: showGoalReached,
+          error: solutionStoreFailed
+        });
+      },
+
       initializeLevel = function() {
         level.grid(grid);
         rover = level.rover();
@@ -54,7 +73,7 @@ $(function() {
           timeout = setTimeout(updateScene, RVR.transitionDuration);
         } else {
           stop();
-          $("#goal-reached").modal('show');
+          storeLevelSolution();
         }
       },
 

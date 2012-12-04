@@ -3,7 +3,8 @@ Rover::Application.routes.draw do
   match '/logout' => "user_sessions#destroy"
   match 'signup' => 'users#new', :as => :signup
 
-  resources :users, :only => [:create]
+  resources :solutions, :only => :create
+  resources :users, :only => :create
   resources :user_sessions
   resources :levels
 
