@@ -266,7 +266,7 @@ $(function() {
         }
       },
 
-      runProgram = function() {
+      run = function() {
         $("#status").removeClass("label-warning").addClass("label-success").text("Running");
         $("#stop-program span").text("Stop");
         $("#stop-program i").removeClass("icon-repeat").addClass("icon-stop");
@@ -285,7 +285,7 @@ $(function() {
 
     $("#run-program").click(function() {
       stop();
-      runProgram();
+      run();
     });
 
     $("#pause-program").click(function() {
