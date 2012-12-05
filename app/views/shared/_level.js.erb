@@ -124,7 +124,8 @@ $(function() {
 
       renderInstruction = function(instruction, container) {
         var input = container.find("input.instruction"),
-            showInstructions = $('<i class="icon-circle-arrow-down pull-right show-instructions"></i>'),
+            showInstructions = $('<i class="icon-circle-arrow-down pull-right"></i>'),
+            deleteInstruction = $('<i class="icon-remove-circle pull-right"></i>'),
             select2Container = container.find(".select2-container"),
             instructionText,
             argSelect,
@@ -159,9 +160,14 @@ $(function() {
           input.select2("open");
         });
 
+        deleteInstruction.click(function() {
+          container.remove();
+        });
+
         container.append(
           $('<div/>', {class: 'instruction-content'})
             .append(showInstructions)
+            .append(deleteInstruction)
             .append(instructionText)
         );
 
