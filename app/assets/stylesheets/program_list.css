@@ -104,3 +104,18 @@ p.center {
   background-color: antiqueWhite;
 }
 
+.instruction-content {
+  position: relative;
+}
+
+.remove-instruction {
+  position: absolute;
+  right: 0px;
+  top: 6px;
+}
+
+.edit-instruction {
+  position: absolute;
+  left: 0px;
+  top: 6px;
+}

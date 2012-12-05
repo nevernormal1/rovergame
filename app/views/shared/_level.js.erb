@@ -124,8 +124,8 @@ $(function() {
 
       renderInstruction = function(instruction, container) {
         var input = container.find("input.instruction"),
-            showInstructions = $('<i class="icon-circle-arrow-down pull-right"></i>'),
-            deleteInstruction = $('<i class="icon-remove-circle pull-right"></i>'),
+            showInstructions = $('<i class="icon-circle-arrow-down edit-instruction instruction-control" style="display:none"></i>'),
+            deleteInstruction = $('<i class="icon-remove-circle remove-instruction instruction-control" style="display:none"></i>'),
             select2Container = container.find(".select2-container"),
             instructionText,
             argSelect,
@@ -314,6 +314,14 @@ $(function() {
     $(document).on("click", ".add-instruction a", function() {
       addInstructionRow($(this).closest(".add-instruction"));
       return false;
+    });
+
+    $(document).on("mouseenter", ".instruction-container", function() {
+      $(this).find(".instruction-control").show();
+    });
+
+    $(document).on("mouseleave", ".instruction-container", function() {
+      $(this).find(".instruction-control").hide();
     });
 
     loadNextLevel();
