@@ -65,6 +65,10 @@ p.center {
   background-color: whiteSmoke;
 }
 
+.instruction-content {
+  padding-left: 18px;
+}
+
 .instruction-content > p {
   display: inline-block;
 }
