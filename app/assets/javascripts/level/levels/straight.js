@@ -50,7 +50,7 @@ RVR.straight = function() {
       populateGrid = function() {
         buildWalls();
 
-        $.each(wallGroups, function(walls, wallGroup) {
+        wallGroups.forEach(function(walls) {
           my.walls(walls);
         });
       },
