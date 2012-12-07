@@ -12,13 +12,9 @@ RVR.rover = function(params) {
       roverOffsetX = grid.offsetX(0.25),
       roverOffsetY = grid.offsetY(0.25),
 
-      positionTranslation = function(currentPosition) {
-        var change = {
-              x: currentPosition.x - params.position.x,
-              y: currentPosition.y - params.position.y
-            },
-            newX = grid.baseOffset.x(change),
-            newY = grid.baseOffset.y(change);
+      positionTranslation = function(pos) {
+        var newX = grid.baseOffset.x(pos),
+            newY = grid.baseOffset.y(pos);
 
         return "translate(" + newX + "," + newY + ")"
       },
@@ -118,7 +114,7 @@ RVR.rover = function(params) {
       },
 
       drawRover = function(d) {
-        return "M" + roverOffsetX(d) + "," + roverOffsetY(d) +
+        return "M" + roverOffsetX({x: 0, y: 0}) + "," + roverOffsetY({x: 0, y: 0}) +
           "h" + (width - radius) +
           "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius + "v" + (height - 2 * radius) +
           "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius + "h" + (radius - width) + "z";

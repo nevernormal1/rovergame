@@ -103,7 +103,7 @@ RVR.rotate = function() {
       my.rover = RVR.rover({
         grid: my.grid,
         level: that,
-        position: {x: my.grid.getColumnCount() / 2, y: 0}
+        position: {x: my.grid.getColumnCount() - 1, y: 1}
       });
     }
     return my.rover;
