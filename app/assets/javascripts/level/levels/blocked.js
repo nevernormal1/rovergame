@@ -8,7 +8,7 @@ RVR.blocked = function() {
       walls,
 
       generateWallCount = function() {
-        return Math.ceil((Math.random() * 2) * 4;
+        return Math.ceil(Math.random() * 2) * 4;
       },
 
       wallRange = function(start, end, coordinates) {
@@ -72,7 +72,6 @@ RVR.blocked = function() {
             } else {
               walls.push(wallRange(row, row - height, columnCoordinates(column)));
               row -= height;
-              width -= 
             }
             height -= 1;
             direction *= -1;
@@ -148,7 +147,7 @@ RVR.blocked = function() {
   that.mission = [
     'This level introduces you to the "Blocked" event.',
     'When an obstacle prevents your rover from cruising on its current heading, a "Blocked" event will be triggered.',
-    'Events are special instructions that have their own set of instructions nested inside them. These nested instructions are only executed when the event is triggered.'
+    'Events are special instructions that have their own set of instructions nested inside them. These nested instructions are only executed when the event is triggered.',
     'To solve this level you will need to place on instruction inside a "Blocked" event. Good luck!'
   ];
 
