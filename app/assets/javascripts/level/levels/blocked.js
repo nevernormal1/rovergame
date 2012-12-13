@@ -8,7 +8,8 @@ RVR.blocked = function() {
       walls,
 
       generateWallCount = function() {
-        return Math.ceil(Math.random() * 2) * 4;
+        return 6;
+        //return Math.ceil(Math.random() * 2) * 2;
       },
 
       wallRange = function(start, end, coordinates) {
@@ -41,16 +42,12 @@ RVR.blocked = function() {
             column = 0,
             direction = 1,
             width = my.grid.getColumnCount() - 1,
-            height = my.grid.getRowCount() - 2,
+            height = my.grid.getRowCount() - 1,
             wallCount = generateWallCount();
 
         walls = new Array();
 
-        console.log("wallCount: " + wallCount);
         for(i = 0; i < wallCount; i++) {
-          console.log("i: " + i);
-          console.log("column: " + column);
-          console.log("width: " + width);
           if (i % 2 == 0) {
             if (direction > 0) {
               // Horizontal wall from left to right
@@ -61,10 +58,10 @@ RVR.blocked = function() {
             } else {
               // Horizontal wall from right to left
               walls.push(wallRange(column, column - width, rowCoordinates(row)));
-              column = column - width;
+              column = column - width + 1;
               row -= 1;
               height -= 3;
-              width -= 2;
+              //width -= 2;
             }
 
           } else {
@@ -72,15 +69,17 @@ RVR.blocked = function() {
               // Vertical wall from top to bottom
               walls.push(wallRange(row, height, columnCoordinates(column)));
               column -= 1;
-              row = height;
+              row = height - 1;
               width -= 1;
             } else {
               walls.push(wallRange(row, row - height, columnCoordinates(column)));
-              row -= height;
+              row = row - height + 1;
+              column += 1;
             }
             height -= 1;
             direction *= -1;
           }
+          console.log(walls[walls.length - 1]);
         }
       },
 
