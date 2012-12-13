@@ -13,7 +13,7 @@ RVR.blocked = function() {
 
       wallRange = function(start, end, coordinates) {
         var wall = new Array(),
-            direction = start > end ? 1 : -1,
+            direction = start < end ? 1 : -1,
             i;
 
         for(i = start; i !== end; i += direction) {
@@ -46,7 +46,11 @@ RVR.blocked = function() {
 
         walls = new Array();
 
+        console.log("wallCount: " + wallCount);
         for(i = 0; i < wallCount; i++) {
+          console.log("i: " + i);
+          console.log("column: " + column);
+          console.log("width: " + width);
           if (i % 2 == 0) {
             if (direction > 0) {
               // Horizontal wall from left to right
@@ -69,6 +73,7 @@ RVR.blocked = function() {
               walls.push(wallRange(row, height, columnCoordinates(column)));
               column -= 1;
               row = height;
+              width -= 1;
             } else {
               walls.push(wallRange(row, row - height, columnCoordinates(column)));
               row -= height;
