@@ -6,10 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #
-Level.create(name: 'blocked', position: 1)
-Level.create(name: 'straight', position: 2)
-Level.create(name: 'rotate', position: 3)
-Level.create(name: 'zigzag', position: 4)
+%w(straight rotate blocked zigzag).each_with_index do |name, index|
+  Level.create(name: name, position: index + 1)
+end
 
 FactoryGirl.create(:user, {name: 'Default User', password: 'password', email: 'user@example.com'})
 
