@@ -8,14 +8,17 @@ RVR.blocked = function() {
       walls,
 
       generateWallCount = function() {
-        return 6;
+        return 12;
         //return Math.ceil(Math.random() * 2) * 2;
       },
 
+      // Puts a wall from the starting index to the ending one, inclusive
       wallRange = function(start, end, coordinates) {
         var wall = new Array(),
             direction = start < end ? 1 : -1,
             i;
+
+        end += direction;
 
         for(i = start; i !== end; i += direction) {
           wall.push(coordinates(i));
@@ -41,8 +44,8 @@ RVR.blocked = function() {
             row = 1,
             column = 0,
             direction = 1,
-            width = my.grid.getColumnCount() - 1,
-            height = my.grid.getRowCount() - 1,
+            width = my.grid.getColumnCount() - 2,
+            height = my.grid.getRowCount() - 4,
             wallCount = generateWallCount();
 
         walls = new Array();
@@ -51,35 +54,35 @@ RVR.blocked = function() {
           if (i % 2 == 0) {
             if (direction > 0) {
               // Horizontal wall from left to right
-              walls.push(wallRange(column, width, rowCoordinates(row)));
-              column = width - 1;
+              walls.push(wallRange(column, column + width, rowCoordinates(row)));
+              column = column + width;
               row += 1;
-              width -= 1;
+              width -= 2;
             } else {
               // Horizontal wall from right to left
-              walls.push(wallRange(column, column - width, rowCoordinates(row)));
-              column = column - width + 1;
+              walls.push(wallRange(column, column - width - 1, rowCoordinates(row)));
+              column = column - width - 1;
               row -= 1;
-              height -= 3;
-              //width -= 2;
+              height -= 2;
+              width -= 1;
             }
 
           } else {
             if (direction > 0) {
               // Vertical wall from top to bottom
-              walls.push(wallRange(row, height, columnCoordinates(column)));
+              walls.push(wallRange(row, row + height, columnCoordinates(column)));
               column -= 1;
-              row = height - 1;
+              row = row + height;
               width -= 1;
             } else {
+              // Vertical wall from bottom to top
               walls.push(wallRange(row, row - height, columnCoordinates(column)));
-              row = row - height + 1;
+              row = row - height;
               column += 1;
+              height -= 2;
             }
-            height -= 1;
             direction *= -1;
           }
-          console.log(walls[walls.length - 1]);
         }
       },
 
