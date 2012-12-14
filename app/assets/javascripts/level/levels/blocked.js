@@ -145,7 +145,7 @@ RVR.blocked = function() {
       my.goal = RVR.goal({
         grid: my.grid,
         x: my.grid.getColumnCount() / 2,
-        y: my.grid.getRowCount() - 1
+        y: my.grid.getRowCount() / 2
       });
     }
     return my.goal;
