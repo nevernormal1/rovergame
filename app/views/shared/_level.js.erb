@@ -18,7 +18,12 @@ $(function() {
       },
 
       showGoalReached = function() {
+        $("#next-level").removeClass("btn-success").addClass("disabled").text("Saving...");
         $("#goal-reached").modal('show');
+      },
+
+      showLevelContinue = function() {
+        $("#next-level").removeClass("disabled").addClass("btn-success").text("Continue");
       },
 
       solutionStoreFailed = function(jqXHR, textStatus, errorThrown) {
@@ -31,7 +36,7 @@ $(function() {
           url: '/solutions',
           data: {position: levelParams.position},
           dataType: "json",
-          success: showGoalReached,
+          success: showLevelContinue,
           error: solutionStoreFailed
         });
       },
@@ -73,6 +78,7 @@ $(function() {
           timeout = setTimeout(updateScene, RVR.transitionDuration);
         } else {
           stop();
+          showGoalReached();
           storeLevelSolution();
         }
       },
