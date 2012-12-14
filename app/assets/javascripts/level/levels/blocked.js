@@ -154,8 +154,8 @@ RVR.blocked = function() {
   that.mission = [
     'This level introduces you to the "Blocked" event.',
     'When an obstacle prevents your rover from cruising on its current heading, a "Blocked" event will be triggered.',
-    'Events are special instructions that have their own set of instructions nested inside them. These nested instructions are only executed when the event is triggered.',
-    'To solve this level you will need to place on instruction inside a "Blocked" event. Good luck!'
+    'Events are special instructions that have their own instructions nested inside them. These nested instructions are only executed when the event is triggered.',
+    'To solve this level you will need to place an instruction you have learned inside a "Blocked" event. Good luck!'
   ];
 
   that.render = render;
