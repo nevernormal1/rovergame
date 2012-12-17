@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #
-%w(straight rotate blocked zigzag).each_with_index do |name, index|
+%w(zigzagup straight rotate blocked zigzag).each_with_index do |name, index|
   Level.create(name: name, position: index + 1)
 end
 
