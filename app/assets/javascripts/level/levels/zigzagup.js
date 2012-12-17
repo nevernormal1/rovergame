@@ -11,11 +11,25 @@ RVR.zigzagup = function() {
         return Math.ceil(Math.random() * 3);
       },
 
-      wallLength = function(x, y, length) {
+      rowLength = function(x, y, length) {
         var i, wall = [];
 
         for (i = 0; i < length; i++) {
-          wall.push({x: x + i, y: y});
+          if (x + i <= my.grid.getColumnCount()) {
+            wall.push({x: x + i, y: y});
+          }
+        }
+
+        return wall;
+      },
+
+      columnLength = function(x, y, length) {
+        var i, wall = [];
+
+        for (i = 0; i < length; i++) {
+          if (y + i >= 0) {
+            wall.push({x: x, y: y + i});
+          }
         }
 
         return wall;
@@ -24,20 +38,20 @@ RVR.zigzagup = function() {
       buildWalls = function() {
         var x = 0,
             width = my.grid.getColumnCount(),
-            y = my.grid.getRowCount(),
+            y = my.grid.getRowCount() - 1,
             length;
 
         walls = [];
 
         while (y > 0) {
-          length = randomLength;
-          if (x + length > width) {
-            length = width - x;
-          }
+          length = randomLength();
 
-          walls.push(wallLength(x, y, length));
+          walls.push(rowLength(x, y - 1, length));
+
+          walls.push(columnLength(x + length + 1, y, length));
 
           x += length;
+          y -= length;
         }
       },
 
