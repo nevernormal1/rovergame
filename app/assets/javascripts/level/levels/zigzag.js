@@ -111,8 +111,11 @@ RVR.zigzag = function() {
   };
 
   that.mission = [
-    'Learn about some of the basic navigational controls of your rover by guiding it through this simple maze.',
-    'The number of walls can vary and their vertical position can change, but their horizontal position will not.',
+    'This level introduces you to your sensor checks. You have 2 sensor checks.',
+    'The first one checks your current heading against one of the 4 possible directions: North, South, East & West. If your heading matches the selected direction, the first block of nested instructions will execute. If your heading does not match the selected direction, the "Otherwise" block of instructions will run.',
+    "The second sensor can determine whether or not a specific direction is blocked for travel in the rover's current position. If it is, the first group of instructions will execute. If it is not, the second group will execute.",
+    "Sensor checks are not events, so they do not wait for a trigger to execute. They will execute immediately when called.",,
+    "Sensor checks should only be used when your rover is stopped or blocked."
   ];
 
   that.render = render;
