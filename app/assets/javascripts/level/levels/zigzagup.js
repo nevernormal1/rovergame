@@ -5,14 +5,16 @@ if (typeof RVR === 'undefined') {
 RVR.zigzagup = function() {
   var my = {},
       that = RVR.level(my),
-      walls,
+      wallGroups,
 
-      randomLength = function() {
-        return Math.ceil(Math.random() * 3);
+      generateWallCount = function() {
+        return Math.ceil(Math.random() * 6) + 2;
       },
 
       rowLength = function(x, y, length) {
         var i, wall = [];
+
+        console.log({x: x, y: y});
 
         for (i = 0; i < length; i++) {
           if (x + i <= my.grid.getColumnCount()) {
@@ -23,52 +25,47 @@ RVR.zigzagup = function() {
         return wall;
       },
 
-      columnLength = function(x, y, length) {
-        var i, wall = [];
-
-        for (i = 0; i < length; i++) {
-          if (y + i >= 0) {
-            wall.push({x: x, y: y + i});
-          }
-        }
-
-        return wall;
-      },
 
       buildWalls = function() {
-        var x = 0,
+        var i = 0,
+            wallCount = generateWallCount(),
             width = my.grid.getColumnCount(),
-            y = my.grid.getRowCount() - 1,
-            length;
+            height = my.grid.getRowCount(),
+            topWalls = [],
+            bottomWalls = [];
 
-        walls = [];
+        wallGroups = [];
 
-        while (y > 0) {
-          length = randomLength();
-
-          walls.push(rowLength(x, y - 1, length));
-
-          walls.push(columnLength(x + length + 1, y, length));
-
-          x += length;
-          y -= length;
+        for(i = 0; i < wallCount; i++) {
+          topWalls.push(rowLength(0, i, wallCount - i));
+          bottomWalls.push(rowLength(width - wallCount + i, height - i - 1, wallCount - i));
         }
+
+        wallGroups.push(topWalls);
+        wallGroups.push(bottomWalls);
       },
 
       populateGrid = function() {
         buildWalls();
 
-        my.walls(walls);
+        wallGroups.forEach(function(walls) {
+          my.walls(walls);
+        });
       },
 
       render = function() {
-        var wallSelection, wallBlocks;
+        var wallGroupSelection, wallSelection, wallBlocks;
 
-        wallSelection = my.grid.selectAll(".wall").data(walls);
+        wallGroupSelection = my.grid.selectAll(".wallGroup").data(wallGroups);
+        wallGroupSelection.enter()
+          .append("g")
+          .attr("class", "wallGroup");
+        wallGroupSelection.exit().remove();
+
+        wallSelection = wallGroupSelection.selectAll(".wall").data(function(d) { return d; });
         wallSelection.enter()
           .append("g")
           .attr("class", "wall");
-
         wallSelection.exit().remove();
 
         wallBlocks = wallSelection.selectAll(".block")
@@ -108,7 +105,7 @@ RVR.zigzagup = function() {
       my.rover = RVR.rover({
         grid: my.grid,
         level: that,
-        position: {x: 0, y: 0}
+        position: {x: 0, y: my.grid.getRowCount() - 1}
       });
     }
     return my.rover;
@@ -119,7 +116,7 @@ RVR.zigzagup = function() {
       my.goal = RVR.goal({
         grid: my.grid,
         x: my.grid.getColumnCount() - 1,
-        y: my.grid.getRowCount() - 1
+        y: 0
       });
     }
     return my.goal;
