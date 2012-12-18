@@ -111,11 +111,10 @@ RVR.zigzag = function() {
   };
 
   that.mission = [
-    'This level introduces you to your sensor checks. You have 2 sensor checks.',
-    'The first one checks your current heading against one of the 4 possible directions: North, South, East & West. If your heading matches the selected direction, the first block of nested instructions will execute. If your heading does not match the selected direction, the "Otherwise" block of instructions will run.',
-    "The second sensor can determine whether or not a specific direction is blocked for travel in the rover's current position. If it is, the first group of instructions will execute. If it is not, the second group will execute.",
-    "Sensor checks are not events, so they do not wait for a trigger to execute. They will execute immediately when called.",,
-    "Sensor checks should only be used when your rover is stopped or blocked."
+    'This level introduces you to the "If Blocked to the ---" sensor check.',
+    "This sensor can determine whether or not a specific direction is blocked for travel from the rover's current position. If it is, the first group of instructions will execute. If it is not, the second group will execute.",
+    "This sensor can be used to find a viable new heading when blocked.",
+    "Combine this sensor with everything you've learned to reach the next goal."
   ];
 
   that.render = render;
