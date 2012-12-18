@@ -8,7 +8,7 @@ RVR.zigzagup = function() {
       wallGroups,
 
       generateWallCount = function() {
-        return Math.ceil(Math.random() * 6) + 2;
+        return Math.ceil(Math.random() * 6) + 4;
       },
 
       rowLength = function(x, y, length) {
@@ -87,10 +87,7 @@ RVR.zigzagup = function() {
       };
 
   that.clear = function() {
-    walls = [];
-    my.reset();
-    that.rover().reset();
-    render();
+    my.grid.clear();
   };
 
   that.reset = function() {
